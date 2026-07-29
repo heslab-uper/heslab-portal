@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title }} — HESLab Portal</title>
+
+  <!-- Plotly.js loaded ONCE here — every chart on this page reuses it -->
+  <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+
+  <!-- Shared stylesheet -->
+  <link rel="stylesheet" href="{{ asset_prefix }}assets/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <a href="{{ root_prefix }}index.html" class="logo">HESLab Portal</a>
+    <nav class="main-nav">
+      <a href="{{ root_prefix }}rainfall/index.html" {% if section == 'rainfall' %}class="active"{% endif %}>Rainfall Monitoring</a>
+      <a href="{{ root_prefix }}fews/index.html" {% if section == 'fews' %}class="active"{% endif %}>FEWS Indonesia</a>
+      <a href="{{ root_prefix }}streamflow/index.html" {% if section == 'streamflow' %}class="active"{% endif %}>Streamflow Forecast</a>
+    </nav>
+  </header>
+
+  <main class="page-content">
+    <h1>{{ title }}</h1>
+    {% if subtitle %}<p class="subtitle">{{ subtitle }}</p>{% endif %}
+
+    <div class="chart-grid">
+      {% for block in content_blocks %}
+        <div class="chart-card {{ block.size|default('full') }}">
+          {% if block.card_title %}<h3>{{ block.card_title }}</h3>{% endif %}
+          {{ block.html | safe }}
+        </div>
+      {% endfor %}
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>Data diperbarui otomatis · HESLab &mdash; Hydro-Environmental Systems Laboratory</p>
+    <p class="updated">Terakhir diperbarui: {{ last_updated }}</p>
+  </footer>
+
+</body>
+</html>
