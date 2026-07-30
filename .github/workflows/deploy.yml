@@ -7,6 +7,9 @@ on:
     - cron: "0 22 * * *"     # 05:00 WIB — build harian (laporan kabupaten, dll)
   workflow_dispatch: {}       # tombol manual "Run workflow" di GitHub
 
+permissions:
+  contents: write            # wajib -- supaya step "Deploy to gh-pages" boleh push
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
