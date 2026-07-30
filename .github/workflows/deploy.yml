@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
   schedule:
-    - cron: "0 22 * * *"     # 05:00 WIB — jalankan build harian
+    - cron: "0 22 * * *"     # 05:00 WIB — build harian (laporan kabupaten, dll)
   workflow_dispatch: {}       # tombol manual "Run workflow" di GitHub
 
 jobs:
@@ -19,13 +19,19 @@ jobs:
 
       - run: pip install -r requirements.txt
 
-      - name: Build site (Python + Plotly -> docs/)
+      - name: Build site (Python + Plotly -> docs/, LOKAL di runner saja)
         run: python site/build_site.py
 
-      - name: Commit generated docs/
-        run: |
-          git config user.name "heslab-bot"
-          git config user.email "bot@heslab.local"
-          git add docs/
-          git commit -m "Auto-build site $(date +%Y-%m-%d)" || echo "No changes"
-          git push
+      # docs/ di sini HANYA ada di dalam runner sementara -- TIDAK pernah
+      # di-commit ke branch main. Langsung dipublish ke branch gh-pages,
+      # dan force_orphan mereset riwayat branch itu setiap kali (supaya
+      # commit per-jam/per-hari tidak menumpuk selamanya).
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          publish_branch: gh-pages
+          force_orphan: true
+          user_name: "heslab-bot"
+          user_email: "bot@heslab.local"
