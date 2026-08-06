@@ -36,5 +36,6 @@ jobs:
           publish_dir: ./docs
           publish_branch: gh-pages
           force_orphan: true
+          cname: portal.heslab-uper.com
           user_name: "heslab-bot"
           user_email: "bot@heslab.local"
