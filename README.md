@@ -9,7 +9,7 @@ repositori ini dan disajikan melalui GitHub Pages.
 **Jangan menyunting berkas HTML di sini secara manual.** Perubahan apa pun akan
 tertimpa pada pembaruan otomatis berikutnya.
 
-Situs: <https://heslab-uper.github.io/heslab-portal/>
+Situs: <https://portal.heslab-uper.com/>
 
 ---
 
