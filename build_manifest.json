@@ -1,7 +1,7 @@
 {
   "targets": {
     "shell": {
-      "last_build_wib": "2026-08-20T19:37:55+07:00",
+      "last_build_wib": "2026-08-20T20:14:03+07:00",
       "pages": [
         "home",
         "rainfall-daily",
@@ -19,7 +19,7 @@
       "note": "produk=semua"
     },
     "rainfall-animation": {
-      "last_build_wib": "2026-08-20T19:37:56+07:00",
+      "last_build_wib": "2026-08-20T20:14:04+07:00",
       "pages": [
         "rainfall"
       ],
