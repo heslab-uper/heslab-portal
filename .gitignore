@@ -1,0 +1,17 @@
+# Jangan pernah ada di sini
+*.env
+*.key
+*.pem
+credentials*
+token*
+*.nc
+*.parquet
+*.gpkg
+data/
+
+# Sistem operasi / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
