@@ -747,11 +747,10 @@ aria-current="true">Rainfall Monitoring</a>
 <div class="wrap">
 
   <section class="pagehead">
-    <p class="eyebrow">Dasbor 01 · Diperbarui setiap jam</p>
     <h1>Rainfall Monitoring</h1>
     <p class="lede">
-      Sebaran hujan 24 jam terakhir per kabupaten/kota dari
-      estimasi satelit GSMaP, diperbarui setiap jam.
+      Animasi sebaran akumulasi hujan 24 jam terakhir di
+      wilayah Indonesia berdasarkan estimasi satelit GSMaP, diperbarui setiap jam.
     </p>
   </section>
 
@@ -776,18 +775,13 @@ aria-current="true">Rainfall Monitoring</a>
 
 
   <div class="note">
-    <p><strong>Jendela bergerak, bukan hari kalender.</strong>
-    Animasi di bawah menampilkan 24 jam terakhir terhitung mundur
-    dari waktu pembaruan, sehingga rentangnya melintasi dua tanggal. Untuk akumulasi
-    per hari kalender, gunakan halaman <a href="../rainfall/harian/index.html">Laporan Hujan Harian</a>.</p>
-
-    <p style="margin-bottom:0"><strong>Membaca cap waktunya.</strong>
-    Setiap gambar mewakili <em>akumulasi hujan selama satu jam penuh</em>, bukan
-    kondisi sesaat. Label <span style="font-family:var(--font-mono)">09:00–10:00 WIB</span>
-    berarti hujan yang terjadi sepanjang selang tersebut, dan datanya baru lengkap
-    setelah pukul 10:00 WIB terlewati. Karena itu gambar terbaru selalu tertinggal
-    sekitar satu jam dari waktu sekarang, di luar keterlambatan pengiriman produk
-    satelit itu sendiri (~0.5 jam).</p>
+    <p style="margin-bottom:0"><strong>Membaca interval waktu.</strong>
+    Setiap gambar menunjukkan akumulasi hujan selama satu jam penuh, bukan
+    kondisi sesaat. Sebagai contoh, label
+    <span style="font-family:var(--font-mono)">09:00–10:00 WIB</span>
+    merepresentasikan total hujan yang terjadi sepanjang interval tersebut.
+    Data untuk suatu interval baru dianggap lengkap setelah waktu akhir
+    interval terlewati.</p>
   </div>
 
   <section class="panel" aria-labelledby="anim-h">
@@ -853,19 +847,13 @@ aria-current="true">Rainfall Monitoring</a>
       (<a href="https://sharaku.eorc.jaxa.jp/GSMaP/" target="_blank" rel="noopener">laman resmi ↗</a>)</dd>
 
     <dt>Produk</dt>
-    <dd><strong>GSMaP NOW (nowcast)</strong> — Estimasi hujan satelit near-instantaneous tanpa koreksi penakar. Ditujukan untuk pemantauan cepat, bukan untuk analisis akumulasi.</dd>
+    <dd><strong>GSMaP NOW (nowcast)</strong> — Estimasi hujan satelit near-instantaneous yang belum dikoreksi dengan data pengamatan stasiun hujan. Ditujukan untuk pemantauan cepat, bukan untuk analisis akumulasi.</dd>
 
-    <dt>Kematangan</dt>
-    <dd>Nowcast / belum terkoreksi · perkiraan keterlambatan ~0.5 jam</dd>
+    <dt>Latency</dt>
+    <dd>~0,5 jam (near real-time)</dd>
 
     <dt>Resolusi asal</dt>
-    <dd>0,1° × 0,1° (± 11 km), resolusi temporal 1 jam</dd>
-
-    <dt>Pengolahan</dt>
-    <dd>Nilai kabupaten/kota merupakan rata-rata areal (areal mean) sel grid GSMaP di dalam poligon administrasi. Untuk kabupaten/kota yang lebih kecil dari satu sel grid digunakan pendekatan nearest-neighbour.</dd>
-
-    <dt>Keterbatasan</dt>
-    <dd>Rata-rata areal meredam nilai ekstrem lokal: nilai sel grid maksimum dalam satu wilayah dapat beberapa kali lebih tinggi daripada rata-rata arealnya. Angka pada portal ini bukan pengganti pengukuran penakar hujan.</dd>
+    <dd>0,1° × 0,1° (±11 km), resolusi temporal 1 jam.</dd>
 
     <dt>Zona waktu</dt>
     <dd>Seluruh waktu ditampilkan dalam WIB (UTC+07:00).</dd>
@@ -907,7 +895,8 @@ aria-current="true">Rainfall Monitoring</a>
         <ul>
           <li>Hydro-Environmental Systems Laboratory</li>
           <li>Program Studi Teknik Sipil, Universitas Pertamina</li>
-          <li><a href="mailto:heslab@universitaspertamina.ac.id">heslab@universitaspertamina.ac.id</a></li>
+          <li><a href="mailto:nurul.fj@universitaspertamina.ac.id">nurul.fj@universitaspertamina.ac.id</a></li>
+          <li><a href="mailto:heslab.uper@gmail.com">heslab.uper@gmail.com</a></li>
           <li><a href="https://www.heslab-uper.com" target="_blank" rel="noopener">Website laboratorium ↗</a></li>
         </ul>
       </div>
@@ -915,7 +904,7 @@ aria-current="true">Rainfall Monitoring</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 21-08-2026 06:02 WIB · © 2026 Hydro-Environmental Systems Laboratory.
+      Halaman dibangun 21-08-2026 06:53 WIB · © 2026 Hydro-Environmental Systems Laboratory.
     </p>
   </div>
 </footer>
