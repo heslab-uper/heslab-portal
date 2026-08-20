@@ -1,0 +1,29 @@
+{
+  "targets": {
+    "shell": {
+      "last_build_wib": "2026-08-20T19:37:55+07:00",
+      "pages": [
+        "home",
+        "rainfall-daily",
+        "rainfall-dasarian",
+        "fews",
+        "streamflow",
+        "drought",
+        "rainfall-daily-now",
+        "rainfall-dasarian-now",
+        "rainfall-daily-nrt",
+        "rainfall-dasarian-nrt",
+        "rainfall-daily-standard",
+        "rainfall-dasarian-standard"
+      ],
+      "note": "produk=semua"
+    },
+    "rainfall-animation": {
+      "last_build_wib": "2026-08-20T19:37:56+07:00",
+      "pages": [
+        "rainfall"
+      ],
+      "note": "produk=semua"
+    }
+  }
+}

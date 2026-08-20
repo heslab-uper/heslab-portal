@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hujan Dasarian — GSMaP Standard — HESLab Portal</title>
+<meta name="description" content="Deret dasarian multi-tahun per kabupaten/kota — Hydro-Environmental Systems Laboratory.">
+<meta name="author" content="Hydro-Environmental Systems Laboratory">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Hujan Dasarian — GSMaP Standard — HESLab Portal">
+<meta property="og:description" content="Deret dasarian multi-tahun per kabupaten/kota">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   HESLab Portal — lembar gaya tunggal.
+   Berkas ini di-inline ke dalam setiap HTML oleh rendering.py, sehingga tiap
+   halaman berdiri sendiri (tidak ada permintaan CSS eksternal).
+
+   Bahasa visual: panel instrumen ukur. Angka memakai huruf monospasi, judul
+   memakai huruf kondensasi, dan pita intensitas hujan dipakai sebagai motif
+   pengikat antar halaman.
+   ========================================================================== */
+
+:root {
+  /* Warna dasar — teks & permukaan netral */
+  --ink-900: #0E1B24;
+  --ink-700: #1E3542;
+  --ink-500: #4A6472;
+  --muted:   #6E848F;
+  --line:    #D7E1E4;
+  --line-soft: #E7EEF0;
+  --paper:   #EEF3F5;
+  --surface: #ffffff;
+
+  /* ---- Biru Universitas Pertamina ------------------------------------
+     Nilai #0077C0 diambil langsung dari berkas logo resmi UPer
+     (piksel daun biru, 19,15% dari seluruh piksel opak logo).
+     H=203° S=100% L=38%. Seluruh tingkat lain diturunkan dari nilai itu
+     dengan hue dan saturasi dipertahankan, hanya lightness yang digeser.
+
+     Verifikasi kontras WCAG AA:
+       putih di atas --river-900  : 11,04:1  lulus
+       putih di atas --river-700  :  4,77:1  lulus
+       --river-700 sbg teks/putih :  4,77:1  lulus
+       --river-600 hanya 3,49:1 -> JANGAN dipakai untuk teks, hanya untuk
+       hover pada latar berwarna, garis, dan elemen non-teks. */
+  --river-900: #003F66;   /* masthead */
+  --river-800: #00558A;
+  --river-700: #0077C0;   /* PRIMARY — biru resmi UPer, tanpa modifikasi */
+  --river-600: #008EE6;   /* hover & elemen non-teks saja */
+  --river-500: #1AA8FF;   /* aksen, garis, ikon */
+  --river-300: #66C5FF;
+  --river-200: #A8DEFF;   /* pinggir kartu */
+  --river-100: #E5F5FF;   /* latar tint pucat */
+
+  /* Hijau daun UPer (#C1D544) — dicadangkan sebagai aksen institusional,
+     belum dipakai. Merah (#ED1C24) sengaja TIDAK diadopsi: pada portal
+     hidrologi, merah harus tetap berarti peringatan, bukan identitas. */
+  --uper-green: #C1D544;
+
+  /* Aksen air — hue digeser dari biru UPer ke arah cyan (203° -> 188°),
+     cukup jauh untuk terbaca sebagai "air" tapi masih satu keluarga
+     dengan warna institusi. Dipakai hanya untuk motif ombak, bukan teks. */
+  --wave-600: #00A5C4;
+  --wave-300: #7FD9EA;
+
+  /* current/current-dark/current-soft dipertahankan sebagai alias supaya
+     komponen lama (tag, tautan, tombol) tidak perlu diubah satu-satu. */
+  --current:      var(--river-700);
+  --current-dark: var(--river-800);
+  --current-soft: var(--river-100);
+
+  /* Aksen hangat — SEKARANG KHUSUS untuk peringatan/catatan metodologis,
+     bukan lagi warna dekoratif. Portal ini sengaja didominasi biru+air,
+     sehingga saat amber muncul, artinya sungguh "perhatikan ini". */
+  --alert:        #B4531B;
+  --alert-soft:   #FBEEE4;
+
+  /* Huruf */
+  --font-display: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+
+  /* Ukuran */
+  --step--1: 0.8125rem;
+  --step-0:  0.9375rem;
+  --step-1:  1.125rem;
+  --step-2:  1.4375rem;
+  --step-3:  1.875rem;
+  --step-4:  2.5rem;
+
+  /* Ruang */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+
+  --radius: 3px;
+  --maxw: 1180px;
+}
+
+/* ---------------------------------------------------------------- reset -- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink-700);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--ink-900);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--sp-3);
+  font-weight: 600;
+}
+
+h1 { font-size: var(--step-4); }
+h2 { font-size: var(--step-2); }
+h3 { font-size: var(--step-1); }
+
+p { margin: 0 0 var(--sp-4); }
+
+a { color: var(--current-dark); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { color: var(--current); }
+
+:focus-visible {
+  outline: 2px solid var(--current);
+  outline-offset: 2px;
+}
+
+.wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--sp-5);
+}
+
+.skip {
+  position: absolute; left: -9999px;
+  background: var(--surface); padding: var(--sp-3) var(--sp-4); z-index: 100;
+}
+.skip:focus { left: var(--sp-4); top: var(--sp-4); }
+
+/* --------------------------------------------------------------- header -- */
+
+.masthead {
+  background: var(--river-900);
+  color: #DCE9EE;
+}
+
+.masthead__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding: var(--sp-4) 0;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  text-decoration: none;
+  color: inherit;
+}
+.brand__icon { flex: none; }
+.brand__logo {
+  flex: none;
+  height: 40px;
+  width: auto;
+  display: block;
+}
+.brand__text { display: flex; flex-direction: column; line-height: 1.15; }
+.brand__mark {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #fff;
+}
+.brand__sub {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: #70BCEB;
+  letter-spacing: 0.02em;
+}
+
+.masthead a.outlink {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: #91CAED;
+  text-decoration: none;
+  border: 1px solid #08639B;
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--radius);
+}
+.masthead a.outlink:hover { border-color: var(--current); color: #fff; }
+
+.mainnav {
+  border-top: 1px solid #07517E;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-5);
+  padding: 0;
+}
+.mainnav a {
+  display: block;
+  padding: var(--sp-3) 0;
+  font-family: var(--font-display);
+  font-size: var(--step-0);
+  letter-spacing: 0.02em;
+  color: #A4CFEA;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+}
+.mainnav a:hover { color: #fff; }
+.mainnav a[aria-current="true"] { color: #fff; border-bottom-color: var(--current); }
+.mainnav a[data-status="planned"]::after {
+  content: "segera";
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-left: var(--sp-2);
+  color: #6BA4C7;
+}
+
+/* Pita intensitas: motif tanda tangan portal, sekaligus kunci warna modul. */
+.ramp-rule {
+  display: flex;
+  height: 4px;
+}
+.ramp-rule span { flex: 1; }
+
+/* Garis ombak — elemen air eksplisit, dipasang di bawah masthead pada
+   setiap halaman. Bukan dekorasi acak: bentuknya gelombang sinus tunggal,
+   menegaskan tema hidrologi tanpa berebut perhatian dengan konten. */
+.wave-rule {
+  display: block;
+  width: 100%;
+  height: 10px;
+  background: var(--river-900);
+}
+.wave-rule svg { display: block; width: 100%; height: 100%; }
+
+/* ----------------------------------------------------------- breadcrumb -- */
+
+.crumbs {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--muted);
+  padding: var(--sp-4) 0 0;
+}
+.crumbs a { color: var(--ink-500); text-decoration: none; }
+.crumbs a:hover { color: var(--current); text-decoration: underline; }
+.crumbs span[aria-hidden] { padding: 0 var(--sp-2); color: var(--line); }
+
+/* --------------------------------------------------------- page header -- */
+
+.pagehead { padding: var(--sp-4) 0 var(--sp-5); }
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--current-dark);
+  margin: 0 0 var(--sp-2);
+}
+.pagehead p.lede {
+  font-size: var(--step-1);
+  color: var(--ink-500);
+  max-width: 62ch;
+  margin: var(--sp-2) 0 0;
+}
+
+/* Panel pembacaan instrumen: status data yang sedang ditampilkan. */
+.readout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin: var(--sp-5) 0;
+  overflow: hidden;
+}
+.readout__cell { background: var(--surface); padding: var(--sp-3) var(--sp-4); }
+.readout__k {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--muted);
+  display: block;
+}
+.readout__v {
+  font-family: var(--font-mono);
+  font-size: var(--step-0);
+  color: var(--ink-900);
+  font-weight: 500;
+  word-break: break-word;
+}
+
+/* --------------------------------------------------------- kartu dasbor -- */
+/* Kartu modul utama pada beranda. Sengaja dibuat 2 kolom (bukan 4) agar tiap
+   kartu punya bobot visual cukup untuk menjadi pintu masuk utama portal. */
+
+.dashgrid {
+  display: grid;
+  gap: var(--sp-4);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  margin-top: var(--sp-2);
+}
+
+.dashcard {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: var(--sp-5);
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  position: relative;
+  overflow: hidden;
+  transition: border-color .16s ease, transform .16s ease, box-shadow .16s ease;
+}
+/* Pita aksen kiri: penanda modul, warnanya diset per-kartu di bawah. */
+.dashcard::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--dash-accent, var(--river-500));
+}
+.dashcard:hover {
+  border-color: var(--river-500);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(7, 51, 105, .10);
+}
+
+.dashcard__head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+.dashcard__icon {
+  flex: none;
+  width: 42px; height: 42px;
+  border-radius: 5px;
+  background: var(--river-100);
+  color: var(--dash-accent, var(--river-700));
+  display: flex; align-items: center; justify-content: center;
+}
+.dashcard__icon svg { display: block; }
+.dashcard__titles { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.dashcard__no {
+  font-family: var(--font-mono);
+  font-size: .66rem;
+  letter-spacing: .1em;
+  color: var(--muted);
+}
+.dashcard h3 { margin: 0; font-size: var(--step-1); }
+.dashcard p {
+  margin: 0;
+  font-size: var(--step--1);
+  color: var(--ink-500);
+  flex: 1;
+}
+.dashcard__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin-top: var(--sp-2);
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--line-soft);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--muted);
+}
+.dashcard__go {
+  color: var(--river-700);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: transform .16s ease;
+  display: inline-block;
+}
+.dashcard:hover .dashcard__go { transform: translateX(3px); }
+
+.grid {
+  display: grid;
+  gap: var(--sp-4);
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+a.card:hover { border-color: var(--current); transform: translateY(-2px); }
+a.card:hover h3 { color: var(--current-dark); }
+
+.card__num {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: var(--sp-3);
+}
+.card p { color: var(--ink-500); font-size: var(--step--1); margin-bottom: var(--sp-4); }
+.card__foot {
+  margin-top: auto;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--current-dark);
+}
+
+.tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 2px 7px;
+  border-radius: 2px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  background: var(--paper);
+}
+.tag--live { border-color: var(--current); color: var(--current-dark); background: var(--current-soft); }
+.tag--planned { border-color: var(--line); color: var(--muted); }
+
+/* -------------------------------------------------------------- panel  -- */
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--sp-5);
+  margin-bottom: var(--sp-5);
+}
+.panel > h2 { margin-top: 0; }
+.panel__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--sp-4);
+}
+
+.split {
+  display: grid;
+  gap: var(--sp-5);
+  grid-template-columns: minmax(0, 2.1fr) minmax(0, 1fr);
+  align-items: start;
+}
+@media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
+
+/* ------------------------------------------------------------- kendali -- */
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  align-items: flex-end;
+  margin-bottom: var(--sp-4);
+}
+.field { display: flex; flex-direction: column; gap: var(--sp-1); }
+.field label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+select, button.btn {
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  padding: var(--sp-2) var(--sp-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink-900);
+  min-height: 38px;
+}
+select:disabled { color: var(--muted); background: var(--paper); }
+button.btn { cursor: pointer; }
+button.btn:hover { border-color: var(--current); color: var(--current-dark); }
+button.btn--primary {
+  background: var(--current); border-color: var(--current); color: #fff;
+  font-family: var(--font-mono); letter-spacing: 0.03em;
+}
+button.btn--primary:hover { background: var(--current-dark); color: #fff; }
+
+.playbar { display: flex; align-items: center; gap: var(--sp-3); flex-wrap: wrap; }
+.playbar input[type="range"] { flex: 1; min-width: 180px; accent-color: var(--current); }
+.playbar output {
+  font-family: var(--font-mono);
+  font-size: var(--step-0);
+  color: var(--ink-900);
+  min-width: 15ch;
+}
+
+/* -------------------------------------------------------------- legenda -- */
+
+.legend { display: flex; flex-wrap: wrap; gap: var(--sp-1) var(--sp-4); margin: var(--sp-4) 0 0; padding: 0; list-style: none; }
+.legend li { display: flex; align-items: center; gap: var(--sp-2); font-family: var(--font-mono); font-size: var(--step--1); color: var(--ink-500); }
+.legend i { width: 14px; height: 14px; border: 1px solid rgba(0,0,0,0.12); border-radius: 2px; display: block; }
+
+/* --------------------------------------------------------------- tabel -- */
+
+.tablewrap { overflow-x: auto; }
+table.data {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--step--1);
+}
+table.data caption {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--muted);
+  padding-bottom: var(--sp-3);
+}
+table.data th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+  padding: var(--sp-2) var(--sp-3);
+  white-space: nowrap;
+}
+table.data td {
+  padding: var(--sp-2) var(--sp-3);
+  border-bottom: 1px solid var(--line-soft);
+  vertical-align: middle;
+}
+table.data td.num, table.data th.num { text-align: right; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+table.data tbody tr:hover { background: var(--current-soft); }
+td .swatch {
+  display: inline-block; width: 10px; height: 10px; border-radius: 2px;
+  margin-right: var(--sp-2); border: 1px solid rgba(0,0,0,0.12);
+}
+.rank { font-family: var(--font-mono); color: var(--muted); }
+
+/* --------------------------------------------------------- panel detail -- */
+
+.detail {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--sp-4);
+  background: var(--paper);
+  min-height: 220px;
+}
+.detail__empty { color: var(--muted); font-size: var(--step--1); }
+.detail__title { font-family: var(--font-display); font-size: var(--step-1); color: var(--ink-900); margin: 0 0 var(--sp-1); }
+.detail__prov { font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); margin-bottom: var(--sp-4); }
+.detail__big {
+  font-family: var(--font-mono);
+  font-size: var(--step-3);
+  color: var(--ink-900);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.detail__unit { font-size: var(--step-0); color: var(--muted); margin-left: var(--sp-1); }
+.detail dl { display: grid; grid-template-columns: auto 1fr; gap: var(--sp-2) var(--sp-4); margin: var(--sp-4) 0 0; font-size: var(--step--1); }
+.detail dt { font-family: var(--font-mono); color: var(--muted); }
+.detail dd { margin: 0; font-family: var(--font-mono); color: var(--ink-900); text-align: right; }
+
+/* -------------------------------------------------------------- catatan -- */
+
+.note {
+  border-left: 3px solid var(--current);
+  background: var(--current-soft);
+  padding: var(--sp-4);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-size: var(--step--1);
+  margin-bottom: var(--sp-5);
+}
+.note--warn { border-left-color: var(--alert); background: var(--alert-soft); }
+.note--wait { border-left-color: var(--muted); background: var(--surface); border: 1px dashed var(--line); border-left: 3px solid var(--muted); }
+.note strong { color: var(--ink-900); }
+.note p:last-child { margin-bottom: 0; }
+
+/* Kotak "menunggu data": ruang yang sudah ada, isinya menyusul. */
+.awaiting {
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  background: repeating-linear-gradient(
+    135deg, var(--surface), var(--surface) 10px, #f7fafb 10px, #f7fafb 20px);
+  padding: var(--sp-7) var(--sp-5);
+  text-align: center;
+  color: var(--muted);
+}
+.awaiting h3 { color: var(--ink-500); }
+.awaiting code {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 1px 5px;
+  border-radius: 2px;
+  color: var(--ink-700);
+}
+
+/* -------------------------------------------------------------- sumber -- */
+
+.source {
+  border-top: 1px solid var(--line);
+  padding-top: var(--sp-4);
+  margin-top: var(--sp-6);
+  font-size: var(--step--1);
+  color: var(--ink-500);
+}
+.source dl { display: grid; grid-template-columns: minmax(120px, max-content) 1fr; gap: var(--sp-2) var(--sp-4); margin: 0; }
+.source dt { font-family: var(--font-mono); font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); }
+.source dd { margin: 0; }
+
+/* --------------------------------------------------------------- plot  -- */
+
+.plot { width: 100%; min-height: 460px; }
+.plot--tall { min-height: 520px; }
+.plot--chart { min-height: 400px; }
+
+/* -------------------------------------------------------------- footer -- */
+
+.foot {
+  background: var(--ink-900);
+  color: #92BAD3;
+  margin-top: var(--sp-7);
+  padding: var(--sp-6) 0;
+  font-size: var(--step--1);
+}
+.foot a { color: #C4DEEE; }
+.foot__grid { display: grid; gap: var(--sp-5); grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.foot h4 {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #6BA4C7;
+  margin: 0 0 var(--sp-3);
+}
+.foot ul { list-style: none; margin: 0; padding: 0; }
+.foot li { margin-bottom: var(--sp-2); }
+.foot__legal { border-top: 1px solid #07517E; margin-top: var(--sp-5); padding-top: var(--sp-4); color: #6BA4C7; }
+
+/* ------------------------------------------------------------ preferensi -- */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  .masthead, .foot, .controls, .playbar { display: none; }
+  body { background: #fff; }
+}
+
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Lewati ke konten</a>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="masthead__top">
+      <a class="brand" href="../../../index.html">
+        <img class="brand__logo" src="../../../assets/img/uper-lambang.png"
+             alt="Lambang Universitas Pertamina" width="40" height="41">
+        <span class="brand__text">
+          <span class="brand__mark">HESLab Portal</span>
+          <span class="brand__sub">Pemantauan dan Prakiraan Hidrologi</span>
+        </span>
+      </a>
+      <a class="outlink" href="https://www.heslab-uper.com" target="_blank" rel="noopener">
+        Website Laboratorium ↗
+      </a>
+    </div>
+    <nav class="mainnav" aria-label="Navigasi utama">
+      <a href="../../../rainfall/index.html"
+         data-status="live"
+aria-current="true">Rainfall Monitoring</a>
+      <a href="../../../fews/index.html"
+         data-status="planned"
+>FEWS</a>
+      <a href="../../../streamflow/index.html"
+         data-status="planned"
+>Streamflow Forecast</a>
+      <a href="../../../drought/index.html"
+         data-status="planned"
+>Drought Risk</a>
+    </nav>
+  </div>
+  <div class="ramp-rule" aria-hidden="true">
+<span style="background:#F7FAFB"></span><span style="background:#DCEBF2"></span><span style="background:#A9D4E6"></span><span style="background:#63ACD3"></span><span style="background:#2E7DB8"></span><span style="background:#6B3FA0"></span><span style="background:#A81F5E"></span>  </div>
+</header>
+
+<div class="wave-rule" aria-hidden="true">
+  <svg viewBox="0 0 400 10" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,5 C 50,0 100,10 150,5 C 200,0 250,10 300,5 C 350,0 400,10 400,5 L400,10 L0,10 Z"
+          fill="var(--wave-600)" opacity="0.55"/>
+    <path d="M0,7 C 50,3 100,11 150,7 C 200,3 250,11 300,7 C 350,3 400,11 400,7 L400,10 L0,10 Z"
+          fill="var(--wave-300)" opacity="0.35"/>
+  </svg>
+</div>
+
+<div class="wrap">
+  <nav class="crumbs" aria-label="Remah roti">
+        <a href="../../../index.html">HESLab Portal</a><span aria-hidden="true">/</span>
+        <a href="../../../rainfall/index.html">Rainfall Monitoring</a><span aria-hidden="true">/</span>
+        <a href="../../../rainfall/dasarian/index.html">Hujan Dasarian</a><span aria-hidden="true">/</span>
+        <span>Hujan Dasarian — GSMaP Standard</span>
+  </nav>
+</div>
+
+<main id="main">
+<div class="wrap">
+
+  <section class="pagehead">
+    <p class="eyebrow">Rainfall Monitoring · Diperbarui setiap bulan</p>
+    <h1>Hujan Dasarian</h1>
+    <p class="lede">
+      Akumulasi hujan per dasarian (periode 10 harian, 36 dasarian dalam setahun)
+      untuk setiap kabupaten/kota menurut GSMaP Standard / Gauge-adjusted.
+    </p>
+  </section>
+
+  <div class="readout">
+  <div class="readout__cell">
+    <span class="readout__k">Produk</span>
+    <span class="readout__v">GSMaP Standard</span>
+  </div>
+  <div class="readout__cell">
+    <span class="readout__k">Status</span>
+    <span class="readout__v">Menunggu data</span>
+  </div>
+  <div class="readout__cell">
+    <span class="readout__k">Konvensi waktu</span>
+    <span class="readout__v">36 dasarian per tahun</span>
+  </div>
+  <div class="readout__cell">
+    <span class="readout__k">Satuan</span>
+    <span class="readout__v">mm/dasarian</span>
+  </div>
+</div>
+
+
+
+  <div class="note">
+    <p><strong>Konvensi dasarian.</strong> Dasarian I mencakup tanggal 1–10,
+    dasarian II tanggal 11–20, dan dasarian III tanggal 21 hingga akhir bulan
+    (8, 9, 10, atau 11 hari). Panjang dasarian III yang tidak seragam perlu
+    diperhitungkan saat membandingkan antar bulan.</p>
+  </div>
+
+  <section class="panel">
+    <div class="awaiting">
+  <h3>Menunggu berkas dasarian</h3>
+  <p>Kendali provinsi, kabupaten/kota, dan lapisan tahun sudah terpasang. Isi berkas berikut lalu jalankan ulang build.</p>
+  <p>Berkas yang dinanti: <code>data/rainfall/dasarian_standard.csv</code></p>
+</div>
+
+  </section>
+
+  <section class="source" aria-labelledby="src-h">
+  <h4 id="src-h" class="eyebrow">Sumber dan pengolahan data</h4>
+  <dl>
+    <dt>Produsen data</dt>
+    <dd>JAXA Global Rainfall Watch (GSMaP), Earth Observation Research Center (EORC), JAXA
+      (<a href="https://sharaku.eorc.jaxa.jp/GSMaP/" target="_blank" rel="noopener">laman resmi ↗</a>)</dd>
+
+    <dt>Produk</dt>
+    <dd><strong>GSMaP Standard / Gauge-adjusted</strong> — Produk standar dengan koreksi penakar hujan. Rujukan utama untuk analisis harian dan dasarian.</dd>
+
+    <dt>Kematangan</dt>
+    <dd>Definitif (terkoreksi penakar) · perkiraan keterlambatan ~3 hari</dd>
+
+    <dt>Resolusi asal</dt>
+    <dd>0,1° × 0,1° (± 11 km), resolusi temporal 1 jam</dd>
+
+    <dt>Pengolahan</dt>
+    <dd>Nilai kabupaten/kota merupakan rata-rata areal (areal mean) sel grid GSMaP di dalam poligon administrasi. Untuk kabupaten/kota yang lebih kecil dari satu sel grid digunakan pendekatan nearest-neighbour.</dd>
+
+    <dt>Keterbatasan</dt>
+    <dd>Rata-rata areal meredam nilai ekstrem lokal: nilai sel grid maksimum dalam satu wilayah dapat beberapa kali lebih tinggi daripada rata-rata arealnya. Angka pada portal ini bukan pengganti pengukuran penakar hujan.</dd>
+
+    <dt>Zona waktu</dt>
+    <dd>Seluruh waktu ditampilkan dalam WIB (UTC+07:00).</dd>
+
+    <dt>Unduh data</dt>
+    <dd>Berkas hujan satelit GSMaP jam-jaman yang menjadi dasar seluruh peta pada modul ini tersedia untuk diunduh dan dipakai ulang.
+      <a href="https://www.heslab-uper.com/data/hujan-satelit" target="_blank" rel="noopener">
+        Unduh data hujan satelit jam-jaman ↗</a></dd>
+
+    <dt>Rujukan</dt>
+    <dd>Kubota, T. et al. (2020). Global Satellite Mapping of Precipitation (GSMaP) Products in the GPM Era. In: Satellite Precipitation Measurement, Springer.</dd>
+  </dl>
+</section>
+
+</div>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <h4>Portal</h4>
+        <ul>
+          <li><a href="../../../rainfall/index.html">Rainfall Monitoring</a></li>
+          <li><a href="../../../fews/index.html">FEWS</a></li>
+          <li><a href="../../../streamflow/index.html">Streamflow Forecast</a></li>
+          <li><a href="../../../drought/index.html">Drought Risk</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Sumber data</h4>
+        <ul>
+          <li><a href="https://sharaku.eorc.jaxa.jp/GSMaP/" target="_blank" rel="noopener">JAXA Global Rainfall Watch (GSMaP) ↗</a></li>
+          <li>Batas wilayah: BPS / Badan Informasi Geospasial</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Laboratorium</h4>
+        <ul>
+          <li>Hydro-Environmental Systems Laboratory</li>
+          <li>Program Studi Teknik Sipil, Universitas Pertamina</li>
+          <li><a href="mailto:heslab@universitaspertamina.ac.id">heslab@universitaspertamina.ac.id</a></li>
+          <li><a href="https://www.heslab-uper.com" target="_blank" rel="noopener">Website laboratorium ↗</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="foot__legal">
+      Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
+      resmi tetap mengacu pada BMKG dan instansi berwenang.
+      Halaman dibangun 20-08-2026 19:37 WIB · © 2026 Hydro-Environmental Systems Laboratory.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
