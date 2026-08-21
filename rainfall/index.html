@@ -908,7 +908,7 @@ aria-current="true">Rainfall Monitoring</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 21-08-2026 07:54 WIB · © 2026 Hydro-Environmental Systems Laboratory.
+      Halaman dibangun 21-08-2026 08:00 WIB · © 2026 Hydro-Environmental Systems Laboratory.
     </p>
   </div>
 </footer>
@@ -1102,8 +1102,8 @@ aria-current="true">Rainfall Monitoring</a>
     };
   };
 
-  H.mapLayout = function (map) {
-    return {
+  H.mapLayout = function (map, bounds) {
+    var layout = {
       mapbox: {
         style: map.style,
         center: { lat: map.center.lat, lon: map.center.lon },
@@ -1114,6 +1114,84 @@ aria-current="true">Rainfall Monitoring</a>
       font: { family: "IBM Plex Sans, system-ui, sans-serif", size: 12, color: "#16333f" },
       dragmode: "pan"
     };
+
+    /* Batasi geseran peta agar tidak keluar dari cakupan data. Bila versi
+       plotly.js yang dipakai belum mengenal properti ini, ia diabaikan
+       tanpa menimbulkan galat. */
+    if (bounds) {
+      layout.mapbox.bounds = {
+        west: bounds.west, east: bounds.east,
+        south: bounds.south, north: bounds.north
+      };
+    }
+    return layout;
+  };
+
+  /*
+   * Hitung tingkat zoom terkecil yang masih menampilkan seluruh cakupan data.
+   *
+   * Web Mercator: pada zoom z, lebar dunia = 512 * 2^z piksel. Zoom yang pas
+   * mengisi lebar wadah dihitung dari perbandingan rentang bujur terhadap
+   * 360 derajat; hal serupa untuk lintang, memakai proyeksi Mercator.
+   *
+   * Diambil nilai TERKECIL dari keduanya, karena itulah zoom saat seluruh
+   * data baru muat di layar. Zoom di bawahnya akan menampilkan wilayah di
+   * luar cakupan data — persis yang ingin dicegah.
+   */
+  function mercatorY(lat) {
+    var r = lat * Math.PI / 180;
+    return Math.log(Math.tan(Math.PI / 4 + r / 2));
+  }
+
+  H.zoomMinimum = function (el, bounds) {
+    var lebar = el.clientWidth || 800;
+    var tinggi = el.clientHeight || 460;
+
+    var spanLon = Math.abs(bounds.east - bounds.west);
+    var zLebar = Math.log2(lebar * 360 / (512 * spanLon));
+
+    var spanY = Math.abs(mercatorY(bounds.north) - mercatorY(bounds.south));
+    var zTinggi = Math.log2(tinggi * (2 * Math.PI) / (512 * spanY));
+
+    return Math.min(zLebar, zTinggi);
+  };
+
+  /*
+   * Kunci zoom agar tidak bisa diperkecil melampaui cakupan data.
+   *
+   * plotly.js tidak menyediakan pengaturan zoom minimum, sehingga dipakai
+   * pendekatan koreksi: setiap kali peta selesai digeser atau di-zoom,
+   * nilai zoom diperiksa dan dikembalikan bila terlalu kecil.
+   *
+   * `sedangKoreksi` mencegah relayout korektif memicu dirinya sendiri.
+   * Batas dihitung ulang saat ukuran jendela berubah, karena zoom minimum
+   * bergantung pada lebar wadah peta.
+   */
+  H.kunciZoomKeBatas = function (el, bounds) {
+    var minZoom = H.zoomMinimum(el, bounds);
+    var sedangKoreksi = false;
+
+    function koreksi(ev) {
+      if (sedangKoreksi) return;
+      var z = ev && ev["mapbox.zoom"];
+      if (typeof z !== "number" || z >= minZoom - 1e-3) return;
+      sedangKoreksi = true;
+      Plotly.relayout(el, { "mapbox.zoom": minZoom }).then(function () {
+        sedangKoreksi = false;
+      });
+    }
+
+    el.on("plotly_relayout", koreksi);
+
+    global.addEventListener("resize", function () {
+      minZoom = H.zoomMinimum(el, bounds);
+      var kini = el._fullLayout && el._fullLayout.mapbox && el._fullLayout.mapbox.zoom;
+      if (typeof kini === "number" && kini < minZoom) {
+        Plotly.relayout(el, { "mapbox.zoom": minZoom });
+      }
+    });
+
+    return minZoom;
   };
 
   global.HES = H;
@@ -1241,7 +1319,7 @@ aria-current="true">Rainfall Monitoring</a>
     });
   }
 
-  var layout = HES.mapLayout(P.map);
+  var layout = HES.mapLayout(P.map, P.bounds);
   layout.mapbox.layers = [layerFor(P.frames.length - 1)];
 
   /* Plotly TIDAK membentuk subplot mapbox bila daftar trace kosong — basemap
@@ -1260,6 +1338,19 @@ aria-current="true">Rainfall Monitoring</a>
     .then(preload)
     .then(function () {
       ready = true;
+
+      /* Kunci zoom keluar pada cakupan data, lalu setel tampilan awal tepat
+         pada batas itu — sehingga seluruh domain terlihat sejak awal dan
+         pengguna hanya dapat memperbesar, tidak memperkecil lebih jauh. */
+      var minZoom = HES.kunciZoomKeBatas(plotEl, P.bounds);
+      Plotly.relayout(plotEl, {
+        "mapbox.zoom": minZoom,
+        "mapbox.center": {
+          lat: (P.bounds.north + P.bounds.south) / 2,
+          lon: (P.bounds.west + P.bounds.east) / 2
+        }
+      });
+
       slider.max = String(P.frames.length - 1);
       slider.disabled = false;
       playBtn.disabled = false;
