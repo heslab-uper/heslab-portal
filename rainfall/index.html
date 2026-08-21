@@ -803,12 +803,13 @@ aria-current="true">Rainfall Monitoring</a>
 
     <ul class="legend" id="anim-legend"></ul>
     <p style="font-size:.8125rem;color:var(--muted);margin-top:1rem;margin-bottom:0">
-      Peta menampilkan grid asli GSMaP beresolusi 0,1° (± 11 km), bukan rata-rata
-      per kabupaten — sehingga sebaran hujan terlihat apa adanya, termasuk sel
-      ekstrem yang biasanya teredam saat dirata-ratakan per wilayah.
-      <strong>Area tanpa warna berarti tidak hujan</strong> (di bawah
-      0,0 mm/jam), bukan tidak ada data —
-      pada satu jam tertentu, sekitar 88% wilayah domain memang tidak berhujan.
+      Peta menampilkan grid asli GSMaP beresolusi 0,1° (±11 km), bukan hasil
+      rata-rata per wilayah administrasi. Dengan demikian, pola dan variasi
+      spasial hujan ditampilkan sebagaimana hasil estimasi satelit, termasuk
+      area dengan intensitas hujan tinggi yang dapat berkurang pengaruhnya pada
+      data yang telah dirata-ratakan. <strong>Area tanpa warna menunjukkan
+      tidak adanya hujan pada periode tersebut</strong>, bukan data yang hilang
+      atau tidak tersedia.
     </p>
   </section>
 
@@ -818,13 +819,13 @@ aria-current="true">Rainfall Monitoring</a>
       <a class="card" href="../rainfall/harian/index.html">
         <span class="card__num">S1</span>
         <h3>Laporan Hujan Harian</h3>
-        <p>Akumulasi hari kalender per kabupaten/kota untuk tiga produk GSMaP, lengkap dengan peta interaktif dan peringkat wilayah.</p>
+        <p>Menyajikan informasi hujan per kabupaten/kota di Indonesia yang dihitung dari rerata wilayah data GSMaP per jam. Tersedia untuk produk GSMaP NOW, GSMaP NRT, dan GSMaP Standard, dengan informasi akumulasi hujan 24 jam (R24), intensitas hujan maksimum, serta waktu kejadian hujan maksimum.</p>
         <span class="card__foot">Diperbarui setiap hari</span>
       </a>
       <a class="card" href="../rainfall/dasarian/index.html">
         <span class="card__num">S2</span>
         <h3>Hujan Dasarian</h3>
-        <p>Akumulasi 10 harian multi-tahun per kabupaten/kota untuk menelaah pola musim dan penyimpangannya.</p>
+        <p>Menyajikan akumulasi hujan dasarian (10 harian) per kabupaten/kota di Indonesia yang dihitung dari rerata wilayah data GSMaP per jam. Tersedia untuk produk GSMaP NOW, GSMaP NRT, dan GSMaP Standard untuk mendukung analisis pola hujan dan variabilitasnya antarwilayah.</p>
         <span class="card__foot">Diperbarui setiap bulan</span>
       </a>
 
@@ -832,8 +833,9 @@ aria-current="true">Rainfall Monitoring</a>
          target="_blank" rel="noopener">
         <span class="card__num">DATA</span>
         <h3>Unduh Data Hujan Satelit</h3>
-        <p>Berkas GSMaP jam-jaman dalam format grid — sumber yang sama dengan
-          peta pada halaman ini — tersedia untuk diunduh dan dipakai ulang.</p>
+        <p>Unduh data hujan satelit GSMaP dalam format NetCDF (data grid) yang
+          menjadi sumber data pada portal ini. Data tersedia untuk analisis,
+          pemodelan, dan pemrosesan lanjutan.</p>
         <span class="card__foot">Buka laman unduhan ↗</span>
       </a>
     </div>
@@ -906,7 +908,7 @@ aria-current="true">Rainfall Monitoring</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 21-08-2026 07:19 WIB · © 2026 Hydro-Environmental Systems Laboratory.
+      Halaman dibangun 21-08-2026 07:54 WIB · © 2026 Hydro-Environmental Systems Laboratory.
     </p>
   </div>
 </footer>
