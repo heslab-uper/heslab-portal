@@ -800,6 +800,12 @@ aria-current="true">Rainfall Monitoring</a>
         <label for="das-kab">Kabupaten / Kota</label>
         <select id="das-kab" disabled></select>
       </div>
+      <div>
+        <label for="das-banding">Tahun pembanding</label>
+        <select id="das-banding" disabled>
+          <option value="">— tidak ada —</option>
+        </select>
+      </div>
     </div>
 
     <div class="split">
@@ -907,7 +913,7 @@ aria-current="true">Rainfall Monitoring</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 22-08-2026 21:27 WIB · © 2026 Hydro-Environmental Systems Laboratory.
+      Halaman dibangun 22-08-2026 21:34 WIB · © 2026 Hydro-Environmental Systems Laboratory.
     </p>
   </div>
 </footer>
@@ -1218,6 +1224,7 @@ aria-current="true">Rainfall Monitoring</a>
   var provSel = document.getElementById("das-prov");
   var kabSel = document.getElementById("das-kab");
   var statEl = document.getElementById("das-stats");
+  var bandingSel = document.getElementById("das-banding");
 
   /* Palet deret waktu: tahun lama gelap, tahun baru terang, satu keluarga
      hue dengan --river-* di portal.css. Ditulis manual (bukan var(--..))
@@ -1339,6 +1346,26 @@ aria-current="true">Rainfall Monitoring</a>
 
   /* --- grafik --------------------------------------------------------------- */
 
+  /*
+   * Persentil per dasarian lintas tahun-tahun TUTUP (tahun berjalan tidak
+   * ikut membentuk klimatologi). q dalam 0..1; nilai null diabaikan.
+   */
+  function persentil(seriesKab, tahunTutup, q) {
+    var out = [];
+    for (var d = 0; d < P.labels.length; d++) {
+      var v = [];
+      tahunTutup.forEach(function (y) {
+        var arr = seriesKab[y];
+        if (arr && arr[d] !== null && arr[d] !== undefined) v.push(arr[d]);
+      });
+      if (!v.length) { out.push(null); continue; }
+      v.sort(function (a, b) { return a - b; });
+      var pos = q * (v.length - 1), lo = Math.floor(pos), hi = Math.ceil(pos);
+      out.push(v[lo] + (v[hi] - v[lo]) * (pos - lo));
+    }
+    return out;
+  }
+
   function draw(kabId, seriesSemua) {
     var seriesKab = seriesSemua[kabId];
     if (!seriesKab) {
@@ -1347,30 +1374,90 @@ aria-current="true">Rainfall Monitoring</a>
       return;
     }
 
-    var traces = P.years.map(function (y, i) {
-      var isCurrent = String(y) === String(P.current_year);
-      var vals = (seriesKab[y] || []).slice();
-      if (isCurrent && P.current_dasarian) {
-        for (var k = P.current_dasarian; k < vals.length; k++) vals[k] = null;
+    var tahunTutup = P.years.filter(function (y) {
+      return String(y) !== String(P.current_year) && seriesKab[y];
+    });
+    var traces = [];
+
+    /* Nilai tahun berjalan, dipotong pada dasarian lengkap terakhir. */
+    var cur = (seriesKab[P.current_year] || []).slice();
+    if (P.current_dasarian) {
+      for (var k = P.current_dasarian; k < cur.length; k++) cur[k] = null;
+    }
+
+    if (tahunTutup.length >= 4) {
+      /* --- MODE KLIMATOLOGI: legenda TETAP walau arsip terus bertambah ---
+         Tahun lama diringkas jadi pita P10-P90 + median; garis individual
+         hanya untuk tahun lalu, tahun berjalan, dan (opsional) pembanding. */
+      var rentang = tahunTutup[0] + "\u2013" + tahunTutup[tahunTutup.length - 1];
+      var p10 = persentil(seriesKab, tahunTutup, 0.10);
+      var p90 = persentil(seriesKab, tahunTutup, 0.90);
+      var med = persentil(seriesKab, tahunTutup, 0.50);
+
+      traces.push({
+        type: "scatter", mode: "lines", name: "P90", x: P.labels, y: p90,
+        line: { width: 0 }, legendgroup: "band", showlegend: false,
+        hovertemplate: "P90 %{y:.1f} mm<extra></extra>", connectgaps: false
+      });
+      traces.push({
+        type: "scatter", mode: "lines",
+        name: "Rentang P10\u2013P90 (" + rentang + ")",
+        x: P.labels, y: p10, fill: "tonexty",
+        fillcolor: "rgba(0,119,192,0.13)", line: { width: 0 },
+        legendgroup: "band",
+        hovertemplate: "P10 %{y:.1f} mm<extra></extra>", connectgaps: false
+      });
+      traces.push({
+        type: "scatter", mode: "lines", name: "Median (" + rentang + ")",
+        x: P.labels, y: med,
+        line: { width: 2, color: "#0077C0", shape: "spline", smoothing: 0.4 },
+        hovertemplate: "Median %{y:.1f} mm<extra></extra>", connectgaps: false
+      });
+
+      var banding = bandingSel ? bandingSel.value : "";
+      var tahunLalu = tahunTutup[tahunTutup.length - 1];
+      if (String(banding) !== String(tahunLalu)) {
+        traces.push({
+          type: "scatter", mode: "lines+markers", name: String(tahunLalu),
+          x: P.labels, y: seriesKab[tahunLalu], connectgaps: false,
+          line: { width: 1.8, color: "#00558A", shape: "spline", smoothing: 0.4 },
+          marker: { size: 4 },
+          hovertemplate: "%{x} " + tahunLalu + "<br>%{y:.1f} mm<extra></extra>"
+        });
       }
-      return {
-        type: "scatter",
-        mode: "lines+markers",
-        name: String(y) + (isCurrent ? " (berjalan)" : ""),
-        x: P.labels,
-        y: vals,
-        connectgaps: false,
-        visible: (P.years.length - i <= 3) ? true : "legendonly",
-        line: {
-          width: isCurrent ? 2.6 : 1.6,
-          color: isCurrent ? "#b4531b" : colorFor(i, P.years.length),
-          dash: isCurrent ? "dot" : "solid",
-          shape: "spline",
-          smoothing: 0.4
-        },
-        marker: { size: isCurrent ? 6 : 4 },
-        hovertemplate: "%{x} " + y + "<br>%{y:.1f} mm<extra></extra>"
-      };
+      if (banding && seriesKab[banding]) {
+        traces.push({
+          type: "scatter", mode: "lines+markers",
+          name: banding + " (pembanding)",
+          x: P.labels, y: seriesKab[banding], connectgaps: false,
+          line: { width: 2, color: "#6a3d9a", shape: "spline", smoothing: 0.4 },
+          marker: { size: 4 },
+          hovertemplate: "%{x} " + banding + "<br>%{y:.1f} mm<extra></extra>"
+        });
+      }
+    } else {
+      /* Arsip masih pendek (<4 tahun tutup): pita persentil belum bermakna,
+         gambar per tahun seperti biasa — legendanya memang masih kecil. */
+      tahunTutup.forEach(function (y, i) {
+        traces.push({
+          type: "scatter", mode: "lines+markers", name: String(y),
+          x: P.labels, y: seriesKab[y], connectgaps: false,
+          line: { width: 1.6, color: colorFor(i, tahunTutup.length),
+                  shape: "spline", smoothing: 0.4 },
+          marker: { size: 4 },
+          hovertemplate: "%{x} " + y + "<br>%{y:.1f} mm<extra></extra>"
+        });
+      });
+    }
+
+    traces.push({
+      type: "scatter", mode: "lines+markers",
+      name: P.current_year + " (berjalan)",
+      x: P.labels, y: cur, connectgaps: false,
+      line: { width: 2.6, color: "#b4531b", dash: "dot",
+              shape: "spline", smoothing: 0.4 },
+      marker: { size: 6 },
+      hovertemplate: "%{x} " + P.current_year + "<br>%{y:.1f} mm<extra></extra>"
     });
 
     var layout = {
@@ -1413,6 +1500,21 @@ aria-current="true">Rainfall Monitoring</a>
   }
 
   /* --- inisialisasi ---------------------------------------------------------- */
+
+  if (bandingSel) {
+    P.years.filter(function (y) {
+      return String(y) !== String(P.current_year);
+    }).slice().reverse().forEach(function (y) {
+      var o = document.createElement("option");
+      o.value = String(y); o.textContent = String(y);
+      bandingSel.appendChild(o);
+    });
+    bandingSel.disabled = false;
+    bandingSel.addEventListener("change", function () {
+      var provId = P.provinces[provSel.value].prov_id;
+      if (provCache[provId]) draw(kabSel.value, provCache[provId]);
+    });
+  }
 
   fillProvinces();
   provSel.value = P.default_province;
