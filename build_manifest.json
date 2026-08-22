@@ -26,13 +26,13 @@
       "note": "dijalankan dari jalankan.py"
     },
     "rainfall-daily": {
-      "last_build_wib": "2026-08-22T13:37:37+07:00",
+      "last_build_wib": "2026-08-22T13:38:50+07:00",
       "pages": [
         "rainfall-daily-now",
         "rainfall-daily-nrt",
         "rainfall-daily-standard"
       ],
-      "note": "dijalankan dari jalankan.py"
+      "note": "produk=semua"
     }
   }
 }
