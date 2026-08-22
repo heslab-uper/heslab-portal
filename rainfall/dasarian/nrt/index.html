@@ -801,10 +801,11 @@ aria-current="true">Rainfall Monitoring</a>
         <select id="das-kab" disabled></select>
       </div>
       <div>
-        <label for="das-banding">Tahun pembanding</label>
+        <label for="das-banding">Tahun pembanding <span class="eyebrow">maks 3</span></label>
         <select id="das-banding" disabled>
-          <option value="">— tidak ada —</option>
+          <option value="">— tambah tahun —</option>
         </select>
+        <div id="das-banding-chips" style="margin-top:.4rem"></div>
       </div>
     </div>
 
@@ -913,7 +914,7 @@ aria-current="true">Rainfall Monitoring</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 22-08-2026 21:34 WIB · © 2026 Hydro-Environmental Systems Laboratory.
+      Halaman dibangun 22-08-2026 21:41 WIB · © 2026 Hydro-Environmental Systems Laboratory.
     </p>
   </div>
 </footer>
@@ -1225,6 +1226,38 @@ aria-current="true">Rainfall Monitoring</a>
   var kabSel = document.getElementById("das-kab");
   var statEl = document.getElementById("das-stats");
   var bandingSel = document.getElementById("das-banding");
+  var bandingChips = document.getElementById("das-banding-chips");
+  var BANDING_MAKS = 3;
+  var BANDING_WARNA = ["#6a3d9a", "#1b7837", "#c51b8a"];
+  var bandingTerpilih = [];   // tahun (string), urutan = urutan pemilihan
+
+  function renderChips() {
+    if (!bandingChips) return;
+    bandingChips.innerHTML = "";
+    bandingTerpilih.forEach(function (y, i) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.textContent = y + " \u00d7";
+      b.title = "Klik untuk menghapus pembanding " + y;
+      b.style.cssText =
+        "margin:0 .35rem .25rem 0;padding:.15rem .5rem;font:11px 'IBM Plex Mono',monospace;" +
+        "border:1px solid " + BANDING_WARNA[i] + ";color:" + BANDING_WARNA[i] +
+        ";background:transparent;border-radius:3px;cursor:pointer";
+      b.addEventListener("click", function () {
+        bandingTerpilih.splice(bandingTerpilih.indexOf(y), 1);
+        renderChips();
+        var provId = P.provinces[provSel.value].prov_id;
+        if (provCache[provId]) draw(kabSel.value, provCache[provId]);
+      });
+      bandingChips.appendChild(b);
+    });
+    if (bandingTerpilih.length >= BANDING_MAKS) {
+      var s = document.createElement("span");
+      s.textContent = "maks " + BANDING_MAKS + " tercapai";
+      s.style.cssText = "font:11px 'IBM Plex Mono',monospace;color:#7a8a90";
+      bandingChips.appendChild(s);
+    }
+  }
 
   /* Palet deret waktu: tahun lama gelap, tahun baru terang, satu keluarga
      hue dengan --river-* di portal.css. Ditulis manual (bukan var(--..))
@@ -1414,9 +1447,8 @@ aria-current="true">Rainfall Monitoring</a>
         hovertemplate: "Median %{y:.1f} mm<extra></extra>", connectgaps: false
       });
 
-      var banding = bandingSel ? bandingSel.value : "";
       var tahunLalu = tahunTutup[tahunTutup.length - 1];
-      if (String(banding) !== String(tahunLalu)) {
+      if (bandingTerpilih.indexOf(String(tahunLalu)) === -1) {
         traces.push({
           type: "scatter", mode: "lines+markers", name: String(tahunLalu),
           x: P.labels, y: seriesKab[tahunLalu], connectgaps: false,
@@ -1425,16 +1457,18 @@ aria-current="true">Rainfall Monitoring</a>
           hovertemplate: "%{x} " + tahunLalu + "<br>%{y:.1f} mm<extra></extra>"
         });
       }
-      if (banding && seriesKab[banding]) {
+      bandingTerpilih.forEach(function (banding, bi) {
+        if (!seriesKab[banding]) return;
         traces.push({
           type: "scatter", mode: "lines+markers",
           name: banding + " (pembanding)",
           x: P.labels, y: seriesKab[banding], connectgaps: false,
-          line: { width: 2, color: "#6a3d9a", shape: "spline", smoothing: 0.4 },
+          line: { width: 2, color: BANDING_WARNA[bi],
+                  shape: "spline", smoothing: 0.4 },
           marker: { size: 4 },
           hovertemplate: "%{x} " + banding + "<br>%{y:.1f} mm<extra></extra>"
         });
-      }
+      });
     } else {
       /* Arsip masih pendek (<4 tahun tutup): pita persentil belum bermakna,
          gambar per tahun seperti biasa — legendanya memang masih kecil. */
@@ -1511,6 +1545,12 @@ aria-current="true">Rainfall Monitoring</a>
     });
     bandingSel.disabled = false;
     bandingSel.addEventListener("change", function () {
+      var y = bandingSel.value;
+      bandingSel.value = "";                       // kembali ke placeholder
+      if (!y || bandingTerpilih.indexOf(y) !== -1) return;
+      if (bandingTerpilih.length >= BANDING_MAKS) { renderChips(); return; }
+      bandingTerpilih.push(y);
+      renderChips();
       var provId = P.provinces[provSel.value].prov_id;
       if (provCache[provId]) draw(kabSel.value, provCache[provId]);
     });
