@@ -35,13 +35,13 @@
       "note": "dijalankan dari jalankan.py"
     },
     "rainfall-dasarian": {
-      "last_build_wib": "2026-08-22T21:26:48+07:00",
+      "last_build_wib": "2026-08-22T21:27:43+07:00",
       "pages": [
         "rainfall-dasarian-now",
         "rainfall-dasarian-nrt",
         "rainfall-dasarian-standard"
       ],
-      "note": "dijalankan dari jalankan.py"
+      "note": "produk=semua"
     }
   }
 }
