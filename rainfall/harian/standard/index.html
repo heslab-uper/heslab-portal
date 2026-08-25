@@ -933,7 +933,7 @@ aria-current="true">Rainfall Monitoring</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 25-08-2026 19:35 WIB · © 2026 Hydro-Environmental Systems Laboratory.
+      Halaman dibangun 25-08-2026 19:40 WIB · © 2026 Hydro-Environmental Systems Laboratory.
     </p>
   </div>
 </footer>
@@ -1390,9 +1390,7 @@ aria-current="true">Rainfall Monitoring</a>
       zmin: 0,
       zmax: HES.zmax(P.classes),
       showscale: false,
-      // Garis batas kab/kota: abu kebiruan tipis — terlihat di atas
-      // isian terang maupun gelap tanpa mendominasi peta.
-      marker: { line: { width: 0.6, color: "rgba(70,95,105,0.55)" } }
+      marker: { line: { width: 0.3, color: "rgba(255,255,255,0.65)" } }
     };
     var nd = HES.nodataTrace(geo, P.featureidkey,
                              HES.missingIds(P.ids, vals), P.nodata);
