@@ -930,7 +930,7 @@ aria-current="true">Rainfall Monitoring</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 25-08-2026 19:40 WIB · © 2026 Hydro-Environmental Systems Laboratory.
+      Halaman dibangun 28-08-2026 21:04 WIB · © 2026 Hydro-Environmental Systems Laboratory.
     </p>
   </div>
 </footer>
@@ -1129,7 +1129,10 @@ aria-current="true">Rainfall Monitoring</a>
       mapbox: {
         style: map.style,
         center: { lat: map.center.lat, lon: map.center.lon },
-        zoom: map.zoom
+        zoom: map.zoom,
+        /* Lapisan basemap raster (Esri Light Gray Canvas). Bila kosong,
+           mapbox memakai gaya bawaan saja — peta tetap tampil. */
+        layers: map.layers || []
       },
       margin: { r: 0, t: 0, l: 0, b: 0 },
       paper_bgcolor: "rgba(0,0,0,0)",
