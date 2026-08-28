@@ -939,7 +939,7 @@ aria-current="true">Rainfall Monitoring</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 28-08-2026 21:18 WIB · © 2026 Hydro-Environmental Systems Laboratory.
+      Halaman dibangun 28-08-2026 21:26 WIB · © 2026 Hydro-Environmental Systems Laboratory.
     </p>
   </div>
 </footer>
@@ -1297,9 +1297,16 @@ aria-current="true">Rainfall Monitoring</a>
     };
   }
 
+  /* Daftar lapisan = basemap (dari konfigurasi) + citra hujan di atasnya.
+     Menimpa mapbox.layers hanya dengan citra akan MENGHAPUS basemap —
+     itulah sebab peta sempat tampil putih polos. */
+  function layersFor(i) {
+    return (P.map.layers || []).concat([layerFor(i)]);
+  }
+
   function setFrame(i) {
     if (!ready) return;
-    Plotly.relayout(plotEl, { "mapbox.layers": [layerFor(i)] });
+    Plotly.relayout(plotEl, { "mapbox.layers": layersFor(i) });
     stamp.textContent = P.frames[i].label;
     slider.value = i;
   }
@@ -1354,7 +1361,7 @@ aria-current="true">Rainfall Monitoring</a>
   }
 
   var layout = HES.mapLayout(P.map, P.bounds);
-  layout.mapbox.layers = [layerFor(P.frames.length - 1)];
+  layout.mapbox.layers = layersFor(P.frames.length - 1);
 
   /* Plotly TIDAK membentuk subplot mapbox bila daftar trace kosong — basemap
      tidak akan muncul sama sekali. Karena halaman ini hanya menampilkan citra
