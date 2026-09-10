@@ -26,14 +26,14 @@
       "note": "produk=semua"
     },
     "rainfall-daily": {
-      "last_build_wib": "2026-09-10T06:49:10+07:00",
+      "last_build_wib": "2026-09-10T11:45:02+07:00",
       "pages": [
         "rainfall-daily-now",
         "rainfall-daily-nrt",
         "rainfall-daily-standard",
         "rainfall-daily"
       ],
-      "note": "dijalankan dari jalankan.py"
+      "note": "produk=semua"
     },
     "rainfall-dasarian": {
       "last_build_wib": "2026-09-10T06:49:48+07:00",
