@@ -1,0 +1,1707 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hujan Dasarian — GSMaP NRT — HESLab Portal</title>
+<meta name="description" content="Deret dasarian multi-tahun per kabupaten/kota — Hydro-Environmental Systems Laboratory.">
+<meta name="author" content="Hydro-Environmental Systems Laboratory">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Hujan Dasarian — GSMaP NRT — HESLab Portal">
+<meta property="og:description" content="Deret dasarian multi-tahun per kabupaten/kota">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://portal.heslab-uper.com/rainfall/dasarian/nrt/">
+<meta property="og:image" content="https://portal.heslab-uper.com/assets/img/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="HESLab Portal">
+<meta property="og:locale" content="id_ID">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Hujan Dasarian — GSMaP NRT — HESLab Portal">
+<meta name="twitter:description" content="Deret dasarian multi-tahun per kabupaten/kota">
+<meta name="twitter:image" content="https://portal.heslab-uper.com/assets/img/og-cover.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   HESLab Portal — lembar gaya tunggal.
+   Berkas ini di-inline ke dalam setiap HTML oleh rendering.py, sehingga tiap
+   halaman berdiri sendiri (tidak ada permintaan CSS eksternal).
+
+   Bahasa visual: panel instrumen ukur. Angka memakai huruf monospasi, judul
+   memakai huruf kondensasi, dan pita intensitas hujan dipakai sebagai motif
+   pengikat antar halaman.
+   ========================================================================== */
+
+:root {
+  /* Warna dasar — teks & permukaan netral */
+  --ink-900: #0E1B24;
+  --ink-700: #1E3542;
+  --ink-500: #4A6472;
+  --muted:   #6E848F;
+  --line:    #D7E1E4;
+  --line-soft: #E7EEF0;
+  --paper:   #EEF3F5;
+  --surface: #ffffff;
+
+  /* ---- Biru Universitas Pertamina ------------------------------------
+     Nilai #0077C0 diambil langsung dari berkas logo resmi UPer
+     (piksel daun biru, 19,15% dari seluruh piksel opak logo).
+     H=203° S=100% L=38%. Seluruh tingkat lain diturunkan dari nilai itu
+     dengan hue dan saturasi dipertahankan, hanya lightness yang digeser.
+
+     Verifikasi kontras WCAG AA:
+       putih di atas --river-900  : 11,04:1  lulus
+       putih di atas --river-700  :  4,77:1  lulus
+       --river-700 sbg teks/putih :  4,77:1  lulus
+       --river-600 hanya 3,49:1 -> JANGAN dipakai untuk teks, hanya untuk
+       hover pada latar berwarna, garis, dan elemen non-teks. */
+  --river-900: #003F66;   /* masthead */
+  --river-800: #00558A;
+  --river-700: #0077C0;   /* PRIMARY — biru resmi UPer, tanpa modifikasi */
+  --river-600: #008EE6;   /* hover & elemen non-teks saja */
+  --river-500: #1AA8FF;   /* aksen, garis, ikon */
+  --river-300: #66C5FF;
+  --river-200: #A8DEFF;   /* pinggir kartu */
+  --river-100: #E5F5FF;   /* latar tint pucat */
+
+  /* Hijau daun UPer (#C1D544) — dicadangkan sebagai aksen institusional,
+     belum dipakai. Merah (#ED1C24) sengaja TIDAK diadopsi: pada portal
+     hidrologi, merah harus tetap berarti peringatan, bukan identitas. */
+  --uper-green: #C1D544;
+
+  /* Aksen air — hue digeser dari biru UPer ke arah cyan (203° -> 188°),
+     cukup jauh untuk terbaca sebagai "air" tapi masih satu keluarga
+     dengan warna institusi. Dipakai hanya untuk motif ombak, bukan teks. */
+  --wave-600: #00A5C4;
+  --wave-300: #7FD9EA;
+
+  /* current/current-dark/current-soft dipertahankan sebagai alias supaya
+     komponen lama (tag, tautan, tombol) tidak perlu diubah satu-satu. */
+  --current:      var(--river-700);
+  --current-dark: var(--river-800);
+  --current-soft: var(--river-100);
+
+  /* Aksen hangat — SEKARANG KHUSUS untuk peringatan/catatan metodologis,
+     bukan lagi warna dekoratif. Portal ini sengaja didominasi biru+air,
+     sehingga saat amber muncul, artinya sungguh "perhatikan ini". */
+  --alert:        #B4531B;
+  --alert-soft:   #FBEEE4;
+
+  /* Huruf */
+  --font-display: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+
+  /* Ukuran */
+  --step--1: 0.8125rem;
+  --step-0:  0.9375rem;
+  --step-1:  1.125rem;
+  --step-2:  1.4375rem;
+  --step-3:  1.875rem;
+  --step-4:  2.5rem;
+
+  /* Ruang */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+
+  --radius: 3px;
+  --maxw: 1180px;
+}
+
+/* ---------------------------------------------------------------- reset -- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink-700);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--ink-900);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--sp-3);
+  font-weight: 600;
+}
+
+h1 { font-size: var(--step-4); }
+h2 { font-size: var(--step-2); }
+h3 { font-size: var(--step-1); }
+
+p { margin: 0 0 var(--sp-4); }
+
+a { color: var(--current-dark); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { color: var(--current); }
+
+:focus-visible {
+  outline: 2px solid var(--current);
+  outline-offset: 2px;
+}
+
+.wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--sp-5);
+}
+
+.skip {
+  position: absolute; left: -9999px;
+  background: var(--surface); padding: var(--sp-3) var(--sp-4); z-index: 100;
+}
+.skip:focus { left: var(--sp-4); top: var(--sp-4); }
+
+/* --------------------------------------------------------------- header -- */
+
+.masthead {
+  background: var(--river-900);
+  color: #DCE9EE;
+}
+
+.masthead__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding: var(--sp-4) 0;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  text-decoration: none;
+  color: inherit;
+}
+.brand__icon { flex: none; }
+.brand__logo {
+  flex: none;
+  height: 40px;
+  width: auto;
+  display: block;
+}
+.brand__text { display: flex; flex-direction: column; line-height: 1.15; }
+.brand__mark {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #fff;
+}
+.brand__sub {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: #70BCEB;
+  letter-spacing: 0.02em;
+}
+
+.masthead a.outlink {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: #91CAED;
+  text-decoration: none;
+  border: 1px solid #08639B;
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--radius);
+}
+.masthead a.outlink:hover { border-color: var(--current); color: #fff; }
+
+.mainnav {
+  border-top: 1px solid #07517E;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-5);
+  padding: 0;
+}
+.mainnav a {
+  display: block;
+  padding: var(--sp-3) 0;
+  font-family: var(--font-display);
+  font-size: var(--step-0);
+  letter-spacing: 0.02em;
+  color: #A4CFEA;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+}
+.mainnav a:hover { color: #fff; }
+.mainnav a[aria-current="true"] { color: #fff; border-bottom-color: var(--current); }
+.mainnav a[data-status="planned"]::after {
+  content: "segera";
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-left: var(--sp-2);
+  color: #6BA4C7;
+}
+
+/* Pita intensitas: motif tanda tangan portal, sekaligus kunci warna modul. */
+.ramp-rule {
+  display: flex;
+  height: 4px;
+}
+.ramp-rule span { flex: 1; }
+
+/* Garis ombak — elemen air eksplisit, dipasang di bawah masthead pada
+   setiap halaman. Bukan dekorasi acak: bentuknya gelombang sinus tunggal,
+   menegaskan tema hidrologi tanpa berebut perhatian dengan konten. */
+.wave-rule {
+  display: block;
+  width: 100%;
+  height: 10px;
+  background: var(--river-900);
+}
+.wave-rule svg { display: block; width: 100%; height: 100%; }
+
+/* ----------------------------------------------------------- breadcrumb -- */
+
+.crumbs {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--muted);
+  padding: var(--sp-4) 0 0;
+}
+.crumbs a { color: var(--ink-500); text-decoration: none; }
+.crumbs a:hover { color: var(--current); text-decoration: underline; }
+.crumbs span[aria-hidden] { padding: 0 var(--sp-2); color: var(--line); }
+
+/* --------------------------------------------------------- page header -- */
+
+.pagehead { padding: var(--sp-4) 0 var(--sp-5); }
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--current-dark);
+  margin: 0 0 var(--sp-2);
+}
+.pagehead p.lede {
+  font-size: var(--step-1);
+  color: var(--ink-500);
+  max-width: 62ch;
+  margin: var(--sp-2) 0 0;
+}
+
+/* Panel pembacaan instrumen: status data yang sedang ditampilkan. */
+.readout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin: var(--sp-5) 0;
+  overflow: hidden;
+}
+.readout__cell { background: var(--surface); padding: var(--sp-3) var(--sp-4); }
+.readout__k {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--muted);
+  display: block;
+}
+.readout__v {
+  font-family: var(--font-mono);
+  font-size: var(--step-0);
+  color: var(--ink-900);
+  font-weight: 500;
+  word-break: break-word;
+}
+
+/* --------------------------------------------------------- kartu dasbor -- */
+/* Kartu modul utama pada beranda. Sengaja dibuat 2 kolom (bukan 4) agar tiap
+   kartu punya bobot visual cukup untuk menjadi pintu masuk utama portal. */
+
+.dashgrid {
+  display: grid;
+  gap: var(--sp-4);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  margin-top: var(--sp-2);
+}
+
+.dashcard {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: var(--sp-5);
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  position: relative;
+  overflow: hidden;
+  transition: border-color .16s ease, transform .16s ease, box-shadow .16s ease;
+}
+/* Pita aksen kiri: penanda modul, warnanya diset per-kartu di bawah. */
+.dashcard::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--dash-accent, var(--river-500));
+}
+.dashcard:hover {
+  border-color: var(--river-500);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(7, 51, 105, .10);
+}
+
+.dashcard__head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+.dashcard__icon {
+  flex: none;
+  width: 42px; height: 42px;
+  border-radius: 5px;
+  background: var(--river-100);
+  color: var(--dash-accent, var(--river-700));
+  display: flex; align-items: center; justify-content: center;
+}
+.dashcard__icon svg { display: block; }
+.dashcard__titles { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.dashcard__no {
+  font-family: var(--font-mono);
+  font-size: .66rem;
+  letter-spacing: .1em;
+  color: var(--muted);
+}
+.dashcard h3 { margin: 0; font-size: var(--step-1); }
+.dashcard p {
+  margin: 0;
+  font-size: var(--step--1);
+  color: var(--ink-500);
+  flex: 1;
+}
+.dashcard__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin-top: var(--sp-2);
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--line-soft);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--muted);
+}
+.dashcard__go {
+  color: var(--river-700);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: transform .16s ease;
+  display: inline-block;
+}
+.dashcard:hover .dashcard__go { transform: translateX(3px); }
+
+.grid {
+  display: grid;
+  gap: var(--sp-4);
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+a.card:hover { border-color: var(--current); transform: translateY(-2px); }
+a.card:hover h3 { color: var(--current-dark); }
+
+.card__num {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: var(--sp-3);
+}
+.card p { color: var(--ink-500); font-size: var(--step--1); margin-bottom: var(--sp-4); }
+.card__foot {
+  margin-top: auto;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--current-dark);
+}
+
+.tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 2px 7px;
+  border-radius: 2px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  background: var(--paper);
+}
+.tag--live { border-color: var(--current); color: var(--current-dark); background: var(--current-soft); }
+.tag--planned { border-color: var(--line); color: var(--muted); }
+
+/* -------------------------------------------------------------- panel  -- */
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--sp-5);
+  margin-bottom: var(--sp-5);
+}
+.panel > h2 { margin-top: 0; }
+.panel__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--sp-4);
+}
+
+.split {
+  display: grid;
+  gap: var(--sp-5);
+  grid-template-columns: minmax(0, 2.1fr) minmax(0, 1fr);
+  align-items: start;
+}
+@media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
+
+/* ------------------------------------------------------------- kendali -- */
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  align-items: flex-end;
+  margin-bottom: var(--sp-4);
+}
+.field { display: flex; flex-direction: column; gap: var(--sp-1); }
+.field label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+select, button.btn {
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  padding: var(--sp-2) var(--sp-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink-900);
+  min-height: 38px;
+}
+select:disabled { color: var(--muted); background: var(--paper); }
+button.btn { cursor: pointer; }
+button.btn:hover { border-color: var(--current); color: var(--current-dark); }
+button.btn--primary {
+  background: var(--current); border-color: var(--current); color: #fff;
+  font-family: var(--font-mono); letter-spacing: 0.03em;
+}
+button.btn--primary:hover { background: var(--current-dark); color: #fff; }
+
+.playbar { display: flex; align-items: center; gap: var(--sp-3); flex-wrap: wrap; }
+.playbar input[type="range"] { flex: 1; min-width: 180px; accent-color: var(--current); }
+.playbar output {
+  font-family: var(--font-mono);
+  font-size: var(--step-0);
+  color: var(--ink-900);
+  min-width: 15ch;
+}
+
+/* -------------------------------------------------------------- legenda -- */
+
+.legend { display: flex; flex-wrap: wrap; gap: var(--sp-1) var(--sp-4); margin: var(--sp-4) 0 0; padding: 0; list-style: none; }
+.legend li { display: flex; align-items: center; gap: var(--sp-2); font-family: var(--font-mono); font-size: var(--step--1); color: var(--ink-500); }
+.legend i { width: 14px; height: 14px; border: 1px solid rgba(0,0,0,0.12); border-radius: 2px; display: block; }
+
+/* --------------------------------------------------------------- tabel -- */
+
+.tablewrap { overflow-x: auto; }
+table.data {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--step--1);
+}
+table.data caption {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--muted);
+  padding-bottom: var(--sp-3);
+}
+table.data th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+  padding: var(--sp-2) var(--sp-3);
+  white-space: nowrap;
+}
+table.data td {
+  padding: var(--sp-2) var(--sp-3);
+  border-bottom: 1px solid var(--line-soft);
+  vertical-align: middle;
+}
+table.data td.num, table.data th.num { text-align: right; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+table.data tbody tr:hover { background: var(--current-soft); }
+td .swatch {
+  display: inline-block; width: 10px; height: 10px; border-radius: 2px;
+  margin-right: var(--sp-2); border: 1px solid rgba(0,0,0,0.12);
+}
+.rank { font-family: var(--font-mono); color: var(--muted); }
+
+/* --------------------------------------------------------- panel detail -- */
+
+.detail {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--sp-4);
+  background: var(--paper);
+  min-height: 220px;
+}
+.detail__empty { color: var(--muted); font-size: var(--step--1); }
+.detail__title { font-family: var(--font-display); font-size: var(--step-1); color: var(--ink-900); margin: 0 0 var(--sp-1); }
+.detail__prov { font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); margin-bottom: var(--sp-4); }
+.detail__big {
+  font-family: var(--font-mono);
+  font-size: var(--step-3);
+  color: var(--ink-900);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.detail__unit { font-size: var(--step-0); color: var(--muted); margin-left: var(--sp-1); }
+.detail dl { display: grid; grid-template-columns: auto 1fr; gap: var(--sp-2) var(--sp-4); margin: var(--sp-4) 0 0; font-size: var(--step--1); }
+.detail dt { font-family: var(--font-mono); color: var(--muted); }
+.detail dd { margin: 0; font-family: var(--font-mono); color: var(--ink-900); text-align: right; }
+
+/* -------------------------------------------------------------- catatan -- */
+
+.note {
+  border-left: 3px solid var(--current);
+  background: var(--current-soft);
+  padding: var(--sp-4);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-size: var(--step--1);
+  margin-bottom: var(--sp-5);
+}
+.note--warn { border-left-color: var(--alert); background: var(--alert-soft); }
+.note--wait { border-left-color: var(--muted); background: var(--surface); border: 1px dashed var(--line); border-left: 3px solid var(--muted); }
+.note strong { color: var(--ink-900); }
+.note p:last-child { margin-bottom: 0; }
+
+/* Kotak "menunggu data": ruang yang sudah ada, isinya menyusul. */
+.awaiting {
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  background: repeating-linear-gradient(
+    135deg, var(--surface), var(--surface) 10px, #f7fafb 10px, #f7fafb 20px);
+  padding: var(--sp-7) var(--sp-5);
+  text-align: center;
+  color: var(--muted);
+}
+.awaiting h3 { color: var(--ink-500); }
+.awaiting code {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 1px 5px;
+  border-radius: 2px;
+  color: var(--ink-700);
+}
+
+/* -------------------------------------------------------------- sumber -- */
+
+.source {
+  border-top: 1px solid var(--line);
+  padding-top: var(--sp-4);
+  margin-top: var(--sp-6);
+  font-size: var(--step--1);
+  color: var(--ink-500);
+}
+.source dl { display: grid; grid-template-columns: minmax(120px, max-content) 1fr; gap: var(--sp-2) var(--sp-4); margin: 0; }
+.source dt { font-family: var(--font-mono); font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); }
+.source dd { margin: 0; }
+
+/* --------------------------------------------------------------- plot  -- */
+
+.plot { width: 100%; min-height: 460px; }
+.plot--tall { min-height: 520px; }
+.plot--chart { min-height: 400px; }
+
+/* -------------------------------------------------------------- footer -- */
+
+.foot {
+  background: var(--ink-900);
+  color: #92BAD3;
+  margin-top: var(--sp-7);
+  padding: var(--sp-6) 0;
+  font-size: var(--step--1);
+}
+.foot a { color: #C4DEEE; }
+.foot__grid { display: grid; gap: var(--sp-5); grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.foot h4 {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #6BA4C7;
+  margin: 0 0 var(--sp-3);
+}
+.foot ul { list-style: none; margin: 0; padding: 0; }
+.foot li { margin-bottom: var(--sp-2); }
+.foot__legal { border-top: 1px solid #07517E; margin-top: var(--sp-5); padding-top: var(--sp-4); color: #6BA4C7; }
+
+/* ------------------------------------------------------------ preferensi -- */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------------------------------------------------------- layar penuh -- */
+
+/* Kelas dipasang dari JS, bukan pseudo-class :fullscreen — penulisan
+   berprefiksnya berbeda antar peramban dan satu selektor yang tidak dikenal
+   membatalkan seluruh aturan. */
+#anim-stage.is-fullscreen {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: var(--sp-4);
+  background: var(--surface);
+}
+
+/* min-height dari .plot / .plot--tall harus dilepas, jika tidak peta tidak
+   dapat menyusut mengikuti sisa ruang di dalam flex column. */
+#anim-stage.is-fullscreen .plot { flex: 1 1 auto; min-height: 0; }
+#anim-stage.is-fullscreen .legend { margin-top: 0; }
+
+@media print {
+  .masthead, .foot, .controls, .playbar { display: none; }
+  body { background: #fff; }
+}
+
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Lewati ke konten</a>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="masthead__top">
+      <a class="brand" href="../../../index.html">
+        <img class="brand__logo" src="../../../assets/img/uper-lambang.png"
+             alt="Lambang Universitas Pertamina" width="40" height="41">
+        <span class="brand__text">
+          <span class="brand__mark">HESLab Portal</span>
+          <span class="brand__sub">Pemantauan dan Prakiraan Hidrologi</span>
+        </span>
+      </a>
+      <a class="outlink" href="https://www.heslab-uper.com" target="_blank" rel="noopener">
+        Website Laboratorium ↗
+      </a>
+    </div>
+    <nav class="mainnav" aria-label="Navigasi utama">
+      <a href="../../../rainfall/index.html"
+         data-status="live"
+aria-current="true">Rainfall Monitoring</a>
+      <a href="../../../fews/index.html"
+         data-status="planned"
+>FEWS</a>
+      <a href="../../../streamflow/index.html"
+         data-status="planned"
+>Streamflow Forecast</a>
+      <a href="../../../drought/index.html"
+         data-status="planned"
+>Drought Risk</a>
+    </nav>
+  </div>
+  <div class="ramp-rule" aria-hidden="true">
+<span style="background:#F7FAFB"></span><span style="background:#DCEBF2"></span><span style="background:#A9D4E6"></span><span style="background:#63ACD3"></span><span style="background:#2E7DB8"></span><span style="background:#6B3FA0"></span><span style="background:#A81F5E"></span>  </div>
+</header>
+
+<div class="wave-rule" aria-hidden="true">
+  <svg viewBox="0 0 400 10" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,5 C 50,0 100,10 150,5 C 200,0 250,10 300,5 C 350,0 400,10 400,5 L400,10 L0,10 Z"
+          fill="var(--wave-600)" opacity="0.55"/>
+    <path d="M0,7 C 50,3 100,11 150,7 C 200,3 250,11 300,7 C 350,3 400,11 400,7 L400,10 L0,10 Z"
+          fill="var(--wave-300)" opacity="0.35"/>
+  </svg>
+</div>
+
+<div class="wrap">
+  <nav class="crumbs" aria-label="Remah roti">
+        <a href="../../../index.html">HESLab Portal</a><span aria-hidden="true">/</span>
+        <a href="../../../rainfall/index.html">Rainfall Monitoring</a><span aria-hidden="true">/</span>
+        <a href="../../../rainfall/dasarian/index.html">Hujan Dasarian</a><span aria-hidden="true">/</span>
+        <span>Hujan Dasarian — GSMaP NRT</span>
+  </nav>
+</div>
+
+<main id="main">
+<div class="wrap">
+
+  <section class="pagehead">
+    <p class="eyebrow">Rainfall Monitoring · Diperbarui setiap bulan</p>
+    <h1>Hujan Dasarian</h1>
+    <p class="lede">
+      Akumulasi hujan per dasarian (periode 10 harian, 36 dasarian dalam setahun)
+      untuk setiap kabupaten/kota menurut GSMaP Near-Real-Time.
+    </p>
+  </section>
+
+  <div class="readout">
+  <div class="readout__cell">
+    <span class="readout__k">Produk</span>
+    <span class="readout__v">GSMaP NRT</span>
+  </div>
+  <div class="readout__cell">
+    <span class="readout__k">Rentang tahun</span>
+    <span class="readout__v">1998–2026 (29 tahun)</span>
+  </div>
+  <div class="readout__cell">
+    <span class="readout__k">Data terakhir</span>
+    <span class="readout__v">Agu II 2026</span>
+  </div>
+  <div class="readout__cell">
+    <span class="readout__k">Wilayah</span>
+    <span class="readout__v">516 kabupaten/kota, 38 provinsi</span>
+  </div>
+</div>
+
+
+
+  <div class="note">
+    <p><strong>Konvensi dasarian.</strong> Dasarian I mencakup tanggal 1–10,
+    dasarian II tanggal 11–20, dan dasarian III tanggal 21 hingga akhir bulan
+    (8, 9, 10, atau 11 hari). Panjang dasarian III yang tidak seragam perlu
+    diperhitungkan saat membandingkan antar bulan.</p>
+  </div>
+
+  <section class="panel" aria-labelledby="chart-h">
+    <div class="panel__head">
+      <h2 id="chart-h">Deret dasarian per wilayah</h2>
+      <span class="tag">29 tahun tersedia · GSMaP NRT</span>
+    </div>
+
+    <div class="controls">
+      <div class="field">
+        <label for="das-prov">Provinsi</label>
+        <select id="das-prov" disabled></select>
+      </div>
+      <div class="field">
+        <label for="das-kab">Kabupaten / Kota</label>
+        <select id="das-kab" disabled></select>
+      </div>
+      <div>
+        <label for="das-banding">Tahun pembanding <span class="eyebrow">maks 3</span></label>
+        <select id="das-banding" disabled>
+          <option value="">— tambah tahun —</option>
+        </select>
+        <div id="das-banding-chips" style="margin-top:.4rem"></div>
+      </div>
+    </div>
+
+    <div class="split">
+      <div>
+        <div class="plot plot--chart" id="plot-dasarian" role="img"
+             aria-label="Grafik akumulasi hujan dasarian multi-tahun"></div>
+      </div>
+      <div>
+        <p class="eyebrow">Ringkasan</p>
+        <div class="detail" id="das-stats" aria-live="polite"></div>
+        <p style="font-size:.8125rem;color:var(--muted);margin-top:.75rem">
+          Klik nama tahun pada legenda untuk menyalakan atau mematikan lapisannya.
+          Secara bawaan tiga tahun terakhir ditampilkan.
+        </p>
+      </div>
+    </div>
+
+    <p style="font-size:.8125rem;color:var(--muted);margin-top:1rem;margin-bottom:0">
+      Tahun berjalan (2026) digambar putus-putus dan berhenti pada
+      <strong>Agu II</strong>, yaitu dasarian lengkap terakhir
+      pada saat pemrosesan. Dasarian yang sedang berlangsung sengaja tidak
+      ditampilkan agar tidak disalahartikan sebagai penurunan curah hujan.
+    </p>
+  </section>
+
+  <section class="source" aria-labelledby="src-h">
+  <h4 id="src-h" class="eyebrow">Sumber dan pengolahan data</h4>
+  <dl>
+    <dt>Produsen data</dt>
+    <dd><img src="../../../assets/img/gsmap-logo.png" alt="Logo GSMaP"
+        width="36" height="36" loading="lazy"
+        style="vertical-align:middle;margin-right:.5rem;border-radius:3px">JAXA Global Rainfall Watch (GSMaP), Earth Observation Research Center (EORC), JAXA
+      (<a href="https://sharaku.eorc.jaxa.jp/GSMaP/" target="_blank" rel="noopener">laman resmi ↗</a>)</dd>
+
+    <dt>Produk</dt>
+    <dd><strong>GSMaP Near-Real-Time</strong> — Tersedia sekitar 4 jam setelah kejadian hujan. Pendekatan pemrosesan cepat data multi-satelit; belum dikoreksi dengan penakar hujan permukaan.</dd>
+
+    <dt>Latency</dt>
+    <dd>~4 jam (near real-time)</dd>
+
+    <dt>Resolusi asal</dt>
+    <dd>0,1° × 0,1° (±11 km), resolusi temporal 1 jam.</dd>
+
+    <dt>Zona waktu</dt>
+    <dd>Seluruh waktu ditampilkan dalam WIB (UTC+07:00).</dd>
+
+    <dt>Unduh data</dt>
+    <dd>Berkas hujan satelit GSMaP jam-jaman yang menjadi dasar seluruh peta pada modul ini tersedia untuk diunduh dan dipakai ulang. Data merupakan hasil ekstraksi GSMaP yang dilakukan HESLab khusus untuk wilayah Indonesia dan disediakan dalam format NetCDF.
+      <a href="https://www.heslab-uper.com/data/hujan-satelit" target="_blank" rel="noopener">
+        Unduh data hujan satelit jam-jaman ↗</a></dd>
+
+    <dt>Rujukan</dt>
+    <dd>Kubota, T. et al. (2020). Global Satellite Mapping of Precipitation (GSMaP) Products in the GPM Era. In: Satellite Precipitation Measurement, Springer.</dd>
+  </dl>
+</section>
+
+  <section class="source" aria-labelledby="cite-h" style="margin-top:1.5rem">
+  <h4 id="cite-h" class="eyebrow">Pengembang dan kontributor</h4>
+  <dl>
+    <dt>Pengembang</dt>
+    <dd>Nurul Fajar Januriyadi, Ph.D.</dd>
+
+    <dt>Kontributor</dt>
+    <dd>Idham Riyando Moe, Ph.D. (idham.moe (at) gmail.com)</dd>
+
+    <dt>Kontak</dt>
+    <dd><a href="mailto:nurul.fj@universitaspertamina.ac.id">nurul.fj@universitaspertamina.ac.id</a>      atau <a href="mailto:heslab.uper@gmail.com">heslab.uper@gmail.com</a></dd>
+
+  </dl>
+</section>
+
+</div>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <h4>Portal</h4>
+        <ul>
+          <li><a href="../../../rainfall/index.html">Rainfall Monitoring</a></li>
+          <li><a href="../../../fews/index.html">FEWS</a></li>
+          <li><a href="../../../streamflow/index.html">Streamflow Forecast</a></li>
+          <li><a href="../../../drought/index.html">Drought Risk</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Sumber data</h4>
+        <ul>
+          <li><a href="https://sharaku.eorc.jaxa.jp/GSMaP/" target="_blank" rel="noopener">JAXA Global Rainfall Watch (GSMaP) ↗</a></li>
+          <li>Badan Informasi Geospasial —
+            <a href="https://tanahair.indonesia.go.id/portal-web/" target="_blank" rel="noopener">Ina-Geoportal ↗</a>, DEMNAS</li>
+          <li><a href="https://livingatlas.arcgis.com/landcoverexplorer/" target="_blank" rel="noopener">Esri Sentinel-2 Land Cover Explorer ↗</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Laboratorium</h4>
+        <ul>
+          <li>Hydro-Environmental Systems Laboratory</li>
+          <li>Program Studi Teknik Sipil, Universitas Pertamina</li>
+          <li><a href="mailto:nurul.fj@universitaspertamina.ac.id">nurul.fj@universitaspertamina.ac.id</a></li>
+          <li><a href="mailto:heslab.uper@gmail.com">heslab.uper@gmail.com</a></li>
+          <li><a href="https://www.heslab-uper.com" target="_blank" rel="noopener">Website laboratorium ↗</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="foot__legal" style="margin-bottom:.25rem;letter-spacing:.06em">
+      <span style="font-family:'IBM Plex Mono',monospace;text-transform:uppercase;font-size:.85em">
+        Berilmu · Bermanfaat · Berdampak</span>
+    </p>
+    <p class="foot__legal">
+      Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
+      resmi tetap mengacu pada BMKG dan instansi berwenang.
+      Halaman dibangun 10-09-2026 06:49 WIB · © 2026 Hydro-Environmental Systems Laboratory.
+    </p>
+  </div>
+</footer>
+
+<script id="payload" type="application/json">{"kind":"rainfall-dasarian-shell","labels":["Jan I","Jan II","Jan III","Feb I","Feb II","Feb III","Mar I","Mar II","Mar III","Apr I","Apr II","Apr III","Mei I","Mei II","Mei III","Jun I","Jun II","Jun III","Jul I","Jul II","Jul III","Agu I","Agu II","Agu III","Sep I","Sep II","Sep III","Okt I","Okt II","Okt III","Nov I","Nov II","Nov III","Des I","Des II","Des III"],"years":[1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026],"current_year":2026,"current_dasarian":23,"provinces":{"Aceh":{"prov_id":"p_01","kab":[{"id":"kab_001","name":"Aceh Barat"},{"id":"kab_002","name":"Aceh Barat Daya"},{"id":"kab_003","name":"Aceh Besar"},{"id":"kab_004","name":"Aceh Jaya"},{"id":"kab_005","name":"Aceh Selatan"},{"id":"kab_006","name":"Aceh Singkil"},{"id":"kab_007","name":"Aceh Tamiang"},{"id":"kab_008","name":"Aceh Tengah"},{"id":"kab_009","name":"Aceh Tenggara"},{"id":"kab_010","name":"Aceh Timur"},{"id":"kab_011","name":"Aceh Utara"},{"id":"kab_049","name":"Bener Meriah"},{"id":"kab_059","name":"Bireuen"},{"id":"kab_105","name":"Gayo Lues"},{"id":"kab_180","name":"Kota Banda Aceh"},{"id":"kab_212","name":"Kota Langsa"},{"id":"kab_213","name":"Kota Lhokseumawe"},{"id":"kab_243","name":"Kota Sabang"},{"id":"kab_253","name":"Kota Subulussalam"},{"id":"kab_359","name":"Nagan Raya"},{"id":"kab_404","name":"Pidie"},{"id":"kab_405","name":"Pidie Jaya"},{"id":"kab_449","name":"Simeulue"}]},"Bali":{"prov_id":"p_02","kab":[{"id":"kab_017","name":"Badung"},{"id":"kab_029","name":"Bangli"},{"id":"kab_076","name":"Buleleng"},{"id":"kab_106","name":"Gianyar"},{"id":"kab_130","name":"Jembrana"},{"id":"kab_139","name":"Karangasem"},{"id":"kab_165","name":"Klungkung"},{"id":"kab_201","name":"Kota Denpasar"},{"id":"kab_475","name":"Tabanan"}]},"Banten":{"prov_id":"p_03","kab":[{"id":"kab_198","name":"Kota Cilegon"},{"id":"kab_248","name":"Kota Serang"},{"id":"kab_258","name":"Kota Tangerang"},{"id":"kab_259","name":"Kota Tangerang Selatan"},{"id":"kab_297","name":"Lebak"},{"id":"kab_383","name":"Pandeglang"},{"id":"kab_439","name":"Serang"},{"id":"kab_483","name":"Tangerang"}]},"Bengkulu":{"prov_id":"p_04","kab":[{"id":"kab_052","name":"Bengkulu Selatan"},{"id":"kab_053","name":"Bengkulu Tengah"},{"id":"kab_054","name":"Bengkulu Utara"},{"id":"kab_144","name":"Kaur"},{"id":"kab_151","name":"Kepahiang"},{"id":"kab_190","name":"Kota Bengkulu"},{"id":"kab_298","name":"Lebong"},{"id":"kab_351","name":"Muko Muko"},{"id":"kab_422","name":"Rejang Lebong"},{"id":"kab_435","name":"Seluma"}]},"DKI Jakarta":{"prov_id":"p_05","kab":[{"id":"kab_012","name":"Adm. Kep. Seribu"},{"id":"kab_173","name":"Kota Adm. Jakarta Barat"},{"id":"kab_174","name":"Kota Adm. Jakarta Pusat"},{"id":"kab_175","name":"Kota Adm. Jakarta Selatan"},{"id":"kab_176","name":"Kota Adm. Jakarta Timur"},{"id":"kab_177","name":"Kota Adm. Jakarta Utara"}]},"Daerah Istimewa Yogyakarta":{"prov_id":"p_06","kab":[{"id":"kab_033","name":"Bantul"},{"id":"kab_113","name":"Gunungkidul"},{"id":"kab_270","name":"Kota Yogyakarta"},{"id":"kab_277","name":"Kulon Progo"},{"id":"kab_453","name":"Sleman"}]},"Gorontalo":{"prov_id":"p_07","kab":[{"id":"kab_062","name":"Boalemo"},{"id":"kab_072","name":"Bone Bolango"},{"id":"kab_107","name":"Gorontalo"},{"id":"kab_108","name":"Gorontalo Utara"},{"id":"kab_204","name":"Kota Gorontalo"},{"id":"kab_380","name":"Pahuwato"},{"id":"kab_407","name":"Pohuwato"}]},"Jambi":{"prov_id":"p_08","kab":[{"id":"kab_043","name":"Batanghari"},{"id":"kab_079","name":"Bungo"},{"id":"kab_162","name":"Kerinci"},{"id":"kab_206","name":"Kota Jambi"},{"id":"kab_255","name":"Kota Sungai Penuh"},{"id":"kab_338","name":"Merangin"},{"id":"kab_350","name":"Muaro Jambi"},{"id":"kab_433","name":"Sarolangun"},{"id":"kab_485","name":"Tanjung Jabung Barat"},{"id":"kab_486","name":"Tanjung Jabung Timur"},{"id":"kab_492","name":"Tebo"}]},"Jawa Barat":{"prov_id":"p_09","kab":[{"id":"kab_019","name":"Bandung"},{"id":"kab_020","name":"Bandung Barat"},{"id":"kab_045","name":"Bekasi"},{"id":"kab_063","name":"Bogor"},{"id":"kab_087","name":"Ciamis"},{"id":"kab_088","name":"Cianjur"},{"id":"kab_090","name":"Cirebon"},{"id":"kab_104","name":"Garut"},{"id":"kab_125","name":"Indramayu"},{"id":"kab_140","name":"Karawang"},{"id":"kab_182","name":"Kota Bandung"},{"id":"kab_183","name":"Kota Banjar"},{"id":"kab_189","name":"Kota Bekasi"},{"id":"kab_195","name":"Kota Bogor"},{"id":"kab_199","name":"Kota Cimahi"},{"id":"kab_200","name":"Kota Cirebon"},{"id":"kab_202","name":"Kota Depok"},{"id":"kab_254","name":"Kota Sukabumi"},{"id":"kab_263","name":"Kota Tasikmalaya"},{"id":"kab_278","name":"Kuningan"},{"id":"kab_314","name":"Majalengka"},{"id":"kab_384","name":"Pangandaran"},{"id":"kab_419","name":"Purwakarta"},{"id":"kab_461","name":"Subang"},{"id":"kab_462","name":"Sukabumi"},{"id":"kab_471","name":"Sumedang"},{"id":"kab_491","name":"Tasikmalaya"}]},"Jawa Tengah":{"prov_id":"p_10","kab":[{"id":"kab_031","name":"Banjarnegara"},{"id":"kab_035","name":"Banyumas"},{"id":"kab_042","name":"Batang"},{"id":"kab_061","name":"Blora"},{"id":"kab_074","name":"Boyolali"},{"id":"kab_075","name":"Brebes"},{"id":"kab_089","name":"Cilacap"},{"id":"kab_094","name":"Demak"},{"id":"kab_111","name":"Grobogan"},{"id":"kab_132","name":"Jepara"},{"id":"kab_138","name":"Karanganyar"},{"id":"kab_146","name":"Kebumen"},{"id":"kab_149","name":"Kendal"},{"id":"kab_164","name":"Klaten"},{"id":"kab_216","name":"Kota Magelang"},{"id":"kab_237","name":"Kota Pekalongan"},{"id":"kab_244","name":"Kota Salatiga"},{"id":"kab_247","name":"Kota Semarang"},{"id":"kab_257","name":"Kota Surakarta"},{"id":"kab_265","name":"Kota Tegal"},{"id":"kab_276","name":"Kudus"},{"id":"kab_311","name":"Magelang"},{"id":"kab_393","name":"Pati"},{"id":"kab_396","name":"Pekalongan"},{"id":"kab_398","name":"Pemalang"},{"id":"kab_418","name":"Purbalingga"},{"id":"kab_420","name":"Purworejo"},{"id":"kab_423","name":"Rembang"},{"id":"kab_436","name":"Semarang"},{"id":"kab_460","name":"Sragen"},{"id":"kab_464","name":"Sukoharjo"},{"id":"kab_493","name":"Tegal"},{"id":"kab_496","name":"Temanggung"},{"id":"kab_513","name":"Wonogiri"},{"id":"kab_514","name":"Wonosobo"}]},"Jawa Timur":{"prov_id":"p_11","kab":[{"id":"kab_028","name":"Bangkalan"},{"id":"kab_036","name":"Banyuwangi"},{"id":"kab_060","name":"Blitar"},{"id":"kab_064","name":"Bojonegoro"},{"id":"kab_070","name":"Bondowoso"},{"id":"kab_110","name":"Gresik"},{"id":"kab_129","name":"Jember"},{"id":"kab_133","name":"Jombang"},{"id":"kab_147","name":"Kediri"},{"id":"kab_187","name":"Kota Batu"},{"id":"kab_194","name":"Kota Blitar"},{"id":"kab_208","name":"Kota Kediri"},{"id":"kab_215","name":"Kota Madiun"},{"id":"kab_218","name":"Kota Malang"},{"id":"kab_223","name":"Kota Mojokerto"},{"id":"kab_235","name":"Kota Pasuruan"},{"id":"kab_242","name":"Kota Probolinggo"},{"id":"kab_256","name":"Kota Surabaya"},{"id":"kab_288","name":"Lamongan"},{"id":"kab_306","name":"Lumajang"},{"id":"kab_310","name":"Madiun"},{"id":"kab_312","name":"Magetan"},{"id":"kab_317","name":"Malang"},{"id":"kab_346","name":"Mojokerto"},{"id":"kab_364","name":"Nganjuk"},{"id":"kab_365","name":"Ngawi"},{"id":"kab_376","name":"Pacitan"},{"id":"kab_382","name":"Pamekasan"},{"id":"kab_392","name":"Pasuruan"},{"id":"kab_409","name":"Ponorogo"},{"id":"kab_412","name":"Probolinggo"},{"id":"kab_430","name":"Sampang"},{"id":"kab_444","name":"Sidoarjo"},{"id":"kab_452","name":"Situbondo"},{"id":"kab_472","name":"Sumenep"},{"id":"kab_504","name":"Trenggalek"},{"id":"kab_505","name":"Tuban"},{"id":"kab_508","name":"Tulungagung"}]},"Kalimantan Barat":{"prov_id":"p_12","kab":[{"id":"kab_051","name":"Bengkayang"},{"id":"kab_137","name":"Kapuas Hulu"},{"id":"kab_145","name":"Kayong Utara"},{"id":"kab_163","name":"Ketapang"},{"id":"kab_240","name":"Kota Pontianak"},{"id":"kab_250","name":"Kota Singkawang"},{"id":"kab_275","name":"Kubu Raya"},{"id":"kab_294","name":"Landak"},{"id":"kab_336","name":"Melawi"},{"id":"kab_337","name":"Mempawah"},{"id":"kab_428","name":"Sambas"},{"id":"kab_431","name":"Sanggau"},{"id":"kab_434","name":"Sekadau"},{"id":"kab_451","name":"Sintang"}]},"Kalimantan Selatan":{"prov_id":"p_13","kab":[{"id":"kab_018","name":"Balangan"},{"id":"kab_030","name":"Banjar"},{"id":"kab_037","name":"Barito Kuala"},{"id":"kab_119","name":"Hulu Sungai Selatan"},{"id":"kab_120","name":"Hulu Sungai Tengah"},{"id":"kab_121","name":"Hulu Sungai Utara"},{"id":"kab_184","name":"Kota Banjarbaru"},{"id":"kab_185","name":"Kota Banjarmasin"},{"id":"kab_271","name":"Kotabaru"},{"id":"kab_474","name":"Tabalong"},{"id":"kab_480","name":"Tanah Bumbu"},{"id":"kab_482","name":"Tanah Laut"},{"id":"kab_490","name":"Tapin"}]},"Kalimantan Tengah":{"prov_id":"p_14","kab":[{"id":"kab_038","name":"Barito Selatan"},{"id":"kab_039","name":"Barito Timur"},{"id":"kab_040","name":"Barito Utara"},{"id":"kab_112","name":"Gunung Mas"},{"id":"kab_136","name":"Kapuas"},{"id":"kab_143","name":"Katingan"},{"id":"kab_228","name":"Kota Palangkaraya"},{"id":"kab_272","name":"Kotawaringin Barat"},{"id":"kab_273","name":"Kotawaringin Timur"},{"id":"kab_287","name":"Lamandau"},{"id":"kab_354","name":"Murung Raya"},{"id":"kab_413","name":"Pulang Pisau"},{"id":"kab_441","name":"Seruyan"},{"id":"kab_463","name":"Sukamara"}]},"Kalimantan Timur":{"prov_id":"p_15","kab":[{"id":"kab_055","name":"Berau"},{"id":"kab_179","name":"Kota Balikpapan"},{"id":"kab_196","name":"Kota Bontang"},{"id":"kab_245","name":"Kota Samarinda"},{"id":"kab_280","name":"Kutai Barat"},{"id":"kab_281","name":"Kutai Kartanegara"},{"id":"kab_282","name":"Kutai Timur"},{"id":"kab_313","name":"Mahakam Ulu"},{"id":"kab_391","name":"Paser"},{"id":"kab_399","name":"Penajam Paser Utara"}]},"Kalimantan Utara":{"prov_id":"p_16","kab":[{"id":"kab_078","name":"Bulungan"},{"id":"kab_262","name":"Kota Tarakan"},{"id":"kab_318","name":"Malinau"},{"id":"kab_370","name":"Nunukan"},{"id":"kab_478","name":"Tana Tidung"}]},"Kepulauan Bangka Belitung":{"prov_id":"p_17","kab":[{"id":"kab_024","name":"Bangka"},{"id":"kab_025","name":"Bangka Barat"},{"id":"kab_026","name":"Bangka Selatan"},{"id":"kab_027","name":"Bangka Tengah"},{"id":"kab_046","name":"Belitung"},{"id":"kab_047","name":"Belitung Timur"},{"id":"kab_232","name":"Kota Pangkal Pinang"}]},"Kepulauan Riau":{"prov_id":"p_18","kab":[{"id":"kab_058","name":"Bintan"},{"id":"kab_141","name":"Karimun"},{"id":"kab_152","name":"Kepulauan Anambas"},{"id":"kab_186","name":"Kota Batam"},{"id":"kab_261","name":"Kota Tanjung Pinang"},{"id":"kab_301","name":"Lingga"},{"id":"kab_361","name":"Natuna"}]},"Lampung":{"prov_id":"p_19","kab":[{"id":"kab_181","name":"Kota Bandar Lampung"},{"id":"kab_222","name":"Kota Metro"},{"id":"kab_289","name":"Lampung Barat"},{"id":"kab_290","name":"Lampung Selatan"},{"id":"kab_291","name":"Lampung Tengah"},{"id":"kab_292","name":"Lampung Timur"},{"id":"kab_293","name":"Lampung Utara"},{"id":"kab_340","name":"Mesuji"},{"id":"kab_401","name":"Pesawaran"},{"id":"kab_402","name":"Pesisir Barat"},{"id":"kab_411","name":"Pringsewu"},{"id":"kab_484","name":"Tanggamus"},{"id":"kab_506","name":"Tulang Bawang"},{"id":"kab_507","name":"Tulang Bawang Barat"},{"id":"kab_512","name":"Way Kanan"}]},"Maluku":{"prov_id":"p_20","kab":[{"id":"kab_081","name":"Buru"},{"id":"kab_082","name":"Buru Selatan"},{"id":"kab_153","name":"Kepulauan Aru"},{"id":"kab_160","name":"Kepulauan Tanimbar"},{"id":"kab_178","name":"Kota Ambon"},{"id":"kab_269","name":"Kota Tual"},{"id":"kab_319","name":"Maluku Barat Daya"},{"id":"kab_320","name":"Maluku Tengah"},{"id":"kab_321","name":"Maluku Tenggara"},{"id":"kab_437","name":"Seram Bagian Barat"},{"id":"kab_438","name":"Seram Bagian Timur"}]},"Maluku Utara":{"prov_id":"p_21","kab":[{"id":"kab_114","name":"Halmahera Barat"},{"id":"kab_115","name":"Halmahera Selatan"},{"id":"kab_116","name":"Halmahera Tengah"},{"id":"kab_117","name":"Halmahera Timur"},{"id":"kab_118","name":"Halmahera Utara"},{"id":"kab_158","name":"Kepulauan Sula"},{"id":"kab_266","name":"Kota Ternate"},{"id":"kab_267","name":"Kota Tidore Kepulauan"},{"id":"kab_414","name":"Pulau Morotai"},{"id":"kab_415","name":"Pulau Taliabu"}]},"Nusa Tenggara Barat":{"prov_id":"p_22","kab":[{"id":"kab_057","name":"Bima"},{"id":"kab_097","name":"Dompu"},{"id":"kab_191","name":"Kota Bima"},{"id":"kab_220","name":"Kota Mataram"},{"id":"kab_302","name":"Lombok Barat"},{"id":"kab_303","name":"Lombok Tengah"},{"id":"kab_304","name":"Lombok Timur"},{"id":"kab_305","name":"Lombok Utara"},{"id":"kab_469","name":"Sumbawa"},{"id":"kab_470","name":"Sumbawa Barat"}]},"Nusa Tenggara Timur":{"prov_id":"p_23","kab":[{"id":"kab_014","name":"Alor"},{"id":"kab_048","name":"Belu"},{"id":"kab_100","name":"Ende"},{"id":"kab_103","name":"Flores Timur"},{"id":"kab_211","name":"Kota Kupang"},{"id":"kab_279","name":"Kupang"},{"id":"kab_299","name":"Lembata"},{"id":"kab_316","name":"Malaka"},{"id":"kab_328","name":"Manggarai"},{"id":"kab_329","name":"Manggarai Barat"},{"id":"kab_330","name":"Manggarai Timur"},{"id":"kab_360","name":"Nagekeo"},{"id":"kab_363","name":"Ngada"},{"id":"kab_426","name":"Rote Ndao"},{"id":"kab_427","name":"Sabu Raijua"},{"id":"kab_447","name":"Sikka"},{"id":"kab_465","name":"Sumba Barat"},{"id":"kab_466","name":"Sumba Barat Daya"},{"id":"kab_467","name":"Sumba Tengah"},{"id":"kab_468","name":"Sumba Timur"},{"id":"kab_497","name":"Timor Tengah Selatan"},{"id":"kab_498","name":"Timor Tengah Utara"}]},"Papua":{"prov_id":"p_24","kab":[{"id":"kab_056","name":"Biak Numfor"},{"id":"kab_127","name":"Jayapura"},{"id":"kab_148","name":"Keerom"},{"id":"kab_161","name":"Kepulauan Yapen"},{"id":"kab_207","name":"Kota Jayapura"},{"id":"kab_323","name":"Mamberamo Raya"},{"id":"kab_432","name":"Sarmi"},{"id":"kab_473","name":"Supiori"},{"id":"kab_511","name":"Waropen"}]},"Papua Barat":{"prov_id":"p_25","kab":[{"id":"kab_102","name":"Fak Fak"},{"id":"kab_134","name":"Kaimana"},{"id":"kab_331","name":"Manokwari"},{"id":"kab_332","name":"Manokwari Selatan"},{"id":"kab_394","name":"Pegunungan Arfak"},{"id":"kab_457","name":"Sorong"},{"id":"kab_494","name":"Teluk Bintuni"},{"id":"kab_495","name":"Teluk Wondama"}]},"Papua Barat Daya":{"prov_id":"p_26","kab":[{"id":"kab_252","name":"Kota Sorong"},{"id":"kab_335","name":"Maybrat"},{"id":"kab_421","name":"Raja Ampat"},{"id":"kab_458","name":"Sorong"},{"id":"kab_459","name":"Sorong Selatan"},{"id":"kab_477","name":"Tambrauw"}]},"Papua Pegunungan":{"prov_id":"p_27","kab":[{"id":"kab_128","name":"Jayawijaya"},{"id":"kab_296","name":"Lanny Jaya"},{"id":"kab_324","name":"Mamberamo Tengah"},{"id":"kab_362","name":"Nduga"},{"id":"kab_395","name":"Pegunungan Bintang"},{"id":"kab_502","name":"Tolikara"},{"id":"kab_515","name":"Yahukimo"},{"id":"kab_516","name":"Yalimo"}]},"Papua Selatan":{"prov_id":"p_28","kab":[{"id":"kab_016","name":"Asmat"},{"id":"kab_073","name":"Boven Digoel"},{"id":"kab_333","name":"Mappi"},{"id":"kab_339","name":"Merauke"}]},"Papua Tengah":{"prov_id":"p_29","kab":[{"id":"kab_092","name":"Deiyai"},{"id":"kab_096","name":"Dogiyai"},{"id":"kab_126","name":"Intan Jaya"},{"id":"kab_341","name":"Mimika"},{"id":"kab_358","name":"Nabire"},{"id":"kab_386","name":"Paniai"},{"id":"kab_416","name":"Puncak"},{"id":"kab_417","name":"Puncak Jaya"}]},"Riau":{"prov_id":"p_30","kab":[{"id":"kab_050","name":"Bengkalis"},{"id":"kab_123","name":"Indragiri Hilir"},{"id":"kab_124","name":"Indragiri Hulu"},{"id":"kab_135","name":"Kampar"},{"id":"kab_155","name":"Kepulauan Meranti"},{"id":"kab_203","name":"Kota Dumai"},{"id":"kab_238","name":"Kota Pekanbaru"},{"id":"kab_274","name":"Kuantan Singingi"},{"id":"kab_397","name":"Pelalawan"},{"id":"kab_424","name":"Rokan Hilir"},{"id":"kab_425","name":"Rokan Hulu"},{"id":"kab_442","name":"Siak"}]},"Sulawesi Barat":{"prov_id":"p_31","kab":[{"id":"kab_315","name":"Majene"},{"id":"kab_322","name":"Mamasa"},{"id":"kab_325","name":"Mamuju"},{"id":"kab_326","name":"Mamuju Tengah"},{"id":"kab_390","name":"Pasangkayu"},{"id":"kab_408","name":"Polewali Mandar"}]},"Sulawesi Selatan":{"prov_id":"p_32","kab":[{"id":"kab_032","name":"Bantaeng"},{"id":"kab_041","name":"Barru"},{"id":"kab_071","name":"Bone"},{"id":"kab_077","name":"Bulukumba"},{"id":"kab_101","name":"Enrekang"},{"id":"kab_109","name":"Gowa"},{"id":"kab_131","name":"Jeneponto"},{"id":"kab_157","name":"Kepulauan Selayar"},{"id":"kab_217","name":"Kota Makassar"},{"id":"kab_230","name":"Kota Palopo"},{"id":"kab_233","name":"Kota Parepare"},{"id":"kab_307","name":"Luwu"},{"id":"kab_308","name":"Luwu Timur"},{"id":"kab_309","name":"Luwu Utara"},{"id":"kab_334","name":"Maros"},{"id":"kab_385","name":"Pangkajene dan Kepulauan"},{"id":"kab_406","name":"Pinrang"},{"id":"kab_443","name":"Sidenreng Rappang"},{"id":"kab_450","name":"Sinjai"},{"id":"kab_456","name":"Soppeng"},{"id":"kab_476","name":"Takalar"},{"id":"kab_479","name":"Tana Toraja"},{"id":"kab_503","name":"Toraja Utara"},{"id":"kab_509","name":"Wajo"}]},"Sulawesi Tengah":{"prov_id":"p_33","kab":[{"id":"kab_021","name":"Banggai"},{"id":"kab_022","name":"Banggai Kepulauan"},{"id":"kab_023","name":"Banggai Laut"},{"id":"kab_080","name":"Buol"},{"id":"kab_098","name":"Donggala"},{"id":"kab_231","name":"Kota Palu"},{"id":"kab_347","name":"Morowali"},{"id":"kab_348","name":"Morowali Utara"},{"id":"kab_387","name":"Parigi Moutong"},{"id":"kab_410","name":"Poso"},{"id":"kab_445","name":"Sigi"},{"id":"kab_500","name":"Tojo Una Una"},{"id":"kab_501","name":"Toli Toli"}]},"Sulawesi Tenggara":{"prov_id":"p_34","kab":[{"id":"kab_069","name":"Bombana"},{"id":"kab_083","name":"Buton"},{"id":"kab_084","name":"Buton Selatan"},{"id":"kab_085","name":"Buton Tengah"},{"id":"kab_086","name":"Buton Utara"},{"id":"kab_166","name":"Kolaka"},{"id":"kab_167","name":"Kolaka Timur"},{"id":"kab_168","name":"Kolaka Utara"},{"id":"kab_169","name":"Konawe"},{"id":"kab_170","name":"Konawe Kepulauan"},{"id":"kab_171","name":"Konawe Selatan"},{"id":"kab_172","name":"Konawe Utara"},{"id":"kab_188","name":"Kota Bau Bau"},{"id":"kab_209","name":"Kota Kendari"},{"id":"kab_352","name":"Muna"},{"id":"kab_353","name":"Muna Barat"},{"id":"kab_510","name":"Wakatobi"}]},"Sulawesi Utara":{"prov_id":"p_35","kab":[{"id":"kab_065","name":"Bolaang Mongondow"},{"id":"kab_066","name":"Bolaang Mongondow Selatan"},{"id":"kab_067","name":"Bolaang Mongondow Timur"},{"id":"kab_068","name":"Bolaang Mongondow Utara"},{"id":"kab_150","name":"Kep. Siau Tagulandang Biaro"},{"id":"kab_156","name":"Kepulauan Sangihe"},{"id":"kab_159","name":"Kepulauan Talaud"},{"id":"kab_193","name":"Kota Bitung"},{"id":"kab_210","name":"Kota Kotamobagu"},{"id":"kab_219","name":"Kota Manado"},{"id":"kab_268","name":"Kota Tomohon"},{"id":"kab_342","name":"Minahasa"},{"id":"kab_343","name":"Minahasa Selatan"},{"id":"kab_344","name":"Minahasa Tenggara"},{"id":"kab_345","name":"Minahasa Utara"}]},"Sumatera Barat":{"prov_id":"p_36","kab":[{"id":"kab_013","name":"Agam"},{"id":"kab_095","name":"Dharmasraya"},{"id":"kab_154","name":"Kepulauan Mentawai"},{"id":"kab_197","name":"Kota Bukittinggi"},{"id":"kab_224","name":"Kota Padang"},{"id":"kab_225","name":"Kota Padang Panjang"},{"id":"kab_234","name":"Kota Pariaman"},{"id":"kab_236","name":"Kota Payakumbuh"},{"id":"kab_246","name":"Kota Sawahlunto"},{"id":"kab_251","name":"Kota Solok"},{"id":"kab_300","name":"Lima Puluh Kota"},{"id":"kab_379","name":"Padang Pariaman"},{"id":"kab_388","name":"Pasaman"},{"id":"kab_389","name":"Pasaman Barat"},{"id":"kab_403","name":"Pesisir Selatan"},{"id":"kab_446","name":"Sijunjung"},{"id":"kab_454","name":"Solok"},{"id":"kab_455","name":"Solok Selatan"},{"id":"kab_481","name":"Tanah Datar"}]},"Sumatera Selatan":{"prov_id":"p_37","kab":[{"id":"kab_034","name":"Banyuasin"},{"id":"kab_099","name":"Empat Lawang"},{"id":"kab_214","name":"Kota Lubuk Linggau"},{"id":"kab_227","name":"Kota Pagar Alam"},{"id":"kab_229","name":"Kota Palembang"},{"id":"kab_241","name":"Kota Prabumulih"},{"id":"kab_286","name":"Lahat"},{"id":"kab_349","name":"Muara Enim"},{"id":"kab_355","name":"Musi Banyuasin"},{"id":"kab_356","name":"Musi Rawas"},{"id":"kab_357","name":"Musi Rawas Utara"},{"id":"kab_371","name":"Ogan Ilir"},{"id":"kab_372","name":"Ogan Komering Ilir"},{"id":"kab_373","name":"Ogan Komering Ulu"},{"id":"kab_374","name":"Ogan Komering Ulu Selatan"},{"id":"kab_375","name":"Ogan Komering Ulu Timur"},{"id":"kab_400","name":"Penukal Abab Lematang Ilir"}]},"Sumatera Utara":{"prov_id":"p_38","kab":[{"id":"kab_015","name":"Asahan"},{"id":"kab_044","name":"Batu Bara"},{"id":"kab_091","name":"Dairi"},{"id":"kab_093","name":"Deli Serdang"},{"id":"kab_122","name":"Humbang Hasundutan"},{"id":"kab_142","name":"Karo"},{"id":"kab_192","name":"Kota Binjai"},{"id":"kab_205","name":"Kota Gunungsitoli"},{"id":"kab_221","name":"Kota Medan"},{"id":"kab_226","name":"Kota Padang Sidempuan"},{"id":"kab_239","name":"Kota Pematangsiantar"},{"id":"kab_249","name":"Kota Sibolga"},{"id":"kab_260","name":"Kota Tanjung Balai"},{"id":"kab_264","name":"Kota Tebing Tinggi"},{"id":"kab_283","name":"Labuhanbatu"},{"id":"kab_284","name":"Labuhanbatu Selatan"},{"id":"kab_285","name":"Labuhanbatu Utara"},{"id":"kab_295","name":"Langkat"},{"id":"kab_327","name":"Mandailing Natal"},{"id":"kab_366","name":"Nias"},{"id":"kab_367","name":"Nias Barat"},{"id":"kab_368","name":"Nias Selatan"},{"id":"kab_369","name":"Nias Utara"},{"id":"kab_377","name":"Padang Lawas"},{"id":"kab_378","name":"Padang Lawas Utara"},{"id":"kab_381","name":"Pakpak Bharat"},{"id":"kab_429","name":"Samosir"},{"id":"kab_440","name":"Serdang Bedagai"},{"id":"kab_448","name":"Simalungun"},{"id":"kab_487","name":"Tapanuli Selatan"},{"id":"kab_488","name":"Tapanuli Tengah"},{"id":"kab_489","name":"Tapanuli Utara"},{"id":"kab_499","name":"Toba"}]}},"default_province":"Aceh","default_kabupaten":"kab_001","data_base_url":"../../../assets/data/dasarian/nrt/","unit":"mm"}</script>
+<script src="https://cdn.plot.ly/plotly-2.32.0.min.js" charset="utf-8"></script>
+<script>/* ==========================================================================
+   Utilitas bersama HESLab Portal.
+   Semua berkas JS di-inline oleh rendering.py; tidak ada modul ES eksternal.
+   ========================================================================== */
+(function (global) {
+  "use strict";
+
+  var H = {};
+
+  /* Ambil payload data yang ditanam di HTML sebagai <script type="application/json">. */
+  H.payload = function (elementId) {
+    var el = document.getElementById(elementId || "payload");
+    if (!el) throw new Error("Payload '" + elementId + "' tidak ditemukan.");
+    return JSON.parse(el.textContent);
+  };
+
+  /* Format angka dengan konvensi Indonesia: koma desimal, titik ribuan. */
+  H.num = function (v, dec) {
+    if (v === null || v === undefined || isNaN(v)) return "–";
+    return Number(v).toLocaleString("id-ID", {
+      minimumFractionDigits: dec === undefined ? 1 : dec,
+      maximumFractionDigits: dec === undefined ? 1 : dec
+    });
+  };
+
+  /* Cari kelas intensitas untuk sebuah nilai. Kelas terakhir bersifat terbuka. */
+  H.classify = function (classes, v) {
+    if (v === null || v === undefined || isNaN(v)) return null;
+    for (var i = 0; i < classes.length; i++) {
+      var c = classes[i];
+      if (v >= c.min && (c.max === null || v < c.max)) return c;
+    }
+    return classes[classes.length - 1];
+  };
+
+  H.colorOf = function (classes, v) {
+    var c = H.classify(classes, v);
+    return c ? c.color : "#ffffff";
+  };
+
+  H.labelOf = function (classes, v) {
+    var c = H.classify(classes, v);
+    return c ? c.label : "Tidak tersedia";
+  };
+
+  /* Batas atas skala warna: sedikit di atas ambang kelas terakhir. */
+  H.zmax = function (classes) {
+    var last = classes[classes.length - 1];
+    return last.max !== null ? last.max : last.min * 1.5;
+  };
+
+  /*
+   * Colorscale diskret untuk Plotly.
+   * Plotly hanya menerima skala kontinu 0..1, jadi setiap kelas ditulis sebagai
+   * dua titik henti dengan warna sama agar transisinya bertingkat, bukan gradual.
+   */
+  H.discreteColorscale = function (classes) {
+    var zmax = H.zmax(classes);
+    var scale = [];
+    classes.forEach(function (c, i) {
+      var lo = c.min / zmax;
+      var hi = (c.max === null ? zmax : Math.min(c.max, zmax)) / zmax;
+      scale.push([Math.max(0, Math.min(1, lo)), c.color]);
+      scale.push([Math.max(0, Math.min(1, hi)), c.color]);
+      if (i === classes.length - 1) scale[scale.length - 1][0] = 1;
+    });
+    return scale;
+  };
+
+  /* Legenda HTML dari daftar kelas, ditutup entri "tidak ada data". */
+  H.renderLegend = function (container, classes, unit, nodata) {
+    if (!container) return;
+    var html = classes.map(function (c) {
+      var range = c.max === null
+        ? "≥ " + H.num(c.min, c.min % 1 ? 1 : 0)
+        : H.num(c.min, c.min % 1 ? 1 : 0) + "–" + H.num(c.max, c.max % 1 ? 1 : 0);
+      return '<li><i style="background:' + c.color + '"></i>' +
+             '<span>' + range + " " + unit + "</span></li>";
+    }).join("");
+
+    // Wilayah tanpa data harus punya kunci warnanya sendiri. Tanpa ini,
+    // pembaca akan menyimpulkan abu-abu berarti "tidak hujan".
+    //
+    // Contoh warnanya dibuat setransparan tampilan di peta, dengan latar
+    // seterang basemap. Legenda yang menampilkan abu-abu pekat sementara
+    // petanya tembus pandang akan membuat pembaca mencari warna yang salah.
+    if (nodata) {
+      var op = nodata.opacity === undefined ? 1 : nodata.opacity;
+      html += '<li style="margin-left:.5rem">' +
+              '<i style="background:#f5f7f8;position:relative;overflow:hidden">' +
+                '<span style="position:absolute;inset:0;background:' + nodata.color +
+                ';opacity:' + op + '"></span>' +
+              '</i><span>' + nodata.label + "</span></li>";
+    }
+    container.innerHTML = html;
+  };
+
+  /* Daftar wilayah yang nilainya tidak tersedia pada satu langkah waktu. */
+  H.missingIds = function (ids, values) {
+    var out = [];
+    for (var i = 0; i < ids.length; i++) {
+      var v = values[i];
+      if (v === null || v === undefined || isNaN(v)) out.push(ids[i]);
+    }
+    return out;
+  };
+
+  /*
+   * Lapisan terpisah untuk wilayah tanpa data.
+   *
+   * Plotly tidak dapat mewarnai nilai z yang null — poligonnya dibiarkan
+   * transparan sehingga menyerupai basemap dan tak terbedakan dari wilayah
+   * yang benar-benar tidak hujan. Karena itu wilayah tanpa data digambar
+   * sebagai trace kedua dengan satu warna tetap.
+   *
+   * Tingkat transparansinya diatur lewat config.NODATA.opacity. Garis tepi
+   * sengaja diberi warna sendiri: ketika isian dibuat tembus pandang, garis
+   * tepilah yang menjaga poligon tetap terbaca sebagai wilayah, bukan sebagai
+   * lubang pada peta.
+   */
+  H.nodataTrace = function (geo, featureidkey, ids, nodata) {
+    return {
+      type: "choroplethmapbox",
+      geojson: geo,
+      featureidkey: featureidkey,
+      locations: ids,
+      z: ids.map(function () { return 0; }),
+      colorscale: [[0, nodata.color], [1, nodata.color]],
+      zmin: 0,
+      zmax: 1,
+      opacity: nodata.opacity === undefined ? 1 : nodata.opacity,
+      showscale: false,
+      hoverinfo: "text",
+      text: ids.map(function () { return nodata.label; }),
+      marker: {
+        line: {
+          width: nodata.line_width === undefined ? 0.6 : nodata.line_width,
+          color: nodata.line_color || "rgba(255,255,255,0.65)"
+        }
+      }
+    };
+  };
+
+  /*
+   * Ambil dan simpan cache satu URL JSON. Dipakai untuk geometri kabupaten
+   * maupun untuk data dasarian per provinsi yang diambil sesuai permintaan —
+   * keduanya butuh perilaku sama: ambil sekali, simpan di memori, pakai ulang.
+   */
+  var jsonCache = {};
+  H.fetchJSON = function (url) {
+    if (!jsonCache[url]) {
+      jsonCache[url] = fetch(url).then(function (r) {
+        if (!r.ok) throw new Error("Gagal memuat " + url + " (" + r.status + ")");
+        return r.json();
+      });
+    }
+    return jsonCache[url];
+  };
+
+  /* Muat GeoJSON sekali, lalu simpan di cache promise. */
+  H.loadGeoJSON = function (url) {
+    return H.fetchJSON(url);
+  };
+
+  /* Tampilkan pesan galat di dalam wadah plot, bukan hanya di konsol. */
+  H.fail = function (container, message, hint) {
+    container.innerHTML =
+      '<div class="awaiting"><h3>Peta tidak dapat ditampilkan</h3>' +
+      '<p>' + message + '</p>' +
+      (hint ? '<p><code>' + hint + '</code></p>' : '') + '</div>';
+  };
+
+  H.reducedMotion = function () {
+    return global.matchMedia &&
+           global.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  };
+
+  /* Konfigurasi Plotly yang seragam di seluruh portal. */
+  H.plotConfig = function (filename) {
+    return {
+      displaylogo: false,
+      responsive: true,
+      toImageButtonOptions: { format: "png", filename: filename, scale: 2 },
+      modeBarButtonsToRemove: ["lasso2d", "select2d", "toggleSpikelines"]
+    };
+  };
+
+  H.mapLayout = function (map, bounds) {
+    var layout = {
+      mapbox: {
+        style: map.style,
+        center: { lat: map.center.lat, lon: map.center.lon },
+        zoom: map.zoom,
+        /* Lapisan basemap raster (Esri Light Gray Canvas). Bila kosong,
+           mapbox memakai gaya bawaan saja — peta tetap tampil. */
+        layers: map.layers || []
+      },
+      margin: { r: 0, t: 0, l: 0, b: 0 },
+      paper_bgcolor: "rgba(0,0,0,0)",
+      font: { family: "IBM Plex Sans, system-ui, sans-serif", size: 12, color: "#16333f" },
+      dragmode: "pan"
+    };
+
+    /* Batasi geseran peta agar tidak keluar dari cakupan data. Bila versi
+       plotly.js yang dipakai belum mengenal properti ini, ia diabaikan
+       tanpa menimbulkan galat. */
+    if (bounds) {
+      layout.mapbox.bounds = {
+        west: bounds.west, east: bounds.east,
+        south: bounds.south, north: bounds.north
+      };
+    }
+    return layout;
+  };
+
+  /*
+   * Hitung tingkat zoom terkecil yang masih menampilkan seluruh cakupan data.
+   *
+   * Web Mercator: pada zoom z, lebar dunia = 512 * 2^z piksel. Zoom yang pas
+   * mengisi lebar wadah dihitung dari perbandingan rentang bujur terhadap
+   * 360 derajat; hal serupa untuk lintang, memakai proyeksi Mercator.
+   *
+   * Diambil nilai TERKECIL dari keduanya, karena itulah zoom saat seluruh
+   * data baru muat di layar. Zoom di bawahnya akan menampilkan wilayah di
+   * luar cakupan data — persis yang ingin dicegah.
+   */
+  function mercatorY(lat) {
+    var r = lat * Math.PI / 180;
+    return Math.log(Math.tan(Math.PI / 4 + r / 2));
+  }
+
+  H.zoomMinimum = function (el, bounds) {
+    var lebar = el.clientWidth || 800;
+    var tinggi = el.clientHeight || 460;
+
+    var spanLon = Math.abs(bounds.east - bounds.west);
+    var zLebar = Math.log2(lebar * 360 / (512 * spanLon));
+
+    var spanY = Math.abs(mercatorY(bounds.north) - mercatorY(bounds.south));
+    var zTinggi = Math.log2(tinggi * (2 * Math.PI) / (512 * spanY));
+
+    return Math.min(zLebar, zTinggi);
+  };
+
+  /*
+   * Kunci zoom agar tidak bisa diperkecil melampaui cakupan data.
+   *
+   * plotly.js tidak menyediakan pengaturan zoom minimum, sehingga dipakai
+   * pendekatan koreksi: setiap kali peta selesai digeser atau di-zoom,
+   * nilai zoom diperiksa dan dikembalikan bila terlalu kecil.
+   *
+   * `sedangKoreksi` mencegah relayout korektif memicu dirinya sendiri.
+   * Batas dihitung ulang saat ukuran jendela berubah, karena zoom minimum
+   * bergantung pada lebar wadah peta.
+   */
+  H.kunciZoomKeBatas = function (el, bounds) {
+    var minZoom = H.zoomMinimum(el, bounds);
+    var sedangKoreksi = false;
+
+    function koreksi(ev) {
+      if (sedangKoreksi) return;
+      var z = ev && ev["mapbox.zoom"];
+      if (typeof z !== "number" || z >= minZoom - 1e-3) return;
+      sedangKoreksi = true;
+      Plotly.relayout(el, { "mapbox.zoom": minZoom }).then(function () {
+        sedangKoreksi = false;
+      });
+    }
+
+    el.on("plotly_relayout", koreksi);
+
+    /*
+     * Hitung ulang batas zoom karena ukuran wadah berubah.
+     *
+     * Dipanggil dari event resize jendela DAN dari luar (masuk/keluar layar
+     * penuh). Layar penuh tidak selalu memicu resize jendela, dan kalaupun
+     * memicu, ukuran wadahnya belum tentu sudah final saat event itu menyala.
+     */
+    function hitungUlang() {
+      minZoom = H.zoomMinimum(el, bounds);
+      var kini = el._fullLayout && el._fullLayout.mapbox && el._fullLayout.mapbox.zoom;
+      if (typeof kini === "number" && kini < minZoom) {
+        Plotly.relayout(el, { "mapbox.zoom": minZoom });
+      }
+      return minZoom;
+    }
+
+    global.addEventListener("resize", hitungUlang);
+
+    /* Mengembalikan objek, bukan angka: pemanggil butuh nilai awal untuk
+       menyetel tampilan pertama, dan butuh cara memaksa hitung ulang. */
+    return { awal: minZoom, refresh: hitungUlang };
+  };
+
+  /* ------------------------------------------------------------ layar penuh --
+
+     Layar penuh dipasang pada WADAH, bukan pada elemen petanya. Kalau hanya
+     elemen peta yang dijadikan layar penuh, tombol putar, penggeser waktu,
+     dan legenda ikut hilang dari layar.
+
+     Peramban yang tidak mendukung Fullscreen API untuk elemen sembarang
+     (antara lain Safari di iPhone) tidak diberi jalur khusus: tombolnya
+     disembunyikan, bukan dibiarkan gagal saat diklik.
+  */
+
+  function elemenFullscreen() {
+    return document.fullscreenElement || document.webkitFullscreenElement || null;
+  }
+
+  H.fullscreenDidukung = function (el) {
+    return !!(el && (el.requestFullscreen || el.webkitRequestFullscreen));
+  };
+
+  /*
+   * Pasang tombol layar penuh pada sebuah wadah.
+   *
+   *   opts.wadah   elemen yang dijadikan layar penuh
+   *   opts.tombol  tombol pemicu
+   *   opts.kelas   kelas CSS yang dipasang pada wadah selama layar penuh
+   *                (bawaan "is-fullscreen"); dipakai agar CSS tidak perlu
+   *                bergantung pada pseudo-class :fullscreen yang penulisan
+   *                berprefiksnya berbeda antar peramban
+   *   opts.label   { masuk, keluar } teks tombol pada kedua keadaan
+   *   opts.onUbah  dipanggil dengan (aktif: boolean) SETELAH ukuran wadah
+   *                stabil — tempat memanggil ulang penyesuaian ukuran plot
+   */
+  H.pasangFullscreen = function (opts) {
+    var wadah = opts.wadah;
+    var tombol = opts.tombol;
+    var kelas = opts.kelas || "is-fullscreen";
+    var label = opts.label || { masuk: "\u2921 Layar penuh", keluar: "\u2922 Keluar" };
+    if (!wadah || !tombol) return;
+
+    if (!H.fullscreenDidukung(wadah)) { tombol.hidden = true; return; }
+
+    tombol.addEventListener("click", function () {
+      var janji;
+      if (elemenFullscreen() === wadah) {
+        janji = (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+      } else {
+        janji = (wadah.requestFullscreen || wadah.webkitRequestFullscreen).call(wadah);
+      }
+      /* Permintaan layar penuh dapat ditolak peramban (mis. kebijakan izin).
+         Penolakan diabaikan diam-diam: halaman tetap berfungsi seperti biasa. */
+      if (janji && janji.catch) janji.catch(function () {});
+    });
+
+    function berubah() {
+      var aktif = elemenFullscreen() === wadah;
+      if (aktif) wadah.classList.add(kelas); else wadah.classList.remove(kelas);
+      tombol.setAttribute("aria-pressed", aktif ? "true" : "false");
+      tombol.textContent = aktif ? label.keluar : label.masuk;
+
+      /* Dua rangka tunda: ukuran wadah baru final setelah peramban selesai
+         menata ulang, bukan pada saat fullscreenchange menyala. */
+      global.requestAnimationFrame(function () {
+        global.requestAnimationFrame(function () {
+          if (opts.onUbah) opts.onUbah(aktif);
+        });
+      });
+    }
+
+    /* Tombol Esc keluar dari layar penuh tanpa melewati tombol di atas;
+       event inilah satu-satunya penanda keadaan yang dapat dipercaya. */
+    document.addEventListener("fullscreenchange", berubah);
+    document.addEventListener("webkitfullscreenchange", berubah);
+  };
+
+  global.HES = H;
+})(window);
+
+/* ==========================================================================
+   Hujan dasarian per kabupaten/kota.
+
+   ARSITEKTUR: berbeda dari peta harian dan animasi, deret angka DASARIAN
+   TIDAK ada di dalam payload halaman ini. P (payload) hanya berisi kerangka:
+   label 36 dasarian, daftar provinsi/kabupaten, dan alamat dasar data.
+
+   Deret angka diambil lewat fetch() saat pengguna memilih provinsi — dua
+   berkas kecil (arsip + tahun berjalan), disimpan di memori (provCache) agar
+   berpindah kabupaten di dalam provinsi yang sama tidak mengulang unduhan.
+
+   Alur kendali: provinsi -> memicu fetch() jika belum ada di cache ->
+   kabupaten -> hanya membaca dari cache, tidak ada jaringan sama sekali.
+   ========================================================================== */
+(function () {
+  "use strict";
+
+  var P = HES.payload("payload");
+  var plotEl = document.getElementById("plot-dasarian");
+  var provSel = document.getElementById("das-prov");
+  var kabSel = document.getElementById("das-kab");
+  var statEl = document.getElementById("das-stats");
+  var bandingSel = document.getElementById("das-banding");
+  var bandingChips = document.getElementById("das-banding-chips");
+  var BANDING_MAKS = 3;
+  var BANDING_WARNA = ["#6a3d9a", "#1b7837", "#c51b8a"];
+  var bandingTerpilih = [];   // tahun (string), urutan = urutan pemilihan
+
+  function renderChips() {
+    if (!bandingChips) return;
+    bandingChips.innerHTML = "";
+    bandingTerpilih.forEach(function (y, i) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.textContent = y + " \u00d7";
+      b.title = "Klik untuk menghapus pembanding " + y;
+      b.style.cssText =
+        "margin:0 .35rem .25rem 0;padding:.15rem .5rem;font:11px 'IBM Plex Mono',monospace;" +
+        "border:1px solid " + BANDING_WARNA[i] + ";color:" + BANDING_WARNA[i] +
+        ";background:transparent;border-radius:3px;cursor:pointer";
+      b.addEventListener("click", function () {
+        bandingTerpilih.splice(bandingTerpilih.indexOf(y), 1);
+        renderChips();
+        var provId = P.provinces[provSel.value].prov_id;
+        if (provCache[provId]) draw(kabSel.value, provCache[provId]);
+      });
+      bandingChips.appendChild(b);
+    });
+    if (bandingTerpilih.length >= BANDING_MAKS) {
+      var s = document.createElement("span");
+      s.textContent = "maks " + BANDING_MAKS + " tercapai";
+      s.style.cssText = "font:11px 'IBM Plex Mono',monospace;color:#7a8a90";
+      bandingChips.appendChild(s);
+    }
+  }
+
+  /* Palet deret waktu: tahun lama gelap, tahun baru terang, satu keluarga
+     hue dengan --river-* di portal.css. Ditulis manual (bukan var(--..))
+     karena Plotly butuh string warna langsung di sisi JS, tidak bisa
+     membaca custom property CSS tanpa panggilan getComputedStyle. Bila
+     token --river-* di portal.css berubah, sesuaikan array ini juga. */
+  var YEAR_COLORS = ["#C7E8FF", "#A8DEFF", "#66C5FF", "#1AA8FF",
+                     "#008EE6", "#0077C0", "#00558A", "#003F66"];
+
+  function colorFor(i, n) {
+    return YEAR_COLORS[Math.min(YEAR_COLORS.length - 2,
+           Math.round(i * (YEAR_COLORS.length - 2) / Math.max(1, n - 1)))];
+  }
+
+  /* --- kendali dropdown --------------------------------------------------- */
+
+  function fillProvinces() {
+    Object.keys(P.provinces).sort().forEach(function (p) {
+      var o = document.createElement("option");
+      o.value = p; o.textContent = p;
+      provSel.appendChild(o);
+    });
+    provSel.disabled = false;
+  }
+
+  function fillKabupaten(provName) {
+    kabSel.innerHTML = "";
+    (P.provinces[provName].kab || []).forEach(function (k) {
+      var o = document.createElement("option");
+      o.value = k.id; o.textContent = k.name;
+      kabSel.appendChild(o);
+    });
+    kabSel.disabled = false;
+  }
+
+  /* --- pengambilan data per provinsi --------------------------------------- */
+
+  var provCache = {};   // prov_id -> {kab_id: {tahun: [36 nilai]}}, sudah digabung
+
+  /*
+   * Gabungkan arsip + tahun berjalan menjadi satu bentuk seragam per kabupaten:
+   * {kab_id: {"1998": [...], ..., "2026": [...]}}. Penggabungan dilakukan di
+   * sini, sekali per provinsi, supaya draw() tidak perlu tahu kedua berkas itu
+   * pernah terpisah.
+   */
+  function gabungkan(arsip, berjalan) {
+    var out = {};
+    Object.keys(arsip.series || {}).forEach(function (kab) {
+      out[kab] = Object.assign({}, arsip.series[kab]);
+    });
+    Object.keys(berjalan.series || {}).forEach(function (kab) {
+      if (!out[kab]) out[kab] = {};
+      out[kab][String(berjalan.year)] = berjalan.series[kab];
+    });
+    return out;
+  }
+
+  function muatProvinsi(provName) {
+    var provId = P.provinces[provName].prov_id;
+    if (provCache[provId]) {
+      return Promise.resolve(provCache[provId]);
+    }
+    var dasar = P.data_base_url + provId;
+    return Promise.all([
+      HES.fetchJSON(dasar + "_arsip.json"),
+      HES.fetchJSON(dasar + "_berjalan.json")
+    ]).then(function (hasil) {
+      var gabungan = gabungkan(hasil[0], hasil[1]);
+      provCache[provId] = gabungan;
+      return gabungan;
+    });
+  }
+
+  function tampilkanMemuat() {
+    plotEl.innerHTML = '<div class="awaiting" style="padding:3rem 1.5rem">' +
+      '<h3>Memuat data provinsi…</h3>' +
+      '<p>Mengambil deret dasarian untuk provinsi yang dipilih.</p></div>';
+    statEl.innerHTML = '<p class="detail__empty">Memuat…</p>';
+  }
+
+  /* --- statistik ringkas --------------------------------------------------- */
+
+  function renderStats(seriesKab) {
+    var complete = P.years.filter(function (y) { return String(y) !== String(P.current_year); });
+    var totals = complete.map(function (y) {
+      var arr = seriesKab[y] || [];
+      return arr.reduce(function (a, b) { return a + (b === null ? 0 : b); }, 0);
+    }).filter(function (v) { return v > 0; });
+
+    var mean = totals.length
+      ? totals.reduce(function (a, b) { return a + b; }, 0) / totals.length : null;
+
+    var ytdRows = "";
+    var cur = seriesKab[P.current_year];
+    if (cur && P.current_dasarian) {
+      var ytd = 0;
+      for (var i = 0; i < P.current_dasarian; i++) ytd += (cur[i] === null ? 0 : cur[i]);
+      var refs = complete.map(function (y) {
+        var a = seriesKab[y] || [], s = 0;
+        for (var j = 0; j < P.current_dasarian; j++) s += (a[j] === null ? 0 : a[j]);
+        return s;
+      }).filter(function (v) { return v > 0; });
+      var refMean = refs.length ? refs.reduce(function (a, b) { return a + b; }, 0) / refs.length : null;
+      ytdRows =
+        "<dt>Akumulasi " + P.current_year + " s.d. " + P.labels[P.current_dasarian - 1] + "</dt>" +
+        "<dd>" + HES.num(ytd, 0) + " mm</dd>" +
+        (refMean ? "<dt>Rerata periode sama</dt><dd>" + HES.num(refMean, 0) + " mm</dd>" +
+                   "<dt>Rasio terhadap rerata</dt><dd>" +
+                   HES.num(100 * ytd / refMean, 0) + " %</dd>" : "");
+    }
+
+    statEl.innerHTML =
+      "<dl>" +
+      "<dt>Tahun tersedia</dt><dd>" + totals.length + "</dd>" +
+      (mean ? "<dt>Rerata hujan tahunan</dt><dd>" + HES.num(mean, 0) + " mm</dd>" : "") +
+      ytdRows +
+      "</dl>";
+  }
+
+  /* --- grafik --------------------------------------------------------------- */
+
+  /*
+   * Persentil per dasarian lintas tahun-tahun TUTUP (tahun berjalan tidak
+   * ikut membentuk klimatologi). q dalam 0..1; nilai null diabaikan.
+   */
+  function persentil(seriesKab, tahunTutup, q) {
+    var out = [];
+    for (var d = 0; d < P.labels.length; d++) {
+      var v = [];
+      tahunTutup.forEach(function (y) {
+        var arr = seriesKab[y];
+        if (arr && arr[d] !== null && arr[d] !== undefined) v.push(arr[d]);
+      });
+      if (!v.length) { out.push(null); continue; }
+      v.sort(function (a, b) { return a - b; });
+      var pos = q * (v.length - 1), lo = Math.floor(pos), hi = Math.ceil(pos);
+      out.push(v[lo] + (v[hi] - v[lo]) * (pos - lo));
+    }
+    return out;
+  }
+
+  function draw(kabId, seriesSemua) {
+    var seriesKab = seriesSemua[kabId];
+    if (!seriesKab) {
+      HES.fail(plotEl, "Belum ada deret dasarian untuk wilayah ini.");
+      statEl.innerHTML = '<p class="detail__empty">Tidak ada data.</p>';
+      return;
+    }
+
+    var tahunTutup = P.years.filter(function (y) {
+      return String(y) !== String(P.current_year) && seriesKab[y];
+    });
+    var traces = [];
+
+    /* Nilai tahun berjalan, dipotong pada dasarian lengkap terakhir. */
+    var cur = (seriesKab[P.current_year] || []).slice();
+    if (P.current_dasarian) {
+      for (var k = P.current_dasarian; k < cur.length; k++) cur[k] = null;
+    }
+
+    if (tahunTutup.length >= 4) {
+      /* --- MODE KLIMATOLOGI: legenda TETAP walau arsip terus bertambah ---
+         Tahun lama diringkas jadi pita P10-P90 + median; garis individual
+         hanya untuk tahun lalu, tahun berjalan, dan (opsional) pembanding. */
+      var rentang = tahunTutup[0] + "\u2013" + tahunTutup[tahunTutup.length - 1];
+      var p10 = persentil(seriesKab, tahunTutup, 0.10);
+      var p90 = persentil(seriesKab, tahunTutup, 0.90);
+      var med = persentil(seriesKab, tahunTutup, 0.50);
+
+      traces.push({
+        type: "scatter", mode: "lines", name: "P90", x: P.labels, y: p90,
+        line: { width: 0 }, legendgroup: "band", showlegend: false,
+        hovertemplate: "P90 %{y:.1f} mm<extra></extra>", connectgaps: false
+      });
+      traces.push({
+        type: "scatter", mode: "lines",
+        name: "Rentang P10\u2013P90 (" + rentang + ")",
+        x: P.labels, y: p10, fill: "tonexty",
+        fillcolor: "rgba(0,119,192,0.13)", line: { width: 0 },
+        legendgroup: "band",
+        hovertemplate: "P10 %{y:.1f} mm<extra></extra>", connectgaps: false
+      });
+      traces.push({
+        type: "scatter", mode: "lines", name: "Median (" + rentang + ")",
+        x: P.labels, y: med,
+        line: { width: 2, color: "#0077C0", shape: "spline", smoothing: 0.4 },
+        hovertemplate: "Median %{y:.1f} mm<extra></extra>", connectgaps: false
+      });
+
+      var tahunLalu = tahunTutup[tahunTutup.length - 1];
+      if (bandingTerpilih.indexOf(String(tahunLalu)) === -1) {
+        traces.push({
+          type: "scatter", mode: "lines+markers", name: String(tahunLalu),
+          x: P.labels, y: seriesKab[tahunLalu], connectgaps: false,
+          line: { width: 1.8, color: "#00558A", shape: "spline", smoothing: 0.4 },
+          marker: { size: 4 },
+          hovertemplate: "%{x} " + tahunLalu + "<br>%{y:.1f} mm<extra></extra>"
+        });
+      }
+      bandingTerpilih.forEach(function (banding, bi) {
+        if (!seriesKab[banding]) return;
+        traces.push({
+          type: "scatter", mode: "lines+markers",
+          name: banding + " (pembanding)",
+          x: P.labels, y: seriesKab[banding], connectgaps: false,
+          line: { width: 2, color: BANDING_WARNA[bi],
+                  shape: "spline", smoothing: 0.4 },
+          marker: { size: 4 },
+          hovertemplate: "%{x} " + banding + "<br>%{y:.1f} mm<extra></extra>"
+        });
+      });
+    } else {
+      /* Arsip masih pendek (<4 tahun tutup): pita persentil belum bermakna,
+         gambar per tahun seperti biasa — legendanya memang masih kecil. */
+      tahunTutup.forEach(function (y, i) {
+        traces.push({
+          type: "scatter", mode: "lines+markers", name: String(y),
+          x: P.labels, y: seriesKab[y], connectgaps: false,
+          line: { width: 1.6, color: colorFor(i, tahunTutup.length),
+                  shape: "spline", smoothing: 0.4 },
+          marker: { size: 4 },
+          hovertemplate: "%{x} " + y + "<br>%{y:.1f} mm<extra></extra>"
+        });
+      });
+    }
+
+    traces.push({
+      type: "scatter", mode: "lines+markers",
+      name: P.current_year + " (berjalan)",
+      x: P.labels, y: cur, connectgaps: false,
+      line: { width: 2.6, color: "#b4531b", dash: "dot",
+              shape: "spline", smoothing: 0.4 },
+      marker: { size: 6 },
+      hovertemplate: "%{x} " + P.current_year + "<br>%{y:.1f} mm<extra></extra>"
+    });
+
+    var layout = {
+      margin: { l: 56, r: 16, t: 12, b: 56 },
+      paper_bgcolor: "rgba(0,0,0,0)",
+      plot_bgcolor: "rgba(0,0,0,0)",
+      font: { family: "IBM Plex Sans, system-ui, sans-serif", size: 12, color: "#16333f" },
+      xaxis: {
+        title: { text: "Dasarian", font: { size: 11 } },
+        tickangle: -60, tickfont: { family: "IBM Plex Mono, monospace", size: 10 },
+        gridcolor: "#eef3f4", zeroline: false
+      },
+      yaxis: {
+        title: { text: "Curah hujan (mm/dasarian)", font: { size: 11 } },
+        tickfont: { family: "IBM Plex Mono, monospace", size: 10 },
+        gridcolor: "#e6ecee", zeroline: true, zerolinecolor: "#d5dfe3", rangemode: "tozero"
+      },
+      legend: {
+        orientation: "h", y: -0.26, x: 0,
+        font: { family: "IBM Plex Mono, monospace", size: 11 }
+      },
+      hovermode: "x unified"
+    };
+
+    Plotly.newPlot(plotEl, traces, layout, HES.plotConfig("heslab_dasarian_" + kabId));
+    renderStats(seriesKab);
+  }
+
+  /* --- orkestrasi perubahan provinsi/kabupaten ----------------------------- */
+
+  function pilihProvinsi(provName, kabIdAwal) {
+    tampilkanMemuat();
+    muatProvinsi(provName).then(function (seriesSemua) {
+      var kabId = kabIdAwal || kabSel.value;
+      draw(kabId, seriesSemua);
+    }).catch(function (err) {
+      HES.fail(plotEl, err.message, P.data_base_url + P.provinces[provName].prov_id + "_arsip.json");
+      statEl.innerHTML = '<p class="detail__empty">Gagal memuat.</p>';
+    });
+  }
+
+  /* --- inisialisasi ---------------------------------------------------------- */
+
+  if (bandingSel) {
+    P.years.filter(function (y) {
+      return String(y) !== String(P.current_year);
+    }).slice().reverse().forEach(function (y) {
+      var o = document.createElement("option");
+      o.value = String(y); o.textContent = String(y);
+      bandingSel.appendChild(o);
+    });
+    bandingSel.disabled = false;
+    bandingSel.addEventListener("change", function () {
+      var y = bandingSel.value;
+      bandingSel.value = "";                       // kembali ke placeholder
+      if (!y || bandingTerpilih.indexOf(y) !== -1) return;
+      if (bandingTerpilih.length >= BANDING_MAKS) { renderChips(); return; }
+      bandingTerpilih.push(y);
+      renderChips();
+      var provId = P.provinces[provSel.value].prov_id;
+      if (provCache[provId]) draw(kabSel.value, provCache[provId]);
+    });
+  }
+
+  fillProvinces();
+  provSel.value = P.default_province;
+  fillKabupaten(P.default_province);
+  kabSel.value = P.default_kabupaten;
+  pilihProvinsi(P.default_province, P.default_kabupaten);
+
+  provSel.addEventListener("change", function () {
+    fillKabupaten(provSel.value);
+    pilihProvinsi(provSel.value);          // provinsi baru -> mungkin perlu fetch
+  });
+
+  kabSel.addEventListener("change", function () {
+    var provId = P.provinces[provSel.value].prov_id;
+    if (provCache[provId]) {
+      draw(kabSel.value, provCache[provId]);   // sudah di cache -> tanpa jaringan
+    } else {
+      pilihProvinsi(provSel.value, kabSel.value);
+    }
+  });
+})();
+</script>
+</body>
+</html>

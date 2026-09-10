@@ -1,0 +1,22 @@
+# Jangan pernah ada di sini
+*.env
+*.key
+*.pem
+credentials*
+token*
+*.nc
+*.parquet
+*.gpkg
+
+# HANYA folder data mentah di AKAR repo (garis miring depan = jangkar akar).
+# JANGAN tulis "data/" tanpa jangkar: pola itu ikut menelan assets/data/
+# tempat JSON dasarian per provinsi berada, sehingga deploy tampak sukses
+# tetapi git diam-diam tidak pernah mengangkut berkasnya ke GitHub Pages.
+/data/
+
+# Sistem operasi / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
