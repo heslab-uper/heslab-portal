@@ -611,6 +611,21 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
 .detail dl { display: grid; grid-template-columns: auto 1fr; gap: var(--sp-2) var(--sp-4); margin: var(--sp-4) 0 0; font-size: var(--step--1); }
 .detail dt { font-family: var(--font-mono); color: var(--muted); }
 .detail dd { margin: 0; font-family: var(--font-mono); color: var(--ink-900); text-align: right; }
+/* Riwayat 7 hari di panel detail harian: batang per tanggal. */
+.spark {
+  list-style: none; margin: var(--sp-2) 0 0; padding: 0;
+  display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 4px;
+  font-family: var(--font-mono); font-size: 0.6875rem; color: var(--muted);
+}
+.spark__col { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 0; }
+.spark__val { white-space: nowrap; }
+.spark__track {
+  display: flex; align-items: flex-end; width: 100%; height: 64px;
+  border-bottom: 1px solid var(--line);
+}
+.spark__bar { display: block; width: 100%; border-radius: 2px 2px 0 0; outline: 1px solid rgba(0,0,0,0.08); }
+.spark__col.is-current { color: var(--ink-900); font-weight: 600; }
+.spark__col.is-current .spark__bar { outline: 2px solid var(--ink-700); }
 
 /* -------------------------------------------------------------- catatan -- */
 
@@ -970,13 +985,13 @@ aria-current="true">Rainfall Monitoring</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 27-09-2026 14:03 WIB · © 2026 Hydro-Environmental Systems Laboratory.
+      Halaman dibangun 27-09-2026 15:48 WIB · © 2026 Hydro-Environmental Systems Laboratory.
     </p>
   </div>
 </footer>
 
-<script id="payload" type="application/json">{"kind":"rainfall-animation-raster","frames":[{"url":"../assets/frames/now/20260926T14-7d665d.png","label":"26 Sep 2026 · 14:00–15:00 WIB"},{"url":"../assets/frames/now/20260926T15-7d665d.png","label":"26 Sep 2026 · 15:00–16:00 WIB"},{"url":"../assets/frames/now/20260926T16-7d665d.png","label":"26 Sep 2026 · 16:00–17:00 WIB"},{"url":"../assets/frames/now/20260926T17-7d665d.png","label":"26 Sep 2026 · 17:00–18:00 WIB"},{"url":"../assets/frames/now/20260926T18-7d665d.png","label":"26 Sep 2026 · 18:00–19:00 WIB"},{"url":"../assets/frames/now/20260926T19-7d665d.png","label":"26 Sep 2026 · 19:00–20:00 WIB"},{"url":"../assets/frames/now/20260926T20-7d665d.png","label":"26 Sep 2026 · 20:00–21:00 WIB"},{"url":"../assets/frames/now/20260926T21-7d665d.png","label":"26 Sep 2026 · 21:00–22:00 WIB"},{"url":"../assets/frames/now/20260926T22-7d665d.png","label":"26 Sep 2026 · 22:00–23:00 WIB"},{"url":"../assets/frames/now/20260926T23-7d665d.png","label":"27 Sep 2026 · 23:00–00:00 WIB"},{"url":"../assets/frames/now/20260927T00-7d665d.png","label":"27 Sep 2026 · 00:00–01:00 WIB"},{"url":"../assets/frames/now/20260927T01-7d665d.png","label":"27 Sep 2026 · 01:00–02:00 WIB"},{"url":"../assets/frames/now/20260927T02-7d665d.png","label":"27 Sep 2026 · 02:00–03:00 WIB"},{"url":"../assets/frames/now/20260927T03-7d665d.png","label":"27 Sep 2026 · 03:00–04:00 WIB"},{"url":"../assets/frames/now/20260927T04-7d665d.png","label":"27 Sep 2026 · 04:00–05:00 WIB"},{"url":"../assets/frames/now/20260927T05-7d665d.png","label":"27 Sep 2026 · 05:00–06:00 WIB"},{"url":"../assets/frames/now/20260927T06-7d665d.png","label":"27 Sep 2026 · 06:00–07:00 WIB"},{"url":"../assets/frames/now/20260927T07-7d665d.png","label":"27 Sep 2026 · 07:00–08:00 WIB"},{"url":"../assets/frames/now/20260927T08-7d665d.png","label":"27 Sep 2026 · 08:00–09:00 WIB"},{"url":"../assets/frames/now/20260927T09-7d665d.png","label":"27 Sep 2026 · 09:00–10:00 WIB"},{"url":"../assets/frames/now/20260927T10-7d665d.png","label":"27 Sep 2026 · 10:00–11:00 WIB"},{"url":"../assets/frames/now/20260927T11-7d665d.png","label":"27 Sep 2026 · 11:00–12:00 WIB"},{"url":"../assets/frames/now/20260927T12-7d665d.png","label":"27 Sep 2026 · 12:00–13:00 WIB"},{"url":"../assets/frames/now/20260927T13-7d665d.png","label":"27 Sep 2026 · 13:00–14:00 WIB"}],"bounds":{"west":90.0,"east":150.10000000000002,"north":15.100000000000001,"south":-15.100000000000001},"classes":[{"min":0.02,"max":0.1,"label":"Gerimis","color":"#142AA6"},{"min":0.1,"max":0.5,"label":"Sangat ringan","color":"#147AFA"},{"min":0.5,"max":2.0,"label":"Ringan","color":"#14BAFA"},{"min":2.0,"max":5.0,"label":"Ringan–sedang","color":"#66D1E6"},{"min":5.0,"max":10.0,"label":"Sedang","color":"#3DD994"},{"min":10.0,"max":20.0,"label":"Lebat","color":"#90E669"},{"min":20.0,"max":40.0,"label":"Sangat lebat","color":"#E0F62E"},{"min":40.0,"max":60.0,"label":"Ekstrem","color":"#FA6414"},{"min":60.0,"max":null,"label":"Ekstrem tinggi","color":"#D01414"}],"dry_label":"Tidak hujan","floor":0.02,"opacity":0.82,"unit":"mm/jam","map":{"center":{"lat":-2.5,"lon":118.0},"zoom":3.5,"style":"white-bg","layers":[{"below":"traces","sourcetype":"raster","sourceattribution":"Esri, HERE, Garmin, © OpenStreetMap contributors","source":["https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"]},{"below":"traces","sourcetype":"raster","source":["https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}"]}]},"autoplay":true,"frame_ms":650,"end_pause_ms":2000}</script>
-<script src="https://cdn.plot.ly/plotly-2.32.0.min.js" charset="utf-8"></script>
+<script id="payload" type="application/json">{"kind":"rainfall-animation-raster","frames":[{"url":"../assets/frames/now/20260926T14-7d665d.png","label":"26 Sep 2026 · 14:00–15:00 WIB"},{"url":"../assets/frames/now/20260926T15-7d665d.png","label":"26 Sep 2026 · 15:00–16:00 WIB"},{"url":"../assets/frames/now/20260926T16-7d665d.png","label":"26 Sep 2026 · 16:00–17:00 WIB"},{"url":"../assets/frames/now/20260926T17-7d665d.png","label":"26 Sep 2026 · 17:00–18:00 WIB"},{"url":"../assets/frames/now/20260926T18-7d665d.png","label":"26 Sep 2026 · 18:00–19:00 WIB"},{"url":"../assets/frames/now/20260926T19-7d665d.png","label":"26 Sep 2026 · 19:00–20:00 WIB"},{"url":"../assets/frames/now/20260926T20-7d665d.png","label":"26 Sep 2026 · 20:00–21:00 WIB"},{"url":"../assets/frames/now/20260926T21-7d665d.png","label":"26 Sep 2026 · 21:00–22:00 WIB"},{"url":"../assets/frames/now/20260926T22-7d665d.png","label":"26 Sep 2026 · 22:00–23:00 WIB"},{"url":"../assets/frames/now/20260926T23-7d665d.png","label":"26 Sep 2026 · 23:00 – 27 Sep 00:00 WIB"},{"url":"../assets/frames/now/20260927T00-7d665d.png","label":"27 Sep 2026 · 00:00–01:00 WIB"},{"url":"../assets/frames/now/20260927T01-7d665d.png","label":"27 Sep 2026 · 01:00–02:00 WIB"},{"url":"../assets/frames/now/20260927T02-7d665d.png","label":"27 Sep 2026 · 02:00–03:00 WIB"},{"url":"../assets/frames/now/20260927T03-7d665d.png","label":"27 Sep 2026 · 03:00–04:00 WIB"},{"url":"../assets/frames/now/20260927T04-7d665d.png","label":"27 Sep 2026 · 04:00–05:00 WIB"},{"url":"../assets/frames/now/20260927T05-7d665d.png","label":"27 Sep 2026 · 05:00–06:00 WIB"},{"url":"../assets/frames/now/20260927T06-7d665d.png","label":"27 Sep 2026 · 06:00–07:00 WIB"},{"url":"../assets/frames/now/20260927T07-7d665d.png","label":"27 Sep 2026 · 07:00–08:00 WIB"},{"url":"../assets/frames/now/20260927T08-7d665d.png","label":"27 Sep 2026 · 08:00–09:00 WIB"},{"url":"../assets/frames/now/20260927T09-7d665d.png","label":"27 Sep 2026 · 09:00–10:00 WIB"},{"url":"../assets/frames/now/20260927T10-7d665d.png","label":"27 Sep 2026 · 10:00–11:00 WIB"},{"url":"../assets/frames/now/20260927T11-7d665d.png","label":"27 Sep 2026 · 11:00–12:00 WIB"},{"url":"../assets/frames/now/20260927T12-7d665d.png","label":"27 Sep 2026 · 12:00–13:00 WIB"},{"url":"../assets/frames/now/20260927T13-7d665d.png","label":"27 Sep 2026 · 13:00–14:00 WIB"}],"bounds":{"west":90.0,"east":150.10000000000002,"north":15.100000000000001,"south":-15.100000000000001},"classes":[{"min":0.02,"max":0.1,"label":"Gerimis","color":"#142AA6"},{"min":0.1,"max":0.5,"label":"Sangat ringan","color":"#147AFA"},{"min":0.5,"max":2.0,"label":"Ringan","color":"#14BAFA"},{"min":2.0,"max":5.0,"label":"Ringan–sedang","color":"#66D1E6"},{"min":5.0,"max":10.0,"label":"Sedang","color":"#3DD994"},{"min":10.0,"max":20.0,"label":"Lebat","color":"#90E669"},{"min":20.0,"max":40.0,"label":"Sangat lebat","color":"#E0F62E"},{"min":40.0,"max":60.0,"label":"Ekstrem","color":"#FA6414"},{"min":60.0,"max":null,"label":"Ekstrem tinggi","color":"#D01414"}],"dry_label":"Tidak hujan","floor":0.02,"opacity":0.82,"unit":"mm/jam","map":{"center":{"lat":-2.5,"lon":118.0},"zoom":3.5,"style":"white-bg","layers":[{"below":"traces","sourcetype":"raster","sourceattribution":"Esri, HERE, Garmin, © OpenStreetMap contributors","source":["https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"]},{"below":"traces","sourcetype":"raster","source":["https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}"]}]},"autoplay":true,"frame_ms":650,"end_pause_ms":2000}</script>
+<script src="https://cdn.plot.ly/plotly-2.32.0.min.js" integrity="sha384-7TVmlZWH60iKX5Uk7lSvQhjtcgw2tkFjuwLcXoRSR4zXTyWFJRm9aPAguMh7CIra" crossorigin="anonymous" charset="utf-8"></script>
 <script>/* ==========================================================================
    Utilitas bersama HESLab Portal.
    Semua berkas JS di-inline oleh rendering.py; tidak ada modul ES eksternal.
@@ -1057,9 +1072,16 @@ aria-current="true">Rainfall Monitoring</a>
   H.renderLegend = function (container, classes, unit, nodata) {
     if (!container) return;
     var html = classes.map(function (c) {
+      // c.legend (opsional) menggantikan teks rentang otomatis, mis. kelas
+      // sifat hujan yang batasnya [31, 51) tetapi ditulis "31–50%".
+      if (c.legend) {
+        return '<li><i style="background:' + c.color + '"></i><span>' + c.legend + "</span></li>";
+      }
+      // Desimal secukupnya: 5 -> "5", 0,5 -> "0,5", 0,02 -> "0,02".
+      var dec = function (x) { return x % 1 === 0 ? 0 : (Math.round(x * 10) === x * 10 ? 1 : 2); };
       var range = c.max === null
-        ? "≥ " + H.num(c.min, c.min % 1 ? 1 : 0)
-        : H.num(c.min, c.min % 1 ? 1 : 0) + "–" + H.num(c.max, c.max % 1 ? 1 : 0);
+        ? "≥ " + H.num(c.min, dec(c.min))
+        : H.num(c.min, dec(c.min)) + "–" + H.num(c.max, dec(c.max));
       return '<li><i style="background:' + c.color + '"></i>' +
              '<span>' + range + " " + unit + "</span></li>";
     }).join("");
@@ -1169,6 +1191,9 @@ aria-current="true">Rainfall Monitoring</a>
     return {
       displaylogo: false,
       responsive: true,
+      // Roda mouse menggulir halaman, bukan memperbesar peta/grafik; zoom
+      // tetap tersedia lewat tombol +/- di bilah alat.
+      scrollZoom: false,
       toImageButtonOptions: { format: "png", filename: filename, scale: 2 },
       modeBarButtonsToRemove: ["lasso2d", "select2d", "toggleSpikelines"]
     };
@@ -1217,6 +1242,35 @@ aria-current="true">Rainfall Monitoring</a>
     var r = lat * Math.PI / 180;
     return Math.log(Math.tan(Math.PI / 4 + r / 2));
   }
+
+  /*
+   * Perluas kotak pembatas ke utara-selatan agar rasio-nya sama dengan wadah.
+   *
+   * mapbox.bounds tidak mengizinkan tampilan keluar dari kotak. Kotak
+   * Indonesia jauh lebih lebar daripada tingginya; pada wadah yang relatif
+   * lebih tinggi, zoom terkecil yang diizinkan ditentukan oleh TINGGI kotak,
+   * sehingga ujung barat (Aceh) dan timur (Papua) terpotong. Dengan menambah
+   * lintang di atas dan bawah sampai rasionya pas, lebar kotaklah yang
+   * menentukan, dan seluruh Indonesia selalu terlihat.
+   */
+  function mercatorLat(y) {
+    return (2 * Math.atan(Math.exp(y)) - Math.PI / 2) * 180 / Math.PI;
+  }
+
+  H.fitBounds = function (el, bounds) {
+    var lebar = el.clientWidth || 800;
+    var tinggi = el.clientHeight || 460;
+    var spanX = Math.abs(bounds.east - bounds.west) * Math.PI / 180;
+    var yN = mercatorY(bounds.north), yS = mercatorY(bounds.south);
+    var perlu = spanX * tinggi / lebar;
+    if (perlu <= yN - yS) return bounds;
+    var tambah = (perlu - (yN - yS)) / 2;
+    return {
+      west: bounds.west, east: bounds.east,
+      north: Math.min(85, mercatorLat(yN + tambah)),
+      south: Math.max(-85, mercatorLat(yS - tambah))
+    };
+  };
 
   H.zoomMinimum = function (el, bounds) {
     var lebar = el.clientWidth || 800;
@@ -1490,7 +1544,10 @@ aria-current="true">Rainfall Monitoring</a>
     });
   }
 
-  var layout = HES.mapLayout(P.map, P.bounds);
+  // Kotak tampilan (bukan kotak citra di baris 49): diperluas utara-selatan
+  // agar seluruh domain muat di wadah (lihat HES.fitBounds).
+  var B = HES.fitBounds(plotEl, P.bounds);
+  var layout = HES.mapLayout(P.map, B);
   layout.mapbox.layers = layersFor(P.frames.length - 1);
 
   /* Plotly TIDAK membentuk subplot mapbox bila daftar trace kosong — basemap
@@ -1513,13 +1570,13 @@ aria-current="true">Rainfall Monitoring</a>
       /* Kunci zoom keluar pada cakupan data, lalu setel tampilan awal tepat
          pada batas itu — sehingga seluruh domain terlihat sejak awal dan
          pengguna hanya dapat memperbesar, tidak memperkecil lebih jauh. */
-      kunciZoom = HES.kunciZoomKeBatas(plotEl, P.bounds);
+      kunciZoom = HES.kunciZoomKeBatas(plotEl, B);
       var minZoom = kunciZoom.awal;
       Plotly.relayout(plotEl, {
         "mapbox.zoom": minZoom,
         "mapbox.center": {
-          lat: (P.bounds.north + P.bounds.south) / 2,
-          lon: (P.bounds.west + P.bounds.east) / 2
+          lat: (B.north + B.south) / 2,
+          lon: (B.west + B.east) / 2
         }
       });
 

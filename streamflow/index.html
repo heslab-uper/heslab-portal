@@ -581,6 +581,12 @@ td .swatch {
   margin-right: var(--sp-2); border: 1px solid rgba(0,0,0,0.12);
 }
 .rank { font-family: var(--font-mono); color: var(--muted); }
+/* Nama wilayah di tabel peringkat: tombol yang tampil seperti teks. */
+button.linkbtn {
+  font: inherit; color: inherit; text-align: left;
+  background: none; border: 0; padding: 0; cursor: pointer;
+}
+button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
 
 /* --------------------------------------------------------- panel detail -- */
 
@@ -605,6 +611,21 @@ td .swatch {
 .detail dl { display: grid; grid-template-columns: auto 1fr; gap: var(--sp-2) var(--sp-4); margin: var(--sp-4) 0 0; font-size: var(--step--1); }
 .detail dt { font-family: var(--font-mono); color: var(--muted); }
 .detail dd { margin: 0; font-family: var(--font-mono); color: var(--ink-900); text-align: right; }
+/* Riwayat 7 hari di panel detail harian: batang per tanggal. */
+.spark {
+  list-style: none; margin: var(--sp-2) 0 0; padding: 0;
+  display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 4px;
+  font-family: var(--font-mono); font-size: 0.6875rem; color: var(--muted);
+}
+.spark__col { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 0; }
+.spark__val { white-space: nowrap; }
+.spark__track {
+  display: flex; align-items: flex-end; width: 100%; height: 64px;
+  border-bottom: 1px solid var(--line);
+}
+.spark__bar { display: block; width: 100%; border-radius: 2px 2px 0 0; outline: 1px solid rgba(0,0,0,0.08); }
+.spark__col.is-current { color: var(--ink-900); font-weight: 600; }
+.spark__col.is-current .spark__bar { outline: 2px solid var(--ink-700); }
 
 /* -------------------------------------------------------------- catatan -- */
 
@@ -881,7 +902,7 @@ aria-current="true">Streamflow Forecast</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 10-09-2026 06:48 WIB · © 2026 Hydro-Environmental Systems Laboratory.
+      Halaman dibangun 27-09-2026 15:47 WIB · © 2026 Hydro-Environmental Systems Laboratory.
     </p>
   </div>
 </footer>
