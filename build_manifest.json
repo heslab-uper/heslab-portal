@@ -36,14 +36,14 @@
       "note": "produk=semua"
     },
     "rainfall-dasarian": {
-      "last_build_wib": "2026-09-27T15:53:42+07:00",
+      "last_build_wib": "2026-09-28T12:00:24+07:00",
       "pages": [
         "rainfall-dasarian-now",
         "rainfall-dasarian-nrt",
         "rainfall-dasarian-standard",
         "rainfall-dasarian"
       ],
-      "note": "dijalankan dari jalankan.py"
+      "note": "produk=semua"
     }
   }
 }
