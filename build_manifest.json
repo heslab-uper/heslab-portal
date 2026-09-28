@@ -19,7 +19,7 @@
       "note": "dijalankan dari jalankan.py"
     },
     "rainfall-animation": {
-      "last_build_wib": "2026-09-28T17:03:03+07:00",
+      "last_build_wib": "2026-09-28T17:55:56+07:00",
       "pages": [
         "rainfall"
       ],
@@ -42,6 +42,13 @@
         "rainfall-dasarian-nrt",
         "rainfall-dasarian-standard",
         "rainfall-dasarian"
+      ],
+      "note": "produk=semua"
+    },
+    "rainfall-forecast": {
+      "last_build_wib": "2026-09-28T17:55:54+07:00",
+      "pages": [
+        "rainfall-forecast"
       ],
       "note": "produk=semua"
     }
