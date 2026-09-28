@@ -735,8 +735,23 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
 #anim-stage.is-fullscreen .plot { flex: 1 1 auto; min-height: 0; }
 #anim-stage.is-fullscreen .legend { margin-top: 0; }
 
+/* ------------------------------------------- prakiraan hujan (ENS) ----- */
+/* Tombol bersegmen: satu pilihan aktif per kelompok (btn--primary). */
+.fc-controls { display: flex; flex-wrap: wrap; gap: var(--sp-3) var(--sp-5); align-items: flex-end; margin-bottom: var(--sp-3); }
+.fc-controls__k { display: block; font-size: var(--step--1); color: var(--muted); margin-bottom: var(--sp-1); }
+.seg { display: inline-flex; }
+.seg button.btn { border-radius: 0; margin-left: -1px; }
+.seg button.btn:first-child { border-radius: var(--radius) 0 0 var(--radius); margin-left: 0; }
+.seg button.btn:last-child { border-radius: 0 var(--radius) var(--radius) 0; }
+/* Tinggi peta diatur map_forecast.js dari rasio domain ENS; min-height .plot dilepas di sana. */
+.fc-small { font-size: var(--step--1); color: var(--muted); margin: var(--sp-3) 0 0; }
+.fc-legend-title { font-size: var(--step--1); color: var(--muted); margin: var(--sp-3) 0 var(--sp-1); }
+.fc-daytable { width: 100%; font-size: var(--step--1); margin-top: var(--sp-3); border-collapse: collapse; }
+.fc-daytable th, .fc-daytable td { padding: var(--sp-1) var(--sp-2); border-bottom: 1px solid var(--line-soft); text-align: right; font-variant-numeric: tabular-nums; }
+.fc-daytable th:first-child, .fc-daytable td:first-child { text-align: left; }
+
 @media print {
-  .masthead, .foot, .controls, .playbar { display: none; }
+  .masthead, .foot, .controls, .playbar, .fc-controls { display: none; }
   body { background: #fff; }
 }
 
@@ -956,7 +971,7 @@ aria-current="true">Rainfall Monitoring</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 28-09-2026 11:45 WIB · © 2026 Hydro-Environmental Systems Laboratory.
+      Halaman dibangun 28-09-2026 17:45 WIB · © 2026 Hydro-Environmental Systems Laboratory.
     </p>
   </div>
 </footer>
