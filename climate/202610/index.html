@@ -1,0 +1,1751 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Climate Outlook — run Okt 2026 — HESLab Portal</title>
+<meta name="description" content="Arsip kajian riset run ECMWF SEAS5 Okt 2026 — Hydro-Environmental Systems Laboratory.">
+<meta name="author" content="Hydro-Environmental Systems Laboratory">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Climate Outlook — run Okt 2026 — HESLab Portal">
+<meta property="og:description" content="Arsip kajian riset run ECMWF SEAS5 Okt 2026">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://portal.heslab-uper.com/climate/202610/">
+<meta property="og:image" content="https://portal.heslab-uper.com/assets/data/climate/202610/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="HESLab Portal">
+<meta property="og:locale" content="id_ID">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Climate Outlook — run Okt 2026 — HESLab Portal">
+<meta name="twitter:description" content="Arsip kajian riset run ECMWF SEAS5 Okt 2026">
+<meta name="twitter:image" content="https://portal.heslab-uper.com/assets/data/climate/202610/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   HESLab Portal — lembar gaya tunggal.
+   Berkas ini di-inline ke dalam setiap HTML oleh rendering.py, sehingga tiap
+   halaman berdiri sendiri (tidak ada permintaan CSS eksternal).
+
+   Bahasa visual: panel instrumen ukur. Angka memakai huruf monospasi, judul
+   memakai huruf kondensasi, dan pita intensitas hujan dipakai sebagai motif
+   pengikat antar halaman.
+   ========================================================================== */
+
+:root {
+  /* Warna dasar — teks & permukaan netral */
+  --ink-900: #0E1B24;
+  --ink-700: #1E3542;
+  --ink-500: #4A6472;
+  --muted:   #6E848F;
+  --line:    #D7E1E4;
+  --line-soft: #E7EEF0;
+  --paper:   #EEF3F5;
+  --surface: #ffffff;
+
+  /* ---- Biru Universitas Pertamina ------------------------------------
+     Nilai #0077C0 diambil langsung dari berkas logo resmi UPer
+     (piksel daun biru, 19,15% dari seluruh piksel opak logo).
+     H=203° S=100% L=38%. Seluruh tingkat lain diturunkan dari nilai itu
+     dengan hue dan saturasi dipertahankan, hanya lightness yang digeser.
+
+     Verifikasi kontras WCAG AA:
+       putih di atas --river-900  : 11,04:1  lulus
+       putih di atas --river-700  :  4,77:1  lulus
+       --river-700 sbg teks/putih :  4,77:1  lulus
+       --river-600 hanya 3,49:1 -> JANGAN dipakai untuk teks, hanya untuk
+       hover pada latar berwarna, garis, dan elemen non-teks. */
+  --river-900: #003F66;   /* masthead */
+  --river-800: #00558A;
+  --river-700: #0077C0;   /* PRIMARY — biru resmi UPer, tanpa modifikasi */
+  --river-600: #008EE6;   /* hover & elemen non-teks saja */
+  --river-500: #1AA8FF;   /* aksen, garis, ikon */
+  --river-300: #66C5FF;
+  --river-200: #A8DEFF;   /* pinggir kartu */
+  --river-100: #E5F5FF;   /* latar tint pucat */
+
+  /* Hijau daun UPer (#C1D544) — dicadangkan sebagai aksen institusional,
+     belum dipakai. Merah (#ED1C24) sengaja TIDAK diadopsi: pada portal
+     hidrologi, merah harus tetap berarti peringatan, bukan identitas. */
+  --uper-green: #C1D544;
+
+  /* Aksen air — hue digeser dari biru UPer ke arah cyan (203° -> 188°),
+     cukup jauh untuk terbaca sebagai "air" tapi masih satu keluarga
+     dengan warna institusi. Dipakai hanya untuk motif ombak, bukan teks. */
+  --wave-600: #00A5C4;
+  --wave-300: #7FD9EA;
+
+  /* current/current-dark/current-soft dipertahankan sebagai alias supaya
+     komponen lama (tag, tautan, tombol) tidak perlu diubah satu-satu. */
+  --current:      var(--river-700);
+  --current-dark: var(--river-800);
+  --current-soft: var(--river-100);
+
+  /* Aksen hangat — SEKARANG KHUSUS untuk peringatan/catatan metodologis,
+     bukan lagi warna dekoratif. Portal ini sengaja didominasi biru+air,
+     sehingga saat amber muncul, artinya sungguh "perhatikan ini". */
+  --alert:        #B4531B;
+  --alert-soft:   #FBEEE4;
+
+  /* Huruf */
+  --font-display: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+
+  /* Ukuran */
+  --step--1: 0.8125rem;
+  --step-0:  0.9375rem;
+  --step-1:  1.125rem;
+  --step-2:  1.4375rem;
+  --step-3:  1.875rem;
+  --step-4:  2.5rem;
+
+  /* Ruang */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+
+  --radius: 3px;
+  --maxw: 1180px;
+}
+
+/* ---------------------------------------------------------------- reset -- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink-700);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--ink-900);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--sp-3);
+  font-weight: 600;
+}
+
+h1 { font-size: var(--step-4); }
+h2 { font-size: var(--step-2); }
+h3 { font-size: var(--step-1); }
+
+p { margin: 0 0 var(--sp-4); }
+
+a { color: var(--current-dark); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { color: var(--current); }
+
+:focus-visible {
+  outline: 2px solid var(--current);
+  outline-offset: 2px;
+}
+
+.wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--sp-5);
+}
+
+.skip {
+  position: absolute; left: -9999px;
+  background: var(--surface); padding: var(--sp-3) var(--sp-4); z-index: 100;
+}
+.skip:focus { left: var(--sp-4); top: var(--sp-4); }
+
+/* --------------------------------------------------------------- header -- */
+
+.masthead {
+  background: var(--river-900);
+  color: #DCE9EE;
+}
+
+.masthead__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding: var(--sp-4) 0;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  text-decoration: none;
+  color: inherit;
+}
+.brand__icon { flex: none; }
+.brand__logo {
+  flex: none;
+  height: 40px;
+  width: auto;
+  display: block;
+}
+.brand__text { display: flex; flex-direction: column; line-height: 1.15; }
+.brand__mark {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #fff;
+}
+.brand__sub {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: #70BCEB;
+  letter-spacing: 0.02em;
+}
+
+.masthead a.outlink {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: #91CAED;
+  text-decoration: none;
+  border: 1px solid #08639B;
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--radius);
+}
+.masthead a.outlink:hover { border-color: var(--current); color: #fff; }
+
+.mainnav {
+  border-top: 1px solid #07517E;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-5);
+  padding: 0;
+}
+.mainnav a {
+  display: block;
+  padding: var(--sp-3) 0;
+  font-family: var(--font-display);
+  font-size: var(--step-0);
+  letter-spacing: 0.02em;
+  color: #A4CFEA;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+}
+.mainnav a:hover { color: #fff; }
+.mainnav a[aria-current="true"] { color: #fff; border-bottom-color: var(--current); }
+.mainnav a[data-status="planned"]::after {
+  content: "segera";
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-left: var(--sp-2);
+  color: #6BA4C7;
+}
+
+/* Pita intensitas: motif tanda tangan portal, sekaligus kunci warna modul. */
+.ramp-rule {
+  display: flex;
+  height: 4px;
+}
+.ramp-rule span { flex: 1; }
+
+/* Garis ombak — elemen air eksplisit, dipasang di bawah masthead pada
+   setiap halaman. Bukan dekorasi acak: bentuknya gelombang sinus tunggal,
+   menegaskan tema hidrologi tanpa berebut perhatian dengan konten. */
+.wave-rule {
+  display: block;
+  width: 100%;
+  height: 10px;
+  background: var(--river-900);
+}
+.wave-rule svg { display: block; width: 100%; height: 100%; }
+
+/* ----------------------------------------------------------- breadcrumb -- */
+
+.crumbs {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--muted);
+  padding: var(--sp-4) 0 0;
+}
+.crumbs a { color: var(--ink-500); text-decoration: none; }
+.crumbs a:hover { color: var(--current); text-decoration: underline; }
+.crumbs span[aria-hidden] { padding: 0 var(--sp-2); color: var(--line); }
+
+/* --------------------------------------------------------- page header -- */
+
+.pagehead { padding: var(--sp-4) 0 var(--sp-5); }
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--current-dark);
+  margin: 0 0 var(--sp-2);
+}
+.pagehead p.lede {
+  font-size: var(--step-1);
+  color: var(--ink-500);
+  max-width: 62ch;
+  margin: var(--sp-2) 0 0;
+}
+
+/* Panel pembacaan instrumen: status data yang sedang ditampilkan. */
+.readout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin: var(--sp-5) 0;
+  overflow: hidden;
+}
+.readout__cell { background: var(--surface); padding: var(--sp-3) var(--sp-4); }
+.readout__k {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--muted);
+  display: block;
+}
+.readout__v {
+  font-family: var(--font-mono);
+  font-size: var(--step-0);
+  color: var(--ink-900);
+  font-weight: 500;
+  word-break: break-word;
+}
+
+/* --------------------------------------------------------- kartu dasbor -- */
+/* Kartu modul utama pada beranda. Sengaja dibuat 2 kolom (bukan 4) agar tiap
+   kartu punya bobot visual cukup untuk menjadi pintu masuk utama portal. */
+
+.dashgrid {
+  display: grid;
+  gap: var(--sp-4);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  margin-top: var(--sp-2);
+}
+
+.dashcard {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: var(--sp-5);
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  position: relative;
+  overflow: hidden;
+  transition: border-color .16s ease, transform .16s ease, box-shadow .16s ease;
+}
+/* Pita aksen kiri: penanda modul, warnanya diset per-kartu di bawah. */
+.dashcard::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--dash-accent, var(--river-500));
+}
+.dashcard:hover {
+  border-color: var(--river-500);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(7, 51, 105, .10);
+}
+
+.dashcard__head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+.dashcard__icon {
+  flex: none;
+  width: 42px; height: 42px;
+  border-radius: 5px;
+  background: var(--river-100);
+  color: var(--dash-accent, var(--river-700));
+  display: flex; align-items: center; justify-content: center;
+}
+.dashcard__icon svg { display: block; }
+.dashcard__titles { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.dashcard__no {
+  font-family: var(--font-mono);
+  font-size: .66rem;
+  letter-spacing: .1em;
+  color: var(--muted);
+}
+.dashcard h3 { margin: 0; font-size: var(--step-1); }
+.dashcard p {
+  margin: 0;
+  font-size: var(--step--1);
+  color: var(--ink-500);
+  flex: 1;
+}
+.dashcard__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin-top: var(--sp-2);
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--line-soft);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--muted);
+}
+.dashcard__go {
+  color: var(--river-700);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: transform .16s ease;
+  display: inline-block;
+}
+.dashcard:hover .dashcard__go { transform: translateX(3px); }
+
+.grid {
+  display: grid;
+  gap: var(--sp-4);
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+a.card:hover { border-color: var(--current); transform: translateY(-2px); }
+a.card:hover h3 { color: var(--current-dark); }
+
+.card__num {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: var(--sp-3);
+}
+.card p { color: var(--ink-500); font-size: var(--step--1); margin-bottom: var(--sp-4); }
+.card__foot {
+  margin-top: auto;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--current-dark);
+}
+
+.tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 2px 7px;
+  border-radius: 2px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  background: var(--paper);
+}
+.tag--live { border-color: var(--current); color: var(--current-dark); background: var(--current-soft); }
+.tag--planned { border-color: var(--line); color: var(--muted); }
+
+/* -------------------------------------------------------------- panel  -- */
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--sp-5);
+  margin-bottom: var(--sp-5);
+}
+.panel > h2 { margin-top: 0; }
+.panel__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--sp-4);
+}
+
+.split {
+  display: grid;
+  gap: var(--sp-5);
+  grid-template-columns: minmax(0, 2.1fr) minmax(0, 1fr);
+  align-items: start;
+}
+@media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
+
+/* ------------------------------------------------------------- kendali -- */
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  align-items: flex-end;
+  margin-bottom: var(--sp-4);
+}
+.field { display: flex; flex-direction: column; gap: var(--sp-1); }
+.field label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+select, button.btn {
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  padding: var(--sp-2) var(--sp-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink-900);
+  min-height: 38px;
+}
+select:disabled { color: var(--muted); background: var(--paper); }
+button.btn { cursor: pointer; }
+button.btn:hover { border-color: var(--current); color: var(--current-dark); }
+button.btn--primary {
+  background: var(--current); border-color: var(--current); color: #fff;
+  font-family: var(--font-mono); letter-spacing: 0.03em;
+}
+button.btn--primary:hover { background: var(--current-dark); color: #fff; }
+
+.playbar { display: flex; align-items: center; gap: var(--sp-3); flex-wrap: wrap; }
+.playbar input[type="range"] { flex: 1; min-width: 180px; accent-color: var(--current); }
+.playbar output {
+  font-family: var(--font-mono);
+  font-size: var(--step-0);
+  color: var(--ink-900);
+  min-width: 15ch;
+}
+
+/* -------------------------------------------------------------- legenda -- */
+
+.legend { display: flex; flex-wrap: wrap; gap: var(--sp-1) var(--sp-4); margin: var(--sp-4) 0 0; padding: 0; list-style: none; }
+.legend li { display: flex; align-items: center; gap: var(--sp-2); font-family: var(--font-mono); font-size: var(--step--1); color: var(--ink-500); }
+.legend i { width: 14px; height: 14px; border: 1px solid rgba(0,0,0,0.12); border-radius: 2px; display: block; }
+
+/* --------------------------------------------------------------- tabel -- */
+
+.tablewrap { overflow-x: auto; }
+table.data {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--step--1);
+}
+table.data caption {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--muted);
+  padding-bottom: var(--sp-3);
+}
+table.data th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+  padding: var(--sp-2) var(--sp-3);
+  white-space: nowrap;
+}
+table.data td {
+  padding: var(--sp-2) var(--sp-3);
+  border-bottom: 1px solid var(--line-soft);
+  vertical-align: middle;
+}
+table.data td.num, table.data th.num { text-align: right; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+table.data tbody tr:hover { background: var(--current-soft); }
+td .swatch {
+  display: inline-block; width: 10px; height: 10px; border-radius: 2px;
+  margin-right: var(--sp-2); border: 1px solid rgba(0,0,0,0.12);
+}
+.rank { font-family: var(--font-mono); color: var(--muted); }
+/* Nama wilayah di tabel peringkat: tombol yang tampil seperti teks. */
+button.linkbtn {
+  font: inherit; color: inherit; text-align: left;
+  background: none; border: 0; padding: 0; cursor: pointer;
+}
+button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
+
+/* --------------------------------------------------------- panel detail -- */
+
+.detail {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--sp-4);
+  background: var(--paper);
+  min-height: 220px;
+}
+.detail__empty { color: var(--muted); font-size: var(--step--1); }
+.detail__title { font-family: var(--font-display); font-size: var(--step-1); color: var(--ink-900); margin: 0 0 var(--sp-1); }
+.detail__prov { font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); margin-bottom: var(--sp-4); }
+.detail__big {
+  font-family: var(--font-mono);
+  font-size: var(--step-3);
+  color: var(--ink-900);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.detail__unit { font-size: var(--step-0); color: var(--muted); margin-left: var(--sp-1); }
+.detail dl { display: grid; grid-template-columns: auto 1fr; gap: var(--sp-2) var(--sp-4); margin: var(--sp-4) 0 0; font-size: var(--step--1); }
+.detail dt { font-family: var(--font-mono); color: var(--muted); }
+.detail dd { margin: 0; font-family: var(--font-mono); color: var(--ink-900); text-align: right; }
+/* Riwayat 7 hari di panel detail harian: batang per tanggal. */
+.spark {
+  list-style: none; margin: var(--sp-2) 0 0; padding: 0;
+  display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 4px;
+  font-family: var(--font-mono); font-size: 0.6875rem; color: var(--muted);
+}
+.spark__col { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 0; }
+.spark__val { white-space: nowrap; }
+.spark__track {
+  display: flex; align-items: flex-end; width: 100%; height: 64px;
+  border-bottom: 1px solid var(--line);
+}
+.spark__bar { display: block; width: 100%; border-radius: 2px 2px 0 0; outline: 1px solid rgba(0,0,0,0.08); }
+.spark__col.is-current { color: var(--ink-900); font-weight: 600; }
+.spark__col.is-current .spark__bar { outline: 2px solid var(--ink-700); }
+
+/* -------------------------------------------------------------- catatan -- */
+
+.note {
+  border-left: 3px solid var(--current);
+  background: var(--current-soft);
+  padding: var(--sp-4);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-size: var(--step--1);
+  margin-bottom: var(--sp-5);
+}
+.note--warn { border-left-color: var(--alert); background: var(--alert-soft); }
+.note--wait { border-left-color: var(--muted); background: var(--surface); border: 1px dashed var(--line); border-left: 3px solid var(--muted); }
+.note strong { color: var(--ink-900); }
+
+/* Teks pembahasan (Climate Outlook, discussion.md): lebar baca terbatas. */
+.prose { max-width: 72ch; }
+.prose p, .prose ul { margin: 0 0 var(--sp-4); }
+.prose h3, .prose h4 { margin: var(--sp-5) 0 var(--sp-2); }
+.prose > :last-child { margin-bottom: 0; }
+.note p:last-child { margin-bottom: 0; }
+
+/* Kotak "menunggu data": ruang yang sudah ada, isinya menyusul. */
+.awaiting {
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  background: repeating-linear-gradient(
+    135deg, var(--surface), var(--surface) 10px, #f7fafb 10px, #f7fafb 20px);
+  padding: var(--sp-7) var(--sp-5);
+  text-align: center;
+  color: var(--muted);
+}
+.awaiting h3 { color: var(--ink-500); }
+.awaiting code {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 1px 5px;
+  border-radius: 2px;
+  color: var(--ink-700);
+}
+
+/* -------------------------------------------------------------- sumber -- */
+
+.source {
+  border-top: 1px solid var(--line);
+  padding-top: var(--sp-4);
+  margin-top: var(--sp-6);
+  font-size: var(--step--1);
+  color: var(--ink-500);
+}
+.source dl { display: grid; grid-template-columns: minmax(120px, max-content) 1fr; gap: var(--sp-2) var(--sp-4); margin: 0; }
+.source dt { font-family: var(--font-mono); font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); }
+.source dd { margin: 0; }
+
+/* --------------------------------------------------------------- plot  -- */
+
+.plot { width: 100%; min-height: 460px; }
+.plot--tall { min-height: 520px; }
+.plot--chart { min-height: 400px; }
+
+/* -------------------------------------------------------------- footer -- */
+
+.foot {
+  background: var(--ink-900);
+  color: #92BAD3;
+  margin-top: var(--sp-7);
+  padding: var(--sp-6) 0;
+  font-size: var(--step--1);
+}
+.foot a { color: #C4DEEE; }
+.foot__grid { display: grid; gap: var(--sp-5); grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.foot h4 {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #6BA4C7;
+  margin: 0 0 var(--sp-3);
+}
+.foot ul { list-style: none; margin: 0; padding: 0; }
+.foot li { margin-bottom: var(--sp-2); }
+.foot__legal { border-top: 1px solid #07517E; margin-top: var(--sp-5); padding-top: var(--sp-4); color: #6BA4C7; }
+
+/* ------------------------------------------------------------ preferensi -- */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------------------------------------------------------- layar penuh -- */
+
+/* Kelas dipasang dari JS, bukan pseudo-class :fullscreen — penulisan
+   berprefiksnya berbeda antar peramban dan satu selektor yang tidak dikenal
+   membatalkan seluruh aturan. */
+#anim-stage.is-fullscreen {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: var(--sp-4);
+  background: var(--surface);
+}
+
+/* min-height dari .plot / .plot--tall harus dilepas, jika tidak peta tidak
+   dapat menyusut mengikuti sisa ruang di dalam flex column. */
+#anim-stage.is-fullscreen .plot { flex: 1 1 auto; min-height: 0; }
+#anim-stage.is-fullscreen .legend { margin-top: 0; }
+
+/* ------------------------------------------- prakiraan hujan (ENS) ----- */
+/* Tombol bersegmen: satu pilihan aktif per kelompok (btn--primary). */
+.fc-controls { display: flex; flex-wrap: wrap; gap: var(--sp-3) var(--sp-5); align-items: flex-end; margin-bottom: var(--sp-3); }
+.fc-controls__k { display: block; font-size: var(--step--1); color: var(--muted); margin-bottom: var(--sp-1); }
+.seg { display: inline-flex; }
+.seg button.btn { border-radius: 0; margin-left: -1px; }
+.seg button.btn:first-child { border-radius: var(--radius) 0 0 var(--radius); margin-left: 0; }
+.seg button.btn:last-child { border-radius: 0 var(--radius) var(--radius) 0; }
+/* Tinggi peta diatur map_forecast.js dari rasio domain ENS; min-height .plot dilepas di sana. */
+.fc-small { font-size: var(--step--1); color: var(--muted); margin: var(--sp-3) 0 0; }
+.fc-legend-title { font-size: var(--step--1); color: var(--muted); margin: var(--sp-3) 0 var(--sp-1); }
+.fc-daytable { width: 100%; font-size: var(--step--1); margin-top: var(--sp-3); border-collapse: collapse; }
+.fc-daytable th, .fc-daytable td { padding: var(--sp-1) var(--sp-2); border-bottom: 1px solid var(--line-soft); text-align: right; font-variant-numeric: tabular-nums; }
+.fc-daytable th:first-child, .fc-daytable td:first-child { text-align: left; }
+
+@media print {
+  .masthead, .foot, .controls, .playbar, .fc-controls { display: none; }
+  body { background: #fff; }
+}
+
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Lewati ke konten</a>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="masthead__top">
+      <a class="brand" href="../../index.html">
+        <img class="brand__logo" src="../../assets/img/uper-lambang.png"
+             alt="Lambang Universitas Pertamina" width="40" height="41">
+        <span class="brand__text">
+          <span class="brand__mark">HESLab Portal</span>
+          <span class="brand__sub">Pemantauan dan Prakiraan Hidrologi</span>
+        </span>
+      </a>
+      <a class="outlink" href="https://www.heslab-uper.com" target="_blank" rel="noopener">
+        Website Laboratorium ↗
+      </a>
+    </div>
+    <nav class="mainnav" aria-label="Navigasi utama">
+      <a href="../../rainfall/index.html"
+         data-status="live"
+>Rainfall Monitoring</a>
+      <a href="../../climate/index.html"
+         data-status="live"
+aria-current="true">Climate Outlook</a>
+      <a href="../../fews/index.html"
+         data-status="planned"
+>FEWS</a>
+      <a href="../../streamflow/index.html"
+         data-status="planned"
+>Streamflow Forecast</a>
+      <a href="../../drought/index.html"
+         data-status="planned"
+>Drought Risk</a>
+    </nav>
+  </div>
+  <div class="ramp-rule" aria-hidden="true">
+<span style="background:#F7FAFB"></span><span style="background:#DCEBF2"></span><span style="background:#A9D4E6"></span><span style="background:#63ACD3"></span><span style="background:#2E7DB8"></span><span style="background:#6B3FA0"></span><span style="background:#A81F5E"></span>  </div>
+</header>
+
+<div class="wave-rule" aria-hidden="true">
+  <svg viewBox="0 0 400 10" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,5 C 50,0 100,10 150,5 C 200,0 250,10 300,5 C 350,0 400,10 400,5 L400,10 L0,10 Z"
+          fill="var(--wave-600)" opacity="0.55"/>
+    <path d="M0,7 C 50,3 100,11 150,7 C 200,3 250,11 300,7 C 350,3 400,11 400,7 L400,10 L0,10 Z"
+          fill="var(--wave-300)" opacity="0.35"/>
+  </svg>
+</div>
+
+<div class="wrap">
+  <nav class="crumbs" aria-label="Remah roti">
+        <a href="../../index.html">HESLab Portal</a><span aria-hidden="true">/</span>
+        <a href="../../climate/index.html">Climate Outlook</a><span aria-hidden="true">/</span>
+        <span>Climate Outlook — run Okt 2026</span>
+  </nav>
+</div>
+
+<main id="main">
+<div class="wrap">
+
+  <section class="pagehead">
+    <p class="eyebrow">Climate Outlook · Kajian riset · Arsip, tidak berubah</p>
+    <h1>Climate Outlook — run Okt 2026</h1>
+    <p class="lede">
+      Kajian riset HESLab atas prakiraan musiman ECMWF SEAS5 run
+      Okt 2026: indeks ENSO (Niño3.4) dan IOD (DMI) enam bulan
+      ke depan, peluang El Niño, La Niña, dan IOD per bulan, serta anomali suhu muka
+      laut di sekitar Indonesia.
+    </p>
+  </section>
+
+  <div class="note">
+    <p><strong>Arsip kajian run Okt 2026</strong> (diolah 15 Okt 2026).
+    Halaman ini tidak berubah dan dapat dikutip. Kajian run terbaru:
+    <a href="../../climate/index.html">Climate Outlook</a>.</p>
+  </div>
+
+  <div class="note">
+    <p><strong>Bukan prakiraan resmi.</strong> Halaman ini adalah pembahasan ilmiah
+    atas satu run model global untuk keperluan riset dan edukasi. Prakiraan iklim
+    resmi Indonesia diterbitkan oleh BMKG.</p>
+  </div>
+
+  <div class="readout">
+  <div class="readout__cell">
+    <span class="readout__k">Initial time</span>
+    <span class="readout__v">Okt 2026 · SEAS5 system 51</span>
+  </div>
+  <div class="readout__cell">
+    <span class="readout__k">Diolah</span>
+    <span class="readout__v">15 Okt 2026</span>
+  </div>
+  <div class="readout__cell">
+    <span class="readout__k">Lead time</span>
+    <span class="readout__v">1–6 bulan · Okt 2026 – Mar 2027</span>
+  </div>
+  <div class="readout__cell">
+    <span class="readout__k">Ensemble member</span>
+    <span class="readout__v">51</span>
+  </div>
+</div>
+
+
+
+  <section class="panel" aria-labelledby="co-idx-h">
+    <div class="panel__head"><h2 id="co-idx-h">Indeks ENSO dan IOD</h2></div>
+
+    <div class="fc-controls">
+      <div><span class="fc-controls__k" id="co-k-index">Indeks</span>
+        <div class="seg" data-key="index" role="group" aria-labelledby="co-k-index">
+          <button class="btn" type="button" data-v="nino34">Niño3.4 (ENSO)</button>
+          <button class="btn" type="button" data-v="dmi">DMI (IOD)</button>
+        </div></div>
+    </div>
+
+    <div class="plot plot--chart" id="plot-co-plume" role="img"
+         aria-label="Plume prakiraan indeks: member, rerata, rentang P10–P90, dan pengamatan"></div>
+    <p class="fc-small" id="co-plume-note"></p>
+    <div class="plot plot--chart" id="plot-co-prob" role="img"
+         aria-label="Peluang kelas per bulan"></div>
+
+    <div class="tablewrap" style="margin-top:var(--sp-4)">
+      <table class="data">
+        <caption>Ringkasan per bulan. Rentang = P10–P90 member (80% member berada di dalamnya).</caption>
+        <thead><tr>
+          <th scope="col">Bulan</th><th scope="col">Lead</th>
+          <th scope="col">Niño3.4 (°C)</th><th scope="col">La Niña / Netral / El Niño</th>
+          <th scope="col">DMI (°C)</th><th scope="col">IOD− / Netral / IOD+</th>
+        </tr></thead>
+        <tbody id="co-tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="co-map-h">
+    <div class="panel__head"><h2 id="co-map-h">Peta anomali suhu muka laut (SST)</h2></div>
+
+
+    <div class="playbar">
+      <button class="btn" id="co-prev" type="button" aria-label="Bulan sebelumnya">◀</button>
+      <input type="range" id="co-slider" min="0" max="0" value="0" step="1" aria-label="Bulan prakiraan">
+      <button class="btn" id="co-next" type="button" aria-label="Bulan berikutnya">▶</button>
+      <output id="co-stamp" for="co-slider"></output>
+    </div>
+
+    <div class="plot" id="plot-co-map" role="img"
+         aria-label="Peta anomali suhu muka laut prakiraan SEAS5 per sel 1 derajat"></div>
+
+    <div class="split" style="margin-top:var(--sp-3)">
+      <div>
+        <p class="fc-legend-title" id="co-legend-title"></p>
+        <ul class="legend" id="co-legend"></ul>
+        <p class="fc-small" id="co-map-note"></p>
+      </div>
+      <div>
+        <p class="eyebrow">Rincian sel</p>
+        <div class="detail" id="co-detail" aria-live="polite">
+          <p class="detail__empty">Klik satu kotak laut pada peta untuk melihat anomali
+            SST di sel itu.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="co-dl-h">
+    <h2 id="co-dl-h">Unduh data dan gambar</h2>
+    <ul>
+      <li><a href="../../assets/data/climate/202610/outlook.csv" download>outlook.csv</a> (1 KB)</li>
+      <li><a href="../../assets/data/climate/202610/members.csv" download>members.csv</a> (12 KB)</li>
+      <li><a href="../../assets/data/climate/202610/observed.csv" download>observed.csv</a> (0 KB)</li>
+      <li><a href="../../assets/data/climate/202610/plume.png" download>plume.png</a> (320 KB)</li>
+      <li><a href="../../assets/data/climate/202610/map_sst_anomaly.png" download>map_sst_anomaly.png</a> (481 KB)</li>
+    </ul>
+  </section>
+
+  <section class="panel" aria-labelledby="co-arc-h">
+    <h2 id="co-arc-h">Arsip kajian</h2>
+    <p class="fc-small">Setiap run punya halaman tetap yang tidak berubah, untuk dikutip atau
+      dibagikan. Halaman Climate Outlook utama selalu menampilkan run terbaru.</p>
+    <ul>
+      <li><a href="../../climate/202610/index.html">Run Okt 2026</a>
+(terbaru)· halaman ini        <code>https://portal.heslab-uper.com/climate/202610/</code></li>
+    </ul>
+  </section>
+
+  <section class="source" aria-labelledby="src-co-h">
+    <h4 id="src-co-h" class="eyebrow">Sumber dan pengolahan data</h4>
+    <dl>
+      <dt>Produsen data</dt>
+      <dd>ECMWF SEAS5 (system 51) melalui Copernicus Climate Change Service (C3S) Climate Data Store
+        (<a href="https://cds.climate.copernicus.eu/datasets/seasonal-monthly-single-levels" target="_blank" rel="noopener">laman dataset ↗</a>)</dd>
+      <dt>Produk</dt>
+      <dd>Prakiraan musiman bulanan, 51 member, lead 1–6 bulan (lead 1 = bulan awal run); terbit sekitar tanggal 5 setiap bulan.</dd>
+      <dt>Pengolahan</dt>
+      <dd>Anomali Niño3.4 dan DMI dihitung terhadap klimatologi SEAS5 1991–2020 per bulan awal dan lead, lalu dikalibrasi linear ke ONI (NOAA CPC) dan DMI (NOAA PSL, HadISST); rerata SEAS5 (raw) ditampilkan berdampingan. Kelas per lead = bagian member: La Niña ≤ −0,5 / El Niño ≥ +0,5 °C, IOD− ≤ −0,4 / IOD+ ≥ +0,4 °C. Peta: anomali SST rerata ensemble per sel 1° terhadap klimatologi SEAS5 1991–2020 yang sama.</dd>
+      <dt>Keterbatasan</dt>
+      <dd>Prakiraan musiman menggambarkan peluang, bukan kepastian, dan keterampilannya menurun dengan lead time. Informasi iklim resmi Indonesia tetap mengacu pada BMKG.</dd>
+      <dt>Lisensi</dt>
+      <dd>Contains modified Copernicus Climate Change Service information 2026. Neither the European Commission nor ECMWF is responsible for any use that may be made of the Copernicus information or data it contains.</dd>
+    </dl>
+  </section>
+  
+</div>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <h4>Portal</h4>
+        <ul>
+          <li><a href="../../rainfall/index.html">Rainfall Monitoring</a></li>
+          <li><a href="../../climate/index.html">Climate Outlook</a></li>
+          <li><a href="../../fews/index.html">FEWS</a></li>
+          <li><a href="../../streamflow/index.html">Streamflow Forecast</a></li>
+          <li><a href="../../drought/index.html">Drought Risk</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Sumber data</h4>
+        <ul>
+          <li><a href="https://sharaku.eorc.jaxa.jp/GSMaP/" target="_blank" rel="noopener">JAXA Global Rainfall Watch (GSMaP) ↗</a></li>
+          <li>Badan Informasi Geospasial —
+            <a href="https://tanahair.indonesia.go.id/portal-web/" target="_blank" rel="noopener">Ina-Geoportal ↗</a>, DEMNAS</li>
+          <li><a href="https://livingatlas.arcgis.com/landcoverexplorer/" target="_blank" rel="noopener">Esri Sentinel-2 Land Cover Explorer ↗</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Laboratorium</h4>
+        <ul>
+          <li>Hydro-Environmental Systems Laboratory</li>
+          <li>Program Studi Teknik Sipil, Universitas Pertamina</li>
+          <li><a href="mailto:nurul.fj@universitaspertamina.ac.id">nurul.fj@universitaspertamina.ac.id</a></li>
+          <li><a href="mailto:heslab.uper@gmail.com">heslab.uper@gmail.com</a></li>
+          <li><a href="https://www.heslab-uper.com" target="_blank" rel="noopener">Website laboratorium ↗</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="foot__legal" style="margin-bottom:.25rem;letter-spacing:.06em">
+      <span style="font-family:'IBM Plex Mono',monospace;text-transform:uppercase;font-size:.85em">
+        Berilmu · Bermanfaat · Berdampak</span>
+    </p>
+    <p class="foot__legal">
+      Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
+      resmi tetap mengacu pada BMKG dan instansi berwenang.
+      Halaman dibangun 15-10-2026 17:32 WIB · © 2026 Hydro-Environmental Systems Laboratory.
+    </p>
+  </div>
+</footer>
+
+<script id="payload" type="application/json">{"kind":"climate-outlook","init_label":"Okt 2026","leads":[{"lead":1,"valid":"2026-10","label":"Okt 2026"},{"lead":2,"valid":"2026-11","label":"Nov 2026"},{"lead":3,"valid":"2026-12","label":"Des 2026"},{"lead":4,"valid":"2027-01","label":"Jan 2027"},{"lead":5,"valid":"2027-02","label":"Feb 2027"},{"lead":6,"valid":"2027-03","label":"Mar 2027"}],"thresholds":{"el_nino":0.5,"la_nina":-0.5,"iod_positive":0.4,"iod_negative":-0.4},"nino34":{"mean":[3.016,3.399,3.522,3.4,3.041,2.597],"p10":[2.948,3.301,3.397,3.228,2.837,2.319],"p90":[3.085,3.482,3.636,3.559,3.263,2.863],"raw":[3.563,3.986,4.16,4.06,3.775,3.413],"members":[[2.975,3.367,3.35,3.063,2.56,2.232],[2.967,3.365,3.39,3.403,2.837,2.144],[3.011,3.462,3.626,3.413,3.234,2.755],[3.028,3.393,3.491,3.345,2.997,2.686],[3.019,3.368,3.397,3.213,2.991,2.415],[3.016,3.495,3.566,3.492,3.213,2.834],[2.993,3.422,3.514,3.335,3.011,2.603],[2.95,3.3,3.447,3.235,2.719,2.28],[3.081,3.318,3.522,3.301,3.06,2.544],[3.034,3.479,3.529,3.432,2.998,2.44],[2.993,3.386,3.568,3.505,3.259,2.84],[2.939,3.335,3.508,3.43,3.068,2.429],[3.043,3.345,3.543,3.41,3.061,2.682],[3.005,3.409,3.649,3.521,3.134,2.681],[2.936,3.301,3.49,3.363,3.029,2.502],[3.052,3.454,3.553,3.367,3.011,2.492],[2.948,3.33,3.464,3.211,2.703,2.429],[3.061,3.362,3.667,3.574,3.211,2.694],[2.976,3.316,3.381,3.261,2.97,2.586],[3.124,3.464,3.591,3.559,3.149,2.863],[3.043,3.471,3.53,3.227,2.847,2.563],[3.081,3.53,3.65,3.65,3.366,2.861],[2.911,3.38,3.421,3.356,3.004,2.664],[2.953,3.283,3.415,3.432,3.196,2.943],[3.12,3.542,3.536,3.52,3.082,2.611],[3.001,3.262,3.412,3.255,2.761,2.442],[2.98,3.37,3.542,3.173,2.85,2.315],[2.999,3.514,3.518,3.383,2.883,2.319],[3.008,3.379,3.636,3.386,2.881,2.389],[3.029,3.453,3.411,3.446,3.074,2.678],[2.975,3.417,3.491,3.355,2.888,2.466],[3.057,3.365,3.495,3.509,3.122,2.792],[2.975,3.399,3.494,3.484,2.902,2.293],[3.056,3.265,3.368,3.322,2.851,2.446],[2.984,3.418,3.539,3.403,3.157,2.762],[3.022,3.372,3.571,3.316,2.955,2.536],[2.973,3.318,3.396,3.353,3.044,2.517],[2.958,3.356,3.643,3.637,3.251,2.973],[2.964,3.346,3.535,3.427,2.878,2.334],[3.017,3.435,3.53,3.444,3.121,2.617],[3.1,3.567,3.587,3.429,3.18,2.667],[2.946,3.257,3.414,3.228,2.854,2.421],[3.035,3.442,3.606,3.307,3.144,2.685],[3.054,3.426,3.59,3.398,3.033,2.522],[3.08,3.465,3.603,3.504,3.388,2.884],[3.115,3.482,3.603,3.526,3.263,2.658],[2.916,3.432,3.603,3.574,3.331,2.922],[3.024,3.454,3.61,3.539,3.317,2.67],[3.123,3.45,3.706,3.652,3.401,3.054],[3.085,3.398,3.433,3.406,2.817,2.571],[3.07,3.447,3.493,3.309,3.037,2.744]]},"dmi":{"mean":[0.375,0.276,0.079,-0.019,-0.139,-0.166],"p10":[0.269,0.057,-0.123,-0.207,-0.32,-0.309],"p90":[0.481,0.473,0.274,0.178,0.052,-0.022],"raw":[0.748,0.469,0.147,-0.036,-0.267,-0.35],"members":[[0.427,0.271,0.294,0.178,-0.051,-0.06],[0.398,0.33,0.05,-0.037,-0.269,-0.429],[0.402,0.357,-0.125,-0.104,-0.076,-0.208],[0.295,0.125,0.065,-0.103,-0.356,-0.381],[0.481,0.473,0.151,-0.0,-0.148,-0.204],[0.348,0.321,0.364,0.033,0.092,-0.01],[0.334,0.281,0.071,-0.083,-0.266,-0.085],[0.272,0.09,-0.064,-0.013,-0.107,0.12],[0.47,0.494,0.052,-0.003,-0.201,-0.248],[0.34,0.195,-0.155,0.069,-0.165,-0.165],[0.269,-0.059,0.006,-0.064,-0.399,-0.263],[0.369,0.432,0.271,0.186,0.039,0.054],[0.334,0.191,-0.045,0.006,-0.165,-0.084],[0.424,0.351,0.233,0.228,0.011,-0.206],[0.38,0.209,-0.073,-0.047,-0.272,-0.071],[0.331,0.157,0.013,-0.068,-0.159,-0.111],[0.439,0.142,0.046,-0.091,-0.32,-0.397],[0.378,0.251,0.142,-0.218,-0.218,-0.222],[0.344,0.255,0.181,0.088,-0.017,-0.278],[0.369,0.053,0.166,0.043,-0.147,-0.234],[0.352,0.314,0.224,0.074,-0.06,-0.022],[0.486,0.552,0.327,0.164,-0.077,-0.309],[0.325,0.395,0.183,0.101,-0.138,-0.368],[0.394,0.494,0.006,0.066,0.197,-0.054],[0.244,0.157,0.269,0.201,-0.254,-0.174],[0.282,0.057,-0.038,-0.194,-0.187,-0.204],[0.333,0.116,-0.155,-0.04,0.052,-0.178],[0.257,0.102,-0.155,-0.141,-0.07,-0.106],[0.402,0.468,0.141,0.017,-0.318,-0.261],[0.334,0.088,-0.178,-0.301,-0.34,-0.235],[0.456,0.36,-0.066,-0.207,-0.364,-0.262],[0.321,0.244,0.025,0.026,-0.112,0.063],[0.583,0.732,0.256,-0.051,-0.212,-0.182],[0.379,0.352,-0.065,-0.122,-0.253,-0.197],[0.395,0.27,-0.117,-0.045,-0.009,-0.216],[0.414,0.282,0.022,0.066,-0.007,-0.15],[0.446,0.394,0.274,0.038,-0.214,-0.296],[0.532,0.009,-0.123,-0.062,-0.177,-0.324],[0.201,0.282,0.297,0.094,-0.003,-0.16],[0.489,0.326,0.033,0.005,-0.211,-0.197],[0.452,0.623,0.452,0.321,0.319,0.03],[0.47,0.425,0.174,0.072,-0.032,-0.192],[0.161,-0.073,-0.001,-0.327,-0.495,-0.052],[0.341,0.183,0.077,-0.153,-0.09,-0.111],[0.265,0.025,0.02,-0.107,0.067,-0.092],[0.52,0.256,-0.03,-0.23,-0.287,-0.104],[0.327,0.426,0.058,-0.021,-0.24,-0.288],[0.272,0.231,-0.053,-0.256,-0.077,-0.143],[0.432,0.383,0.218,-0.16,-0.224,-0.058],[0.468,0.304,0.025,0.027,0.106,-0.042],[0.409,0.4,0.266,0.201,-0.163,-0.123]]},"enso":{"la_nina":[0.0,0.0,0.0,0.0,0.0,0.0],"neutral":[0.0,0.0,0.0,0.0,0.0,0.0],"el_nino":[1.0,1.0,1.0,1.0,1.0,1.0]},"iod":{"negative":[0.0,0.0,0.0,0.0,0.02,0.02],"neutral":[0.608,0.804,0.98,1.0,0.98,0.98],"positive":[0.392,0.196,0.02,0.0,0.0,0.0]},"observed":{"valid":["2026-04","2026-05","2026-06","2026-07","2026-08","2026-09"],"label":["Apr 2026","Mei 2026","Jun 2026","Jul 2026","Agu 2026","Sep 2026"],"oni":[0.46,0.95,1.39,1.8,2.16,null],"dmi":[0.279,0.146,null,null,null,null]},"map":{"lat":[9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5],"lon":[90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5],"bounds":{"north":10,"west":90,"south":-15,"east":145},"urls":["../../assets/data/climate/202610/map_2026-10.json","../../assets/data/climate/202610/map_2026-11.json","../../assets/data/climate/202610/map_2026-12.json","../../assets/data/climate/202610/map_2027-01.json","../../assets/data/climate/202610/map_2027-02.json","../../assets/data/climate/202610/map_2027-03.json"],"layers":[{"k":"sst_anom","label":"Anomali SST","unit":"°C","classes":[{"min":null,"max":-2,"color":"#053061","legend":"< −2 °C"},{"min":-2,"max":-1.5,"color":"#2166AC","legend":"−2 s.d. −1,5 °C"},{"min":-1.5,"max":-1,"color":"#4393C3","legend":"−1,5 s.d. −1 °C"},{"min":-1,"max":-0.5,"color":"#92C5DE","legend":"−1 s.d. −0,5 °C"},{"min":-0.5,"max":-0.25,"color":"#D1E5F0","legend":"−0,5 s.d. −0,25 °C"},{"min":-0.25,"max":0.25,"color":"#F7F7F7","legend":"−0,25 s.d. 0,25 °C"},{"min":0.25,"max":0.5,"color":"#FDDBC7","legend":"0,25 s.d. 0,5 °C"},{"min":0.5,"max":1,"color":"#F4A582","legend":"0,5 s.d. 1 °C"},{"min":1,"max":1.5,"color":"#D6604D","legend":"1 s.d. 1,5 °C"},{"min":1.5,"max":2,"color":"#B2182B","legend":"1,5 s.d. 2 °C"},{"min":2,"max":null,"color":"#67001F","legend":"≥ 2 °C"}]}],"map":{"center":{"lat":-2.5,"lon":118.0},"zoom":3.5,"style":"white-bg","layers":[{"below":"traces","sourcetype":"raster","sourceattribution":"Esri, HERE, Garmin, © OpenStreetMap contributors","source":["https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"]},{"below":"traces","sourcetype":"raster","source":["https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}"]}]},"height":{"min":280,"max":720},"opacity":0.82}}</script>
+<script src="https://cdn.plot.ly/plotly-2.32.0.min.js" integrity="sha384-7TVmlZWH60iKX5Uk7lSvQhjtcgw2tkFjuwLcXoRSR4zXTyWFJRm9aPAguMh7CIra" crossorigin="anonymous" charset="utf-8"></script>
+<script>/* ==========================================================================
+   Utilitas bersama HESLab Portal.
+   Semua berkas JS di-inline oleh rendering.py; tidak ada modul ES eksternal.
+   ========================================================================== */
+(function (global) {
+  "use strict";
+
+  var H = {};
+
+  /* Ambil payload data yang ditanam di HTML sebagai <script type="application/json">. */
+  H.payload = function (elementId) {
+    var el = document.getElementById(elementId || "payload");
+    if (!el) throw new Error("Payload '" + elementId + "' tidak ditemukan.");
+    return JSON.parse(el.textContent);
+  };
+
+  /* Escape teks sebelum disisipkan lewat innerHTML. */
+  H.esc = function (s) {
+    return String(s === null || s === undefined ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  };
+
+  /* Format angka dengan konvensi Indonesia: koma desimal, titik ribuan. */
+  H.num = function (v, dec) {
+    if (v === null || v === undefined || isNaN(v)) return "–";
+    return Number(v).toLocaleString("id-ID", {
+      minimumFractionDigits: dec === undefined ? 1 : dec,
+      maximumFractionDigits: dec === undefined ? 1 : dec
+    });
+  };
+
+  /* Cari kelas intensitas untuk sebuah nilai. Kelas terakhir bersifat terbuka. */
+  H.classify = function (classes, v) {
+    if (v === null || v === undefined || isNaN(v)) return null;
+    for (var i = 0; i < classes.length; i++) {
+      var c = classes[i];
+      if (v >= c.min && (c.max === null || v < c.max)) return c;
+    }
+    return classes[classes.length - 1];
+  };
+
+  H.colorOf = function (classes, v) {
+    var c = H.classify(classes, v);
+    return c ? c.color : "#ffffff";
+  };
+
+  H.labelOf = function (classes, v) {
+    var c = H.classify(classes, v);
+    return c ? c.label : "Tidak tersedia";
+  };
+
+  /* Batas atas skala warna: sedikit di atas ambang kelas terakhir. */
+  H.zmax = function (classes) {
+    var last = classes[classes.length - 1];
+    return last.max !== null ? last.max : last.min * 1.5;
+  };
+
+  /*
+   * Colorscale diskret untuk Plotly.
+   * Plotly hanya menerima skala kontinu 0..1, jadi setiap kelas ditulis sebagai
+   * dua titik henti dengan warna sama agar transisinya bertingkat, bukan gradual.
+   */
+  H.discreteColorscale = function (classes) {
+    var zmax = H.zmax(classes);
+    var scale = [];
+    classes.forEach(function (c, i) {
+      var lo = c.min / zmax;
+      var hi = (c.max === null ? zmax : Math.min(c.max, zmax)) / zmax;
+      scale.push([Math.max(0, Math.min(1, lo)), c.color]);
+      scale.push([Math.max(0, Math.min(1, hi)), c.color]);
+      if (i === classes.length - 1) scale[scale.length - 1][0] = 1;
+    });
+    return scale;
+  };
+
+  /* Legenda HTML dari daftar kelas, ditutup entri "tidak ada data". */
+  H.renderLegend = function (container, classes, unit, nodata) {
+    if (!container) return;
+    var html = classes.map(function (c) {
+      // c.legend (opsional) menggantikan teks rentang otomatis, mis. kelas
+      // sifat hujan yang batasnya [31, 51) tetapi ditulis "31–50%".
+      if (c.legend) {
+        return '<li><i style="background:' + c.color + '"></i><span>' + c.legend + "</span></li>";
+      }
+      // Desimal secukupnya: 5 -> "5", 0,5 -> "0,5", 0,02 -> "0,02".
+      var dec = function (x) { return x % 1 === 0 ? 0 : (Math.round(x * 10) === x * 10 ? 1 : 2); };
+      var range = c.max === null
+        ? "≥ " + H.num(c.min, dec(c.min))
+        : H.num(c.min, dec(c.min)) + "–" + H.num(c.max, dec(c.max));
+      return '<li><i style="background:' + c.color + '"></i>' +
+             '<span>' + range + " " + unit + "</span></li>";
+    }).join("");
+
+    // Wilayah tanpa data harus punya kunci warnanya sendiri. Tanpa ini,
+    // pembaca akan menyimpulkan abu-abu berarti "tidak hujan".
+    //
+    // Contoh warnanya dibuat setransparan tampilan di peta, dengan latar
+    // seterang basemap. Legenda yang menampilkan abu-abu pekat sementara
+    // petanya tembus pandang akan membuat pembaca mencari warna yang salah.
+    if (nodata) {
+      var op = nodata.opacity === undefined ? 1 : nodata.opacity;
+      html += '<li style="margin-left:.5rem">' +
+              '<i style="background:#f5f7f8;position:relative;overflow:hidden">' +
+                '<span style="position:absolute;inset:0;background:' + nodata.color +
+                ';opacity:' + op + '"></span>' +
+              '</i><span>' + nodata.label + "</span></li>";
+    }
+    container.innerHTML = html;
+  };
+
+  /* Daftar wilayah yang nilainya tidak tersedia pada satu langkah waktu. */
+  H.missingIds = function (ids, values) {
+    var out = [];
+    for (var i = 0; i < ids.length; i++) {
+      var v = values[i];
+      if (v === null || v === undefined || isNaN(v)) out.push(ids[i]);
+    }
+    return out;
+  };
+
+  /*
+   * Lapisan terpisah untuk wilayah tanpa data.
+   *
+   * Plotly tidak dapat mewarnai nilai z yang null — poligonnya dibiarkan
+   * transparan sehingga menyerupai basemap dan tak terbedakan dari wilayah
+   * yang benar-benar tidak hujan. Karena itu wilayah tanpa data digambar
+   * sebagai trace kedua dengan satu warna tetap.
+   *
+   * Tingkat transparansinya diatur lewat config.NODATA.opacity. Garis tepi
+   * sengaja diberi warna sendiri: ketika isian dibuat tembus pandang, garis
+   * tepilah yang menjaga poligon tetap terbaca sebagai wilayah, bukan sebagai
+   * lubang pada peta.
+   */
+  H.nodataTrace = function (geo, featureidkey, ids, nodata) {
+    return {
+      type: "choroplethmapbox",
+      geojson: geo,
+      featureidkey: featureidkey,
+      locations: ids,
+      z: ids.map(function () { return 0; }),
+      colorscale: [[0, nodata.color], [1, nodata.color]],
+      zmin: 0,
+      zmax: 1,
+      opacity: nodata.opacity === undefined ? 1 : nodata.opacity,
+      showscale: false,
+      hoverinfo: "text",
+      text: ids.map(function () { return nodata.label; }),
+      marker: {
+        line: {
+          width: nodata.line_width === undefined ? 0.6 : nodata.line_width,
+          color: nodata.line_color || "rgba(255,255,255,0.65)"
+        }
+      }
+    };
+  };
+
+  /*
+   * Ambil dan simpan cache satu URL JSON. Dipakai untuk geometri kabupaten
+   * maupun untuk data dasarian per provinsi yang diambil sesuai permintaan —
+   * keduanya butuh perilaku sama: ambil sekali, simpan di memori, pakai ulang.
+   */
+  var jsonCache = {};
+  H.fetchJSON = function (url) {
+    if (!jsonCache[url]) {
+      jsonCache[url] = fetch(url).then(function (r) {
+        if (!r.ok) throw new Error("Gagal memuat " + url + " (" + r.status + ")");
+        return r.json();
+      }).catch(function (err) {
+        delete jsonCache[url];     // gangguan sesaat tidak boleh menetap sampai muat ulang
+        throw err;
+      });
+    }
+    return jsonCache[url];
+  };
+
+  /* Muat GeoJSON sekali, lalu simpan di cache promise. */
+  H.loadGeoJSON = function (url) {
+    return H.fetchJSON(url);
+  };
+
+  /* Tampilkan pesan galat di dalam wadah plot, bukan hanya di konsol. */
+  H.fail = function (container, message, hint) {
+    container.innerHTML =
+      '<div class="awaiting"><h3>Peta tidak dapat ditampilkan</h3>' +
+      '<p>' + message + '</p>' +
+      (hint ? '<p><code>' + hint + '</code></p>' : '') + '</div>';
+  };
+
+  H.reducedMotion = function () {
+    return global.matchMedia &&
+           global.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  };
+
+  /* Konfigurasi Plotly yang seragam di seluruh portal. */
+  H.plotConfig = function (filename) {
+    return {
+      displaylogo: false,
+      responsive: true,
+      // Roda mouse menggulir halaman, bukan memperbesar peta/grafik; zoom
+      // tetap tersedia lewat tombol +/- di bilah alat.
+      scrollZoom: false,
+      toImageButtonOptions: { format: "png", filename: filename, scale: 2 },
+      modeBarButtonsToRemove: ["lasso2d", "select2d", "toggleSpikelines"]
+    };
+  };
+
+  H.mapLayout = function (map, bounds) {
+    var layout = {
+      mapbox: {
+        style: map.style,
+        center: { lat: map.center.lat, lon: map.center.lon },
+        zoom: map.zoom,
+        /* Lapisan basemap raster (Esri Light Gray Canvas). Bila kosong,
+           mapbox memakai gaya bawaan saja — peta tetap tampil. */
+        layers: map.layers || []
+      },
+      margin: { r: 0, t: 0, l: 0, b: 0 },
+      paper_bgcolor: "rgba(0,0,0,0)",
+      font: { family: "IBM Plex Sans, system-ui, sans-serif", size: 12, color: "#16333f" },
+      dragmode: "pan"
+    };
+
+    /* Batasi geseran peta agar tidak keluar dari cakupan data. Bila versi
+       plotly.js yang dipakai belum mengenal properti ini, ia diabaikan
+       tanpa menimbulkan galat. */
+    if (bounds) {
+      layout.mapbox.bounds = {
+        west: bounds.west, east: bounds.east,
+        south: bounds.south, north: bounds.north
+      };
+    }
+    return layout;
+  };
+
+  /*
+   * Hitung tingkat zoom terkecil yang masih menampilkan seluruh cakupan data.
+   *
+   * Web Mercator: pada zoom z, lebar dunia = 512 * 2^z piksel. Zoom yang pas
+   * mengisi lebar wadah dihitung dari perbandingan rentang bujur terhadap
+   * 360 derajat; hal serupa untuk lintang, memakai proyeksi Mercator.
+   *
+   * Diambil nilai TERKECIL dari keduanya, karena itulah zoom saat seluruh
+   * data baru muat di layar. Zoom di bawahnya akan menampilkan wilayah di
+   * luar cakupan data — persis yang ingin dicegah.
+   */
+  function mercatorY(lat) {
+    var r = lat * Math.PI / 180;
+    return Math.log(Math.tan(Math.PI / 4 + r / 2));
+  }
+
+  /*
+   * Perluas kotak pembatas ke utara-selatan agar rasio-nya sama dengan wadah.
+   *
+   * mapbox.bounds tidak mengizinkan tampilan keluar dari kotak. Kotak
+   * Indonesia jauh lebih lebar daripada tingginya; pada wadah yang relatif
+   * lebih tinggi, zoom terkecil yang diizinkan ditentukan oleh TINGGI kotak,
+   * sehingga ujung barat (Aceh) dan timur (Papua) terpotong. Dengan menambah
+   * lintang di atas dan bawah sampai rasionya pas, lebar kotaklah yang
+   * menentukan, dan seluruh Indonesia selalu terlihat.
+   */
+  function mercatorLat(y) {
+    return (2 * Math.atan(Math.exp(y)) - Math.PI / 2) * 180 / Math.PI;
+  }
+
+  H.fitBounds = function (el, bounds) {
+    var lebar = el.clientWidth || 800;
+    var tinggi = el.clientHeight || 460;
+    var spanX = Math.abs(bounds.east - bounds.west) * Math.PI / 180;
+    var yN = mercatorY(bounds.north), yS = mercatorY(bounds.south);
+    var perlu = spanX * tinggi / lebar;
+    if (perlu <= yN - yS) return bounds;
+    var tambah = (perlu - (yN - yS)) / 2;
+    return {
+      west: bounds.west, east: bounds.east,
+      north: Math.min(85, mercatorLat(yN + tambah)),
+      south: Math.max(-85, mercatorLat(yS - tambah))
+    };
+  };
+
+  H.zoomMinimum = function (el, bounds) {
+    var lebar = el.clientWidth || 800;
+    var tinggi = el.clientHeight || 460;
+
+    var spanLon = Math.abs(bounds.east - bounds.west);
+    var zLebar = Math.log2(lebar * 360 / (512 * spanLon));
+
+    var spanY = Math.abs(mercatorY(bounds.north) - mercatorY(bounds.south));
+    var zTinggi = Math.log2(tinggi * (2 * Math.PI) / (512 * spanY));
+
+    return Math.min(zLebar, zTinggi);
+  };
+
+  /*
+   * Kunci zoom agar tidak bisa diperkecil melampaui cakupan data.
+   *
+   * plotly.js tidak menyediakan pengaturan zoom minimum, sehingga dipakai
+   * pendekatan koreksi: setiap kali peta selesai digeser atau di-zoom,
+   * nilai zoom diperiksa dan dikembalikan bila terlalu kecil.
+   *
+   * `sedangKoreksi` mencegah relayout korektif memicu dirinya sendiri.
+   * Batas dihitung ulang saat ukuran jendela berubah, karena zoom minimum
+   * bergantung pada lebar wadah peta.
+   */
+  H.kunciZoomKeBatas = function (el, bounds) {
+    var minZoom = H.zoomMinimum(el, bounds);
+    var sedangKoreksi = false;
+
+    function koreksi(ev) {
+      if (sedangKoreksi) return;
+      var z = ev && ev["mapbox.zoom"];
+      if (typeof z !== "number" || z >= minZoom - 1e-3) return;
+      sedangKoreksi = true;
+      Plotly.relayout(el, { "mapbox.zoom": minZoom }).then(function () {
+        sedangKoreksi = false;
+      });
+    }
+
+    el.on("plotly_relayout", koreksi);
+
+    /*
+     * Hitung ulang batas zoom karena ukuran wadah berubah.
+     *
+     * Dipanggil dari event resize jendela DAN dari luar (masuk/keluar layar
+     * penuh). Layar penuh tidak selalu memicu resize jendela, dan kalaupun
+     * memicu, ukuran wadahnya belum tentu sudah final saat event itu menyala.
+     */
+    function hitungUlang() {
+      minZoom = H.zoomMinimum(el, bounds);
+      var kini = el._fullLayout && el._fullLayout.mapbox && el._fullLayout.mapbox.zoom;
+      if (typeof kini === "number" && kini < minZoom) {
+        Plotly.relayout(el, { "mapbox.zoom": minZoom });
+      }
+      return minZoom;
+    }
+
+    global.addEventListener("resize", hitungUlang);
+
+    /* Mengembalikan objek, bukan angka: pemanggil butuh nilai awal untuk
+       menyetel tampilan pertama, dan butuh cara memaksa hitung ulang. */
+    return { awal: minZoom, refresh: hitungUlang };
+  };
+
+  /* ------------------------------------------------------------ layar penuh --
+
+     Layar penuh dipasang pada WADAH, bukan pada elemen petanya. Kalau hanya
+     elemen peta yang dijadikan layar penuh, tombol putar, penggeser waktu,
+     dan legenda ikut hilang dari layar.
+
+     Peramban yang tidak mendukung Fullscreen API untuk elemen sembarang
+     (antara lain Safari di iPhone) tidak diberi jalur khusus: tombolnya
+     disembunyikan, bukan dibiarkan gagal saat diklik.
+  */
+
+  function elemenFullscreen() {
+    return document.fullscreenElement || document.webkitFullscreenElement || null;
+  }
+
+  H.fullscreenDidukung = function (el) {
+    return !!(el && (el.requestFullscreen || el.webkitRequestFullscreen));
+  };
+
+  /*
+   * Pasang tombol layar penuh pada sebuah wadah.
+   *
+   *   opts.wadah   elemen yang dijadikan layar penuh
+   *   opts.tombol  tombol pemicu
+   *   opts.kelas   kelas CSS yang dipasang pada wadah selama layar penuh
+   *                (bawaan "is-fullscreen"); dipakai agar CSS tidak perlu
+   *                bergantung pada pseudo-class :fullscreen yang penulisan
+   *                berprefiksnya berbeda antar peramban
+   *   opts.label   { masuk, keluar } teks tombol pada kedua keadaan
+   *   opts.onUbah  dipanggil dengan (aktif: boolean) SETELAH ukuran wadah
+   *                stabil — tempat memanggil ulang penyesuaian ukuran plot
+   */
+  H.pasangFullscreen = function (opts) {
+    var wadah = opts.wadah;
+    var tombol = opts.tombol;
+    var kelas = opts.kelas || "is-fullscreen";
+    var label = opts.label || { masuk: "\u2921 Layar penuh", keluar: "\u2922 Keluar" };
+    if (!wadah || !tombol) return;
+
+    if (!H.fullscreenDidukung(wadah)) { tombol.hidden = true; return; }
+
+    tombol.addEventListener("click", function () {
+      var janji;
+      if (elemenFullscreen() === wadah) {
+        janji = (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+      } else {
+        janji = (wadah.requestFullscreen || wadah.webkitRequestFullscreen).call(wadah);
+      }
+      /* Permintaan layar penuh dapat ditolak peramban (mis. kebijakan izin).
+         Penolakan diabaikan diam-diam: halaman tetap berfungsi seperti biasa. */
+      if (janji && janji.catch) janji.catch(function () {});
+    });
+
+    function berubah() {
+      var aktif = elemenFullscreen() === wadah;
+      if (aktif) wadah.classList.add(kelas); else wadah.classList.remove(kelas);
+      tombol.setAttribute("aria-pressed", aktif ? "true" : "false");
+      tombol.textContent = aktif ? label.keluar : label.masuk;
+
+      /* Dua rangka tunda: ukuran wadah baru final setelah peramban selesai
+         menata ulang, bukan pada saat fullscreenchange menyala. */
+      global.requestAnimationFrame(function () {
+        global.requestAnimationFrame(function () {
+          if (opts.onUbah) opts.onUbah(aktif);
+        });
+      });
+    }
+
+    /* Tombol Esc keluar dari layar penuh tanpa melewati tombol di atas;
+       event inilah satu-satunya penanda keadaan yang dapat dipercaya. */
+    document.addEventListener("fullscreenchange", berubah);
+    document.addEventListener("webkitfullscreenchange", berubah);
+  };
+
+  global.HES = H;
+})(window);
+
+/* ==========================================================================
+   Climate Outlook: plume Niño3.4/DMI, peluang kelas, tabel, dan peta SEAS5.
+   Payload: heslab/builders/climate_outlook.py. Kelas peta: config.py 9e.
+   ========================================================================== */
+(function () {
+  "use strict";
+  var P = HES.payload("payload");
+  var GRID = "#e6ecee";
+  var FONT = { family: "IBM Plex Sans, system-ui, sans-serif", size: 12, color: "#16333f" };
+
+  /* Indeks dan kelasnya. Warna sama dengan plume.png buletin. */
+  var IDX = {
+    nino34: { name: "Niño3.4", obsKey: "oni", obsName: "ONI teramati", probKey: "enso",
+              lo: P.thresholds.la_nina, hi: P.thresholds.el_nino,
+              loName: "La Niña", hiName: "El Niño",
+              cls: [["la_nina", "La Niña", "#2C7BB6"], ["neutral", "Netral", "#9AA5AB"],
+                    ["el_nino", "El Niño", "#D8792B"]] },
+    dmi: { name: "DMI", obsKey: "dmi", obsName: "DMI teramati", probKey: "iod",
+           lo: P.thresholds.iod_negative, hi: P.thresholds.iod_positive,
+           loName: "IOD−", hiName: "IOD+",
+           cls: [["negative", "IOD−", "#2C7BB6"], ["neutral", "Netral", "#9AA5AB"],
+                 ["positive", "IOD+", "#D8792B"]] }
+  };
+
+  /* Bulan prakiraan yang sudah lewat menurut jam pengunjung: halaman bisa
+     dibuka lama setelah run terbit. */
+  var now = new Date();
+  var thisMonth = now.getFullYear() + "-" + ("0" + (now.getMonth() + 1)).slice(-2);
+  function isPast(valid) { return valid < thisMonth; }
+
+  var state = { index: "nino34", layer: P.map ? P.map.layers[0].k : null, lead: 0 };
+
+  function pct(v) { return v === null || v === undefined ? "–" : Math.round(v * 100) + "%"; }
+  function deg(v) { return v === null || v === undefined ? "–" : (v > 0 ? "+" : "") + HES.num(v, 2); }
+
+  /* ------------------------------------------------------------- plume -- */
+  function renderPlume() {
+    var I = IDX[state.index], D = P[state.index];
+    var leadX = P.leads.map(function (l) { return l.valid; });
+    var obs = P.observed;
+    var allX = obs.valid.concat(leadX.filter(function (v) { return obs.valid.indexOf(v) < 0; }));
+    var label = {};
+    obs.valid.forEach(function (v, i) { label[v] = obs.label[i]; });
+    P.leads.forEach(function (l) { label[l.valid] = l.label; });
+
+    var traces = D.members.map(function (row, i) {
+      return { x: leadX, y: row, type: "scatter", mode: "lines", hoverinfo: "skip",
+               line: { color: "rgba(120,135,142,0.35)", width: 0.8 },
+               name: "Member (" + D.members.length + ")", legendgroup: "m", showlegend: i === 0 };
+    });
+    traces.push({ x: leadX, y: D.p10, type: "scatter", mode: "lines", line: { width: 0 },
+                  hoverinfo: "skip", showlegend: false });
+    traces.push({ x: leadX, y: D.p90, type: "scatter", mode: "lines", line: { width: 0 },
+                  fill: "tonexty", fillcolor: "rgba(44,123,182,0.18)", name: "P10–P90 member",
+                  hoverinfo: "skip" });
+    traces.push({ x: leadX, y: D.raw, type: "scatter", mode: "lines",
+                  line: { color: "#16333f", dash: "dot", width: 1.4 }, name: "Rerata SEAS5 (raw)",
+                  hovertemplate: "Raw %{y:.2f} °C<extra></extra>" });
+    traces.push({ x: leadX, y: D.mean, type: "scatter", mode: "lines+markers",
+                  line: { color: "#2C7BB6", width: 3 }, marker: { size: 7 },
+                  name: "Rerata ensemble (terkalibrasi)",
+                  customdata: D.p10.map(function (v, i) { return [v, D.p90[i]]; }),
+                  hovertemplate: "Rerata %{y:.2f} °C<br>P10–P90 %{customdata[0]:.2f} s.d. %{customdata[1]:.2f}<extra></extra>" });
+    traces.push({ x: obs.valid, y: obs[I.obsKey], type: "scatter", mode: "lines+markers",
+                  connectgaps: false, line: { color: "#16333f", width: 2.2 },
+                  marker: { symbol: "square", size: 7 }, name: I.obsName,
+                  hovertemplate: I.obsName + " %{y:.2f} °C<extra></extra>" });
+
+    var shapes = [
+      { type: "line", xref: "paper", x0: 0, x1: 1, y0: I.hi, y1: I.hi, line: { color: "#D8792B", dash: "dash", width: 1.2 } },
+      { type: "line", xref: "paper", x0: 0, x1: 1, y0: I.lo, y1: I.lo, line: { color: "#2C7BB6", dash: "dash", width: 1.2 } },
+      { type: "line", xref: "paper", x0: 0, x1: 1, y0: 0, y1: 0, line: { color: "#9AA5AB", width: 1 } }
+    ];
+    var past = leadX.filter(isPast);
+    if (past.length) {
+      shapes.push({ type: "rect", xref: "x", yref: "paper", x0: allX.indexOf(past[0]) - 0.5,
+                    x1: allX.indexOf(past[past.length - 1]) + 0.5, y0: 0, y1: 1,
+                    fillcolor: "rgba(154,165,171,0.15)", line: { width: 0 }, layer: "below" });
+    }
+    var ann = [
+      { xref: "paper", x: 1, y: I.hi, text: I.hiName + " ≥ " + deg(I.hi), showarrow: false,
+        xanchor: "right", yanchor: "bottom", font: { size: 11, color: "#B4531B" } },
+      { xref: "paper", x: 1, y: I.lo, text: I.loName + " ≤ " + deg(I.lo), showarrow: false,
+        xanchor: "right", yanchor: "top", font: { size: 11, color: "#2C7BB6" } }
+    ];
+    if (past.length) {
+      ann.push({ x: past[0], yref: "paper", y: 1, text: "sudah lewat", showarrow: false,
+                 xanchor: "left", yanchor: "top", font: { size: 10, color: "#6b7b82" } });
+    }
+
+    var el = document.getElementById("plot-co-plume");
+    Plotly.react(el, traces, {
+      margin: { t: 30, r: 10, b: 40, l: 55 }, paper_bgcolor: "rgba(0,0,0,0)", plot_bgcolor: "rgba(0,0,0,0)",
+      font: FONT, hovermode: "x unified", shapes: shapes, annotations: ann,
+      title: { text: I.name + ", anomali °C · run " + P.init_label, font: { size: 14 }, x: 0, xanchor: "left" },
+      xaxis: { type: "category", categoryorder: "array", categoryarray: allX,
+               tickvals: allX, ticktext: allX.map(function (v) { return label[v].replace(" ", "<br>"); }),
+               gridcolor: GRID },
+      yaxis: { title: { text: "°C" }, gridcolor: GRID, zeroline: false },
+      legend: { orientation: "h", y: -0.22, font: { size: 11 } }
+    }, HES.plotConfig("heslab_plume_" + state.index));
+
+    var kosong = obs[I.obsKey].filter(function (v) { return v === null; }).length;
+    document.getElementById("co-plume-note").textContent =
+      "Garis hitam: pengamatan" + (kosong ? " (" + kosong + " bulan belum terbit)" : "") +
+      ". Nilai terkalibrasi = anomali SEAS5 yang disesuaikan ke skala " +
+      (state.index === "nino34" ? "ONI" : "DMI") + " teramati; rerata SEAS5 (raw) ditampilkan sebagai pembanding.";
+  }
+
+  /* ------------------------------------------------------ peluang kelas -- */
+  function renderProb() {
+    var I = IDX[state.index], pr = P[I.probKey];
+    var x = P.leads.map(function (l) { return l.label + (isPast(l.valid) ? "*" : ""); });
+    var traces = I.cls.map(function (c) {
+      var y = pr[c[0]].map(function (v) { return v === null ? null : Math.round(v * 100); });
+      return { x: x, y: y, type: "bar", name: c[1], marker: { color: c[2] },
+               text: y.map(function (v) { return v >= 10 ? v + "%" : ""; }), textposition: "inside",
+               insidetextanchor: "middle", hovertemplate: c[1] + " %{y}%<extra></extra>" };
+    });
+    Plotly.react(document.getElementById("plot-co-prob"), traces, {
+      barmode: "stack", margin: { t: 30, r: 10, b: 40, l: 55 }, font: FONT,
+      paper_bgcolor: "rgba(0,0,0,0)", plot_bgcolor: "rgba(0,0,0,0)",
+      title: { text: "Peluang kelas per bulan (% member)", font: { size: 14 }, x: 0, xanchor: "left" },
+      yaxis: { range: [0, 100], ticksuffix: "%", gridcolor: GRID },
+      legend: { orientation: "h", y: -0.18, traceorder: "normal" }
+    }, HES.plotConfig("heslab_peluang_" + I.probKey));
+  }
+
+  function renderTable() {
+    var rows = P.leads.map(function (l, i) {
+      var n = P.nino34, d = P.dmi;
+      function trio(o, keys) { return keys.map(function (k) { return pct(o[k][i]); }).join(" / "); }
+      return "<tr" + (isPast(l.valid) ? ' class="is-past"' : "") + "><td>" + HES.esc(l.label) +
+        (isPast(l.valid) ? " <small>(sudah lewat)</small>" : "") + "</td><td>" + l.lead + "</td>" +
+        "<td>" + deg(n.mean[i]) + " <small>(" + deg(n.p10[i]) + " s.d. " + deg(n.p90[i]) + ")</small></td>" +
+        "<td>" + trio(P.enso, ["la_nina", "neutral", "el_nino"]) + "</td>" +
+        "<td>" + deg(d.mean[i]) + " <small>(" + deg(d.p10[i]) + " s.d. " + deg(d.p90[i]) + ")</small></td>" +
+        "<td>" + trio(P.iod, ["negative", "neutral", "positive"]) + "</td></tr>";
+    });
+    document.getElementById("co-tbody").innerHTML = rows.join("");
+  }
+
+  /* --------------------------------------------------------------- peta -- */
+  var M = P.map, mapEl = document.getElementById("plot-co-map");
+  var GEO = null, IDS = null, B = null, vista = null, antrean = Promise.resolve();
+
+  function cellsGeoJSON() {
+    IDS = M.lat.map(function (_, i) { return String(i); });
+    return { type: "FeatureCollection", features: M.lat.map(function (la, i) {
+      var lo = M.lon[i];
+      return { type: "Feature", id: IDS[i], properties: {},
+               geometry: { type: "Polygon", coordinates: [[[lo - 0.5, la - 0.5], [lo + 0.5, la - 0.5],
+                 [lo + 0.5, la + 0.5], [lo - 0.5, la + 0.5], [lo - 0.5, la - 0.5]]] } };
+    }) };
+  }
+
+  function layerSpec() {
+    for (var i = 0; i < M.layers.length; i++) if (M.layers[i].k === state.layer) return M.layers[i];
+    return M.layers[0];
+  }
+
+  /* Warna berurutan + fungsi indeks kelas per sel (null = darat, tidak digambar).
+     Kelas bisa bernilai negatif, jadi warnanya lewat indeks kelas, bukan nilai. */
+  function scheme(L) {
+    return { colors: L.classes.map(function (c) { return c.color; }), index: function (V, i) {
+      var v = V[L.k][i];
+      if (v === null) return null;
+      for (var j = 0; j < L.classes.length; j++) {
+        var c = L.classes[j];
+        if ((c.min === null || v >= c.min) && (c.max === null || v < c.max)) return j;
+      }
+      return null;
+    } };
+  }
+
+  function colorscale(colors) {
+    var n = colors.length, out = [];
+    colors.forEach(function (c, i) { out.push([i / n, c]); out.push([(i + 1) / n, c]); });
+    return out;
+  }
+
+  function cellLabel(i) {
+    return HES.num(Math.abs(M.lat[i]), 1) + (M.lat[i] < 0 ? "° LS, " : "° LU, ") + HES.num(M.lon[i], 1) + "° BT";
+  }
+
+  function hoverText(V, i, L) {
+    return cellLabel(i) + "<br>" + L.label + ": " + deg(V[L.k][i]) + " " + L.unit;
+  }
+
+  function renderLegend(L) {
+    document.getElementById("co-legend-title").textContent = L.label + ", " + L.unit;
+    document.getElementById("co-legend").innerHTML = L.classes.map(function (c) {
+      return '<li><i style="background:' + c.color + '"></i><span>' + c.legend + "</span></li>";
+    }).join("");
+    document.getElementById("co-map-note").textContent =
+      "Anomali rerata ensemble terhadap klimatologi SEAS5 1991–2020. Daratan tidak diwarnai.";
+  }
+
+  function detail(V, i) {
+    var lead = P.leads[state.lead];
+    var v = V.sst_anom[i];
+    document.getElementById("co-detail").innerHTML =
+      '<p class="detail__title">' + HES.esc(lead.label) + "</p>" +
+      '<p class="detail__prov">sel 1° · ' + cellLabel(i) + "</p>" +
+      "<dl><dt>Anomali SST</dt><dd>" + (v === null ? "daratan" : deg(v) + " °C") + "</dd></dl>";
+  }
+
+  var V = null;
+  function renderMap() {
+    var lead = P.leads[state.lead];
+    document.getElementById("co-stamp").textContent = lead.label + " · lead " + lead.lead +
+      (isPast(lead.valid) ? " (sudah lewat)" : "");
+    antrean = antrean.then(function () { return HES.fetchJSON(M.urls[state.lead]); }).then(function (data) {
+      V = data.values;
+      var L = layerSpec(), sc = scheme(L);
+      var ids = [], z = [], txt = [];
+      IDS.forEach(function (id, i) {
+        var k = sc.index(V, i);
+        if (k === null) return;                       // darat: dibiarkan transparan
+        ids.push(id); z.push(k); txt.push(hoverText(V, i, L));
+      });
+      var traces = [{
+        type: "choroplethmapbox", geojson: GEO, locations: ids, z: z, text: txt, hoverinfo: "text",
+        zmin: 0, zmax: sc.colors.length, colorscale: colorscale(sc.colors), showscale: false,
+        marker: { opacity: M.opacity, line: { width: 0 } }
+      }];
+      renderLegend(L);
+      var Lay = HES.mapLayout(M.map, B);
+      Lay.mapbox.zoom = vista.zoom;
+      Lay.mapbox.center = vista.center;
+      return Plotly.react(mapEl, traces, Lay, HES.plotConfig("heslab_musiman_" + L.k + "_" + lead.valid));
+    }).catch(function (err) {
+      HES.fail(mapEl, "Data peta bulan ini tidak dapat dimuat.", String(err && err.message || err));
+    });
+    return antrean;
+  }
+
+  function sizeMap() {
+    function mercY(lat) { var r = lat * Math.PI / 180; return Math.log(Math.tan(Math.PI / 4 + r / 2)); }
+    var D = M.bounds;
+    var ratio = (mercY(D.north) - mercY(D.south)) / ((D.east - D.west) * Math.PI / 180);
+    mapEl.style.minHeight = "0";
+    mapEl.style.height = Math.max(M.height.min, Math.min(M.height.max, Math.round(mapEl.clientWidth * ratio))) + "px";
+  }
+
+  /* ------------------------------------------------------------ kendali -- */
+  function syncSeg() {
+    document.querySelectorAll(".seg").forEach(function (seg) {
+      var key = seg.getAttribute("data-key");
+      seg.querySelectorAll("button").forEach(function (b) {
+        b.setAttribute("aria-pressed", b.getAttribute("data-v") === state[key] ? "true" : "false");
+      });
+    });
+  }
+  document.querySelectorAll(".seg").forEach(function (seg) {
+    var key = seg.getAttribute("data-key");
+    seg.addEventListener("click", function (ev) {
+      var b = ev.target.closest("button");
+      if (!b) return;
+      state[key] = b.getAttribute("data-v");
+      syncSeg();
+      if (key === "index") { renderPlume(); renderProb(); } else { renderMap(); }
+    });
+  });
+
+  syncSeg();
+  renderPlume();
+  renderProb();
+  renderTable();
+
+  if (M && mapEl) {
+    var slider = document.getElementById("co-slider");
+    slider.max = String(P.leads.length - 1);
+    /* Mulai dari bulan prakiraan pertama yang belum lewat. */
+    for (var i = 0; i < P.leads.length; i++) { if (!isPast(P.leads[i].valid)) { state.lead = i; break; } }
+    slider.value = String(state.lead);
+    var go = function (i) {
+      state.lead = Math.max(0, Math.min(P.leads.length - 1, i));
+      slider.value = String(state.lead);
+      renderMap();
+    };
+    slider.addEventListener("input", function () { go(+slider.value); });
+    document.getElementById("co-prev").addEventListener("click", function () { go(state.lead - 1); });
+    document.getElementById("co-next").addEventListener("click", function () { go(state.lead + 1); });
+
+    GEO = cellsGeoJSON();
+    sizeMap();
+    B = HES.fitBounds(mapEl, M.bounds);
+    vista = { zoom: HES.zoomMinimum(mapEl, B),
+              center: { lat: (B.north + B.south) / 2, lon: (B.west + B.east) / 2 } };
+    renderMap().then(function () {
+      var kunci = HES.kunciZoomKeBatas(mapEl, B);
+      mapEl.on("plotly_relayout", function () {
+        var mb = mapEl._fullLayout.mapbox;
+        vista = { zoom: mb.zoom, center: { lat: mb.center.lat, lon: mb.center.lon } };
+      });
+      mapEl.on("plotly_click", function (ev) {
+        var pt = ev.points && ev.points[0];
+        if (pt && V && pt.location !== undefined) detail(V, +pt.location);
+      });
+      window.addEventListener("resize", function () {
+        sizeMap();
+        B = HES.fitBounds(mapEl, M.bounds);
+        Plotly.relayout(mapEl, { "mapbox.bounds": { west: B.west, east: B.east, south: B.south, north: B.north } })
+          .then(function () { return Plotly.Plots.resize(mapEl); })
+          .then(function () { kunci.refresh(); });
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>
+<!-- heslab-content: ccb618d6571e2a8f -->
