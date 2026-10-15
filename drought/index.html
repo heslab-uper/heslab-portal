@@ -640,6 +640,12 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
 .note--warn { border-left-color: var(--alert); background: var(--alert-soft); }
 .note--wait { border-left-color: var(--muted); background: var(--surface); border: 1px dashed var(--line); border-left: 3px solid var(--muted); }
 .note strong { color: var(--ink-900); }
+
+/* Teks pembahasan (Climate Outlook, discussion.md): lebar baca terbatas. */
+.prose { max-width: 72ch; }
+.prose p, .prose ul { margin: 0 0 var(--sp-4); }
+.prose h3, .prose h4 { margin: var(--sp-5) 0 var(--sp-2); }
+.prose > :last-child { margin-bottom: 0; }
 .note p:last-child { margin-bottom: 0; }
 
 /* Kotak "menunggu data": ruang yang sudah ada, isinya menyusul. */
@@ -735,8 +741,23 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
 #anim-stage.is-fullscreen .plot { flex: 1 1 auto; min-height: 0; }
 #anim-stage.is-fullscreen .legend { margin-top: 0; }
 
+/* ------------------------------------------- prakiraan hujan (ENS) ----- */
+/* Tombol bersegmen: satu pilihan aktif per kelompok (btn--primary). */
+.fc-controls { display: flex; flex-wrap: wrap; gap: var(--sp-3) var(--sp-5); align-items: flex-end; margin-bottom: var(--sp-3); }
+.fc-controls__k { display: block; font-size: var(--step--1); color: var(--muted); margin-bottom: var(--sp-1); }
+.seg { display: inline-flex; }
+.seg button.btn { border-radius: 0; margin-left: -1px; }
+.seg button.btn:first-child { border-radius: var(--radius) 0 0 var(--radius); margin-left: 0; }
+.seg button.btn:last-child { border-radius: 0 var(--radius) var(--radius) 0; }
+/* Tinggi peta diatur map_forecast.js dari rasio domain ENS; min-height .plot dilepas di sana. */
+.fc-small { font-size: var(--step--1); color: var(--muted); margin: var(--sp-3) 0 0; }
+.fc-legend-title { font-size: var(--step--1); color: var(--muted); margin: var(--sp-3) 0 var(--sp-1); }
+.fc-daytable { width: 100%; font-size: var(--step--1); margin-top: var(--sp-3); border-collapse: collapse; }
+.fc-daytable th, .fc-daytable td { padding: var(--sp-1) var(--sp-2); border-bottom: 1px solid var(--line-soft); text-align: right; font-variant-numeric: tabular-nums; }
+.fc-daytable th:first-child, .fc-daytable td:first-child { text-align: left; }
+
 @media print {
-  .masthead, .foot, .controls, .playbar { display: none; }
+  .masthead, .foot, .controls, .playbar, .fc-controls { display: none; }
   body { background: #fff; }
 }
 
@@ -764,6 +785,9 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
       <a href="../rainfall/index.html"
          data-status="live"
 >Rainfall Monitoring</a>
+      <a href="../climate/index.html"
+         data-status="live"
+>Climate Outlook</a>
       <a href="../fews/index.html"
          data-status="planned"
 >FEWS</a>
@@ -870,6 +894,7 @@ aria-current="true">Drought Risk</a>
         <h4>Portal</h4>
         <ul>
           <li><a href="../rainfall/index.html">Rainfall Monitoring</a></li>
+          <li><a href="../climate/index.html">Climate Outlook</a></li>
           <li><a href="../fews/index.html">FEWS</a></li>
           <li><a href="../streamflow/index.html">Streamflow Forecast</a></li>
           <li><a href="../drought/index.html">Drought Risk</a></li>
@@ -902,10 +927,11 @@ aria-current="true">Drought Risk</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 27-09-2026 15:47 WIB · © 2026 Hydro-Environmental Systems Laboratory.
+      Halaman dibangun 15-10-2026 16:41 WIB · © 2026 Hydro-Environmental Systems Laboratory.
     </p>
   </div>
 </footer>
 
 </body>
 </html>
+<!-- heslab-content: 3e1e0c81ff20fd55 -->

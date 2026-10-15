@@ -640,6 +640,12 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
 .note--warn { border-left-color: var(--alert); background: var(--alert-soft); }
 .note--wait { border-left-color: var(--muted); background: var(--surface); border: 1px dashed var(--line); border-left: 3px solid var(--muted); }
 .note strong { color: var(--ink-900); }
+
+/* Teks pembahasan (Climate Outlook, discussion.md): lebar baca terbatas. */
+.prose { max-width: 72ch; }
+.prose p, .prose ul { margin: 0 0 var(--sp-4); }
+.prose h3, .prose h4 { margin: var(--sp-5) 0 var(--sp-2); }
+.prose > :last-child { margin-bottom: 0; }
 .note p:last-child { margin-bottom: 0; }
 
 /* Kotak "menunggu data": ruang yang sudah ada, isinya menyusul. */
@@ -779,6 +785,9 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
       <a href="../../../rainfall/index.html"
          data-status="live"
 aria-current="true">Rainfall Monitoring</a>
+      <a href="../../../climate/index.html"
+         data-status="live"
+>Climate Outlook</a>
       <a href="../../../fews/index.html"
          data-status="planned"
 >FEWS</a>
@@ -968,6 +977,7 @@ aria-current="true">Rainfall Monitoring</a>
         <h4>Portal</h4>
         <ul>
           <li><a href="../../../rainfall/index.html">Rainfall Monitoring</a></li>
+          <li><a href="../../../climate/index.html">Climate Outlook</a></li>
           <li><a href="../../../fews/index.html">FEWS</a></li>
           <li><a href="../../../streamflow/index.html">Streamflow Forecast</a></li>
           <li><a href="../../../drought/index.html">Drought Risk</a></li>
@@ -1000,7 +1010,7 @@ aria-current="true">Rainfall Monitoring</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 15-10-2026 11:45 WIB · © 2026 Hydro-Environmental Systems Laboratory.
+      Halaman dibangun 15-10-2026 16:41 WIB · © 2026 Hydro-Environmental Systems Laboratory.
     </p>
   </div>
 </footer>
@@ -1744,10 +1754,12 @@ aria-current="true">Rainfall Monitoring</a>
   if (ageH <= maxAge) return;
 
   var umur = ageH >= 48 ? Math.floor(ageH / 24) + " hari" : Math.floor(ageH) + " jam";
-  el.querySelector("[data-age]").textContent = umur;
+  var slot = el.querySelector("[data-age]");
+  if (slot) slot.textContent = umur;
   el.hidden = false;
 })();
 
 </script>
 </body>
 </html>
+<!-- heslab-content: dffb304277a99e1e -->

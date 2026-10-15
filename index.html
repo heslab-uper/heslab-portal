@@ -640,6 +640,12 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
 .note--warn { border-left-color: var(--alert); background: var(--alert-soft); }
 .note--wait { border-left-color: var(--muted); background: var(--surface); border: 1px dashed var(--line); border-left: 3px solid var(--muted); }
 .note strong { color: var(--ink-900); }
+
+/* Teks pembahasan (Climate Outlook, discussion.md): lebar baca terbatas. */
+.prose { max-width: 72ch; }
+.prose p, .prose ul { margin: 0 0 var(--sp-4); }
+.prose h3, .prose h4 { margin: var(--sp-5) 0 var(--sp-2); }
+.prose > :last-child { margin-bottom: 0; }
 .note p:last-child { margin-bottom: 0; }
 
 /* Kotak "menunggu data": ruang yang sudah ada, isinya menyusul. */
@@ -735,8 +741,23 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
 #anim-stage.is-fullscreen .plot { flex: 1 1 auto; min-height: 0; }
 #anim-stage.is-fullscreen .legend { margin-top: 0; }
 
+/* ------------------------------------------- prakiraan hujan (ENS) ----- */
+/* Tombol bersegmen: satu pilihan aktif per kelompok (btn--primary). */
+.fc-controls { display: flex; flex-wrap: wrap; gap: var(--sp-3) var(--sp-5); align-items: flex-end; margin-bottom: var(--sp-3); }
+.fc-controls__k { display: block; font-size: var(--step--1); color: var(--muted); margin-bottom: var(--sp-1); }
+.seg { display: inline-flex; }
+.seg button.btn { border-radius: 0; margin-left: -1px; }
+.seg button.btn:first-child { border-radius: var(--radius) 0 0 var(--radius); margin-left: 0; }
+.seg button.btn:last-child { border-radius: 0 var(--radius) var(--radius) 0; }
+/* Tinggi peta diatur map_forecast.js dari rasio domain ENS; min-height .plot dilepas di sana. */
+.fc-small { font-size: var(--step--1); color: var(--muted); margin: var(--sp-3) 0 0; }
+.fc-legend-title { font-size: var(--step--1); color: var(--muted); margin: var(--sp-3) 0 var(--sp-1); }
+.fc-daytable { width: 100%; font-size: var(--step--1); margin-top: var(--sp-3); border-collapse: collapse; }
+.fc-daytable th, .fc-daytable td { padding: var(--sp-1) var(--sp-2); border-bottom: 1px solid var(--line-soft); text-align: right; font-variant-numeric: tabular-nums; }
+.fc-daytable th:first-child, .fc-daytable td:first-child { text-align: left; }
+
 @media print {
-  .masthead, .foot, .controls, .playbar { display: none; }
+  .masthead, .foot, .controls, .playbar, .fc-controls { display: none; }
   body { background: #fff; }
 }
 
@@ -764,6 +785,9 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
       <a href="rainfall/index.html"
          data-status="live"
 >Rainfall Monitoring</a>
+      <a href="climate/index.html"
+         data-status="live"
+>Climate Outlook</a>
       <a href="fews/index.html"
          data-status="planned"
 >FEWS</a>
@@ -829,6 +853,27 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
           <span class="dashcard__go">Buka →</span>
         </span>
       </a>
+      <a class="dashcard" href="climate/index.html"
+         style="--dash-accent: var(--river-700)">
+        <div class="dashcard__head">
+          <span class="dashcard__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M10 3a2 2 0 0 1 4 0v8.2a4 4 0 1 1-4 0Z" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linejoin="round"/><path d="M12 9v5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M2 21c2.5-1.6 4.5-1.6 7 0s4.5 1.6 7 0 4.5-1.6 6 0" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".55"/>
+            </svg>
+          </span>
+          <span class="dashcard__titles">
+            <span class="dashcard__no">02</span>
+            <h3>Climate Outlook</h3>
+          </span>
+        </div>
+        <p>Kajian riset prakiraan musiman ECMWF SEAS5: ENSO (Niño3.4) dan IOD (DMI) enam bulan ke depan, serta peluang hujan di atas atau di bawah normal.</p>
+        <span class="dashcard__foot">
+          <span class="tag tag--live">
+            aktif
+          </span>
+          <span class="dashcard__go">Buka →</span>
+        </span>
+      </a>
       <a class="dashcard" href="fews/index.html"
          style="--dash-accent: var(--river-500)">
         <div class="dashcard__head">
@@ -838,7 +883,7 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
             </svg>
           </span>
           <span class="dashcard__titles">
-            <span class="dashcard__no">02</span>
+            <span class="dashcard__no">03</span>
             <h3>FEWS</h3>
           </span>
         </div>
@@ -859,7 +904,7 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
             </svg>
           </span>
           <span class="dashcard__titles">
-            <span class="dashcard__no">03</span>
+            <span class="dashcard__no">04</span>
             <h3>Streamflow Forecast</h3>
           </span>
         </div>
@@ -880,7 +925,7 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
             </svg>
           </span>
           <span class="dashcard__titles">
-            <span class="dashcard__no">04</span>
+            <span class="dashcard__no">05</span>
             <h3>Drought Risk</h3>
           </span>
         </div>
@@ -957,6 +1002,7 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
         <h4>Portal</h4>
         <ul>
           <li><a href="rainfall/index.html">Rainfall Monitoring</a></li>
+          <li><a href="climate/index.html">Climate Outlook</a></li>
           <li><a href="fews/index.html">FEWS</a></li>
           <li><a href="streamflow/index.html">Streamflow Forecast</a></li>
           <li><a href="drought/index.html">Drought Risk</a></li>
@@ -989,10 +1035,11 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 27-09-2026 15:47 WIB · © 2026 Hydro-Environmental Systems Laboratory.
+      Halaman dibangun 15-10-2026 16:41 WIB · © 2026 Hydro-Environmental Systems Laboratory.
     </p>
   </div>
 </footer>
 
 </body>
 </html>
+<!-- heslab-content: 3ad3972b3a6a0af3 -->
