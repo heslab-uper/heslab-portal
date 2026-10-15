@@ -810,6 +810,12 @@ aria-current="true">Rainfall Monitoring</a>
         <a href="../../../rainfall/dasarian/index.html">Hujan Dasarian</a><span aria-hidden="true">/</span>
         <span>Hujan Dasarian — GSMaP NRT</span>
   </nav>
+  <div class="note note--warn" id="stale-note" role="status" hidden
+       data-end="2026-10-15T07:00+07:00" data-max-age-h="72">
+    <strong>Data belum diperbarui.</strong>
+    Data di halaman ini berakhir 15 Okt 2026 07.00 WIB, <span data-age></span>
+    yang lalu, melewati jadwal pembaruannya. Angka di bawah bukan kondisi terkini.
+  </div>
 </div>
 
 <main id="main">
@@ -1021,7 +1027,7 @@ aria-current="true">Rainfall Monitoring</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 14-10-2026 12:00 WIB · © 2026 Hydro-Environmental Systems Laboratory.
+      Halaman dibangun 15-10-2026 12:00 WIB · © 2026 Hydro-Environmental Systems Laboratory.
     </p>
   </div>
 </footer>
@@ -2032,6 +2038,27 @@ aria-current="true">Rainfall Monitoring</a>
     HES.fail(plotEl, err.message, A.geojson_url);
   });
 })();
+</script>
+<script>
+/* Pita peringatan data lama (heslab/freshness.py, config.DATA_MAX_AGE_HOURS).
+   Umur dihitung terhadap jam PENGUNJUNG, bukan waktu build: halaman yang
+   membeku karena task build berhenti tetap memberi tahu bahwa angkanya lama. */
+(function () {
+  "use strict";
+  var el = document.getElementById("stale-note");
+  if (!el) return;
+  var end = new Date(el.getAttribute("data-end"));
+  var maxAge = parseFloat(el.getAttribute("data-max-age-h"));
+  if (isNaN(end.getTime()) || isNaN(maxAge)) return;
+
+  var ageH = (Date.now() - end.getTime()) / 36e5;
+  if (ageH <= maxAge) return;
+
+  var umur = ageH >= 48 ? Math.floor(ageH / 24) + " hari" : Math.floor(ageH) + " jam";
+  el.querySelector("[data-age]").textContent = umur;
+  el.hidden = false;
+})();
+
 </script>
 </body>
 </html>
