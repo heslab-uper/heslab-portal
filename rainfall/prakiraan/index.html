@@ -640,6 +640,12 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
 .note--warn { border-left-color: var(--alert); background: var(--alert-soft); }
 .note--wait { border-left-color: var(--muted); background: var(--surface); border: 1px dashed var(--line); border-left: 3px solid var(--muted); }
 .note strong { color: var(--ink-900); }
+
+/* Teks pembahasan (Climate Outlook, discussion.md): lebar baca terbatas. */
+.prose { max-width: 72ch; }
+.prose p, .prose ul { margin: 0 0 var(--sp-4); }
+.prose h3, .prose h4 { margin: var(--sp-5) 0 var(--sp-2); }
+.prose > :last-child { margin-bottom: 0; }
 .note p:last-child { margin-bottom: 0; }
 
 /* Kotak "menunggu data": ruang yang sudah ada, isinya menyusul. */
@@ -779,6 +785,9 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
       <a href="../../rainfall/index.html"
          data-status="live"
 aria-current="true">Rainfall Monitoring</a>
+      <a href="../../climate/index.html"
+         data-status="live"
+>Climate Outlook</a>
       <a href="../../fews/index.html"
          data-status="planned"
 >FEWS</a>
@@ -818,7 +827,7 @@ aria-current="true">Rainfall Monitoring</a>
 </div>
 
 <main id="main">
-<!-- heslab-sidik: 439d829f2a1fc1d4 -->
+<!-- heslab-sidik: c780d9dd572ecce2 -->
 <div class="wrap">
 
   <section class="pagehead">
@@ -827,7 +836,7 @@ aria-current="true">Rainfall Monitoring</a>
     <p class="lede">
       Prakiraan hujan ensemble ECMWF untuk tiga hari ke depan, per
       kabupaten/kota dan per kotak grid 0,25°. Rerata adalah rata-rata seluruh
-      anggota; batas bawah (p10) dan batas atas (p90) mengapit 80% anggota,
+      member; batas bawah (p10) dan batas atas (p90) mengapit 80% member,
       yaitu rentang hujan yang mungkin terjadi menurut ensemble.
     </p>
   </section>
@@ -842,7 +851,7 @@ aria-current="true">Rainfall Monitoring</a>
     <span class="readout__v">0–72 jam · langkah 6 jam</span>
   </div>
   <div class="readout__cell">
-    <span class="readout__k">Anggota ensemble</span>
+    <span class="readout__k">Ensemble member</span>
     <span class="readout__v">50</span>
   </div>
   <div class="readout__cell">
@@ -920,7 +929,7 @@ aria-current="true">Rainfall Monitoring</a>
       </table>
     </div>
     <p class="fc-small">Klik nama wilayah untuk membuka rinciannya. Peringkat disusun dari
-      rata-rata areal per kabupaten/kota; statistik dihitung dari seluruh anggota
+      rata-rata areal per kabupaten/kota; statistik dihitung dari seluruh member
       sesudah dirata-ratakan per wilayah.</p>
   </section>
 
@@ -931,13 +940,13 @@ aria-current="true">Rainfall Monitoring</a>
     <dd>European Centre for Medium-Range Weather Forecasts (ECMWF) — ECMWF Open Data
       (<a href="https://www.ecmwf.int/en/forecasts/datasets/open-data" target="_blank" rel="noopener">laman resmi ↗</a>)</dd>
     <dt>Produk</dt>
-    <dd>Prakiraan ensemble (ENS), 50 anggota, run 00 UTC setiap hari, jangkauan 72 jam.</dd>
+    <dd>Prakiraan ensemble (ENS), 50 member, run 00 UTC setiap hari, jangkauan 72 jam.</dd>
     <dt>Resolusi</dt>
     <dd>0,25° × 0,25° (±28 km); periode 6 jam dan harian.</dd>
     <dt>Pengolahan</dt>
-    <dd>Hujan per periode dihitung dari selisih akumulasi total presipitasi antarlangkah; kenaikan negatif akibat pembulatan pengemasan GRIB (kurang dari 0,04 mm) dijadikan 0. Nilai kabupaten/kota adalah rata-rata areal berbobot luas setiap anggota; rerata, batas bawah (p10), dan batas atas (p90) dihitung dari 50 anggota sesudahnya. Hari prakiraan = 00–24 UTC (07.00–07.00 WIB).</dd>
+    <dd>Hujan per periode dihitung dari selisih akumulasi total presipitasi antarlangkah; kenaikan negatif akibat pembulatan pengemasan GRIB (kurang dari 0,04 mm) dijadikan 0. Nilai kabupaten/kota adalah rata-rata areal berbobot luas setiap member; rerata, batas bawah (p10), dan batas atas (p90) dihitung dari 50 member sesudahnya. Hari prakiraan = 00–24 UTC (07.00–07.00 WIB).</dd>
     <dt>Keterbatasan</dt>
-    <dd>Rerata dan rentang p10–p90 menggambarkan sebaran 50 anggota prakiraan, bukan kepastian: 1 dari 10 anggota berada di bawah batas bawah dan 1 dari 10 di atas batas atas. Peta 6 jam menampilkan intensitas rata-rata; intensitas sesaat dapat jauh lebih tinggi.</dd>
+    <dd>Rerata dan rentang p10–p90 menggambarkan sebaran 50 member prakiraan, bukan kepastian: 1 dari 10 member berada di bawah batas bawah dan 1 dari 10 di atas batas atas. Peta 6 jam menampilkan intensitas rata-rata; intensitas sesaat dapat jauh lebih tinggi.</dd>
     <dt>Zona waktu</dt>
     <dd>Seluruh waktu ditampilkan dalam WIB (UTC+07:00).</dd>
     <dt>Lisensi</dt>
@@ -970,6 +979,7 @@ aria-current="true">Rainfall Monitoring</a>
         <h4>Portal</h4>
         <ul>
           <li><a href="../../rainfall/index.html">Rainfall Monitoring</a></li>
+          <li><a href="../../climate/index.html">Climate Outlook</a></li>
           <li><a href="../../fews/index.html">FEWS</a></li>
           <li><a href="../../streamflow/index.html">Streamflow Forecast</a></li>
           <li><a href="../../drought/index.html">Drought Risk</a></li>
@@ -1002,7 +1012,7 @@ aria-current="true">Rainfall Monitoring</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 15-10-2026 16:03 WIB · © 2026 Hydro-Environmental Systems Laboratory.
+      Halaman dibangun 15-10-2026 17:03 WIB · © 2026 Hydro-Environmental Systems Laboratory.
     </p>
   </div>
 </footer>
@@ -1479,7 +1489,7 @@ aria-current="true">Rainfall Monitoring</a>
     if (isProb()) {
       return "<b>" + HES.esc(nama(id)) + "</b><br>" + HES.esc(prov(id)) + "<br>" +
              "Peluang " + thrLabel() + ": " + v + "%<br>(" + Math.round(v * P.members / 100) +
-             " dari " + P.members + " anggota · " + AREA[S.area].toLowerCase() + ")";
+             " dari " + P.members + " member · " + AREA[S.area].toLowerCase() + ")";
     }
     var s = "<b>" + HES.esc(nama(id)) + "</b><br>" + HES.esc(prov(id)) + "<br>" +
             STAT[S.stat].label + ": " + HES.num(v) + " " + P.per[S.step];
@@ -1550,11 +1560,11 @@ aria-current="true">Rainfall Monitoring</a>
     if (isProb()) {
       document.getElementById("fc-legend-title").textContent = "Peluang hujan " + thrLabel() +
         (S.step === "6h" ? " (rata-rata " + P.period_hours + " jam)" : " (07.00–07.00 WIB)") +
-        " · % dari " + P.members + " anggota";
+        " · % dari " + P.members + " member";
       HES.renderLegend(document.getElementById("fc-legend"),
         P.prob_classes.map(function (c) { return Object.assign({}, c, { legend: c.label }); }), "");
       document.getElementById("fc-map-note").textContent =
-        "Peluang = porsi anggota ensemble yang memprakirakan hujan lebih dari ambang. " +
+        "Peluang = porsi ensemble member yang memprakirakan hujan lebih dari ambang. " +
         (S.view === "grid"
           ? "Grid: per kotak 0,25°; kotak tanpa warna berpeluang di bawah 10%. "
           : (S.area === "max"
@@ -1640,7 +1650,7 @@ aria-current="true">Rainfall Monitoring</a>
     }
     var p10 = col("p10"), p90 = col("p90"), mx = col("max");
     var tr = pita("min", "max", "min–maks", "rgba(99,172,211,0.20)")
-      .concat(pita("p10", "p90", "p10–p90 (80% anggota)", "rgba(46,125,184,0.40)"))
+      .concat(pita("p10", "p90", "p10–p90 (80% member)", "rgba(46,125,184,0.40)"))
       .concat([{ x: x, y: col("ens_mean"), mode: "lines+markers", name: "rerata",
                  line: { color: "#16333f", width: 2 }, marker: { size: 5 },
                  customdata: p10.map(function (a, j) { return [a, p90[j], mx[j]]; }),
@@ -1670,7 +1680,7 @@ aria-current="true">Rainfall Monitoring</a>
       P.steps.day.map(function (s, j) {
         return "<tr><td>" + HES.esc(s.short) + "</td><td><b>" + HES.num(D.ens_mean[j][k]) + "</b></td><td>" +
                HES.num(D.p10[j][k]) + "</td><td>" + HES.num(D.p90[j][k]) + "</td><td>" + HES.num(D.max[j][k]) + "</td></tr>";
-      }).join("") + '</table><p class="fc-small">mm per hari, dari ' + P.members + " anggota.</p>";
+      }).join("") + '</table><p class="fc-small">mm per hari, dari ' + P.members + " member.</p>";
   }
 
   /* ------------------------------------------------------------ kendali -- */
@@ -1795,11 +1805,12 @@ aria-current="true">Rainfall Monitoring</a>
   if (ageH <= maxAge) return;
 
   var umur = ageH >= 48 ? Math.floor(ageH / 24) + " hari" : Math.floor(ageH) + " jam";
-  el.querySelector("[data-age]").textContent = umur;
+  var slot = el.querySelector("[data-age]");
+  if (slot) slot.textContent = umur;
   el.hidden = false;
 })();
 
 </script>
 </body>
 </html>
-<!-- heslab-content: 0ecebd528cd06ab4 -->
+<!-- heslab-content: 5b3b8c55207b991b -->
