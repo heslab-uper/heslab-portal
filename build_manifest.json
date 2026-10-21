@@ -1,7 +1,7 @@
 {
   "targets": {
     "shell": {
-      "last_build_wib": "2026-10-21T23:45:19+07:00",
+      "last_build_wib": "2026-10-22T05:29:56+07:00",
       "pages": [
         "home",
         "rainfall-daily",
@@ -61,7 +61,7 @@
       "note": "produk=semua"
     },
     "climate-outlook": {
-      "last_build_wib": "2026-10-15T17:55:09+07:00",
+      "last_build_wib": "2026-10-22T05:29:38+07:00",
       "pages": [
         "climate-202610",
         "climate"
