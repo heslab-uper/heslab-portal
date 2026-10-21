@@ -1,0 +1,56 @@
+# Cek kesegaran data halaman Rainfall Monitoring.
+#
+# Berkas ini DIHASILKAN build (heslab/rendering.py, ensure_freshness_workflow)
+# dari templates/github/cek-kesegaran.yml; jangan disunting di repo terbit.
+# https://portal.heslab-uper.com/rainfall/ diganti alamat halaman Rainfall yang tayang.
+#
+# Tiap jam workflow membaca atribut data-end dan data-max-age-h pada pita
+# "Data belum diperbarui" (batasnya dari config.DATA_MAX_AGE_HOURS). Bila data
+# lebih tua dari batas, atau halaman tidak dapat dibuka, run GAGAL dan GitHub
+# mengirim email ke akun yang terakhir mengubah jadwal ini (pemilik
+# 2026-10-22: notifikasi lewat GitHub Actions).
+name: Cek kesegaran data portal
+
+on:
+  schedule:
+    - cron: "20 * * * *"   # menit ke-20 tiap jam (UTC), sesudah build menit ke-3
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cek:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Periksa umur data Rainfall
+        env:
+          HALAMAN: "https://portal.heslab-uper.com/rainfall/"
+        run: |
+          python3 - <<'PY'
+          import os, re, sys, time, urllib.request
+          from datetime import datetime, timezone
+
+          url = os.environ["HALAMAN"]
+          try:
+              with urllib.request.urlopen(f"{url}?cek={int(time.time())}", timeout=30) as r:
+                  html = r.read().decode("utf-8")
+          except Exception as exc:
+              print(f"::error::Halaman tidak dapat dibuka: {url} ({exc})")
+              sys.exit(1)
+
+          akhir = re.search(r'data-end="([^"]+)"', html)
+          batas = re.search(r'data-max-age-h="([0-9.]+)"', html)
+          if not akhir or not batas:
+              print(f"::error::Atribut data-end/data-max-age-h tidak ditemukan di {url}")
+              sys.exit(1)
+
+          akhir = datetime.fromisoformat(akhir.group(1))
+          batas = float(batas.group(1))
+          umur = (datetime.now(timezone.utc) - akhir).total_seconds() / 3600
+          print(f"Data berakhir {akhir.isoformat()}; umur {umur:.1f} jam; batas {batas:g} jam")
+          if umur > batas:
+              print(f"::error::Data Rainfall belum diperbarui: umur {umur:.1f} jam melewati batas {batas:g} jam")
+              sys.exit(1)
+          PY

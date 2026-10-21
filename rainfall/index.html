@@ -415,6 +415,25 @@ a:hover { color: var(--current); }
 }
 .dashcard:hover .dashcard__go { transform: translateX(3px); }
 
+/* Gambar modul aktif (16:9), rata ke tepi atas kartu. Dibuat
+   buat_gambar_modul.py; width/height di <img> mencegah loncatan tata letak. */
+.dashcard__media {
+  display: block;
+  width: calc(100% + 2 * var(--sp-5));
+  max-width: none;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  margin: calc(-1 * var(--sp-5)) calc(-1 * var(--sp-5)) 0;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+/* Kelompok kartu: modul aktif di atas, "Dalam pengembangan" di bawah. */
+.dashgroup + .dashgroup { margin-top: var(--sp-5); }
+.dashgrid--compact { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+.dashgrid--compact .dashcard { padding: var(--sp-4); gap: var(--sp-2); }
+
 .grid {
   display: grid;
   gap: var(--sp-4);
@@ -863,7 +882,13 @@ aria-current="true">Rainfall Monitoring</a>
     <span style="font-family:var(--font-mono)">09:00–10:00 WIB</span>
     merepresentasikan total hujan yang terjadi sepanjang interval tersebut.
     Data untuk suatu interval baru dianggap lengkap setelah waktu akhir
-    interval terlewati.</p>
+    interval terlewati.</p>    <p style="margin:.75rem 0 0"><strong>Hujan wilayah Indonesia.</strong>
+    Persentase sel grid 0,1° pada jam terakhir yang mencatat hujan sedikitnya
+    0,02 mm/jam, dihitung di dalam kotak
+    6° LU – 11° LS dan
+    95°–141° BT. Kotak ini mencakup laut
+    dan sebagian wilayah negara tetangga; ia bukan batas negara. Angka
+    <em>maks</em> adalah intensitas tertinggi pada sel di dalam kotak yang sama.</p>
   </div>
 
   <section class="panel" aria-labelledby="anim-h">
@@ -893,9 +918,22 @@ aria-current="true">Rainfall Monitoring</a>
       rata-rata per wilayah administrasi. Dengan demikian, pola dan variasi
       spasial hujan ditampilkan sebagaimana hasil estimasi satelit, termasuk
       area dengan intensitas hujan tinggi yang dapat berkurang pengaruhnya pada
-      data yang telah dirata-ratakan. <strong>Area tanpa warna menunjukkan
-      tidak adanya hujan pada periode tersebut</strong>, bukan data yang hilang
-      atau tidak tersedia.
+      data yang telah dirata-ratakan. <strong>Area tanpa warna berarti tidak
+      ada hujan yang terdeteksi</strong> pada periode tersebut, atau sel itu
+      tidak memiliki observasi satelit: nilai "tanpa observasi" dari JAXA
+      disimpan sebagai 0 pada arsip HESLab, sehingga keduanya tampil sama.
+    </p>
+    <p style="font-size:.8125rem;color:var(--muted);margin-top:.75rem;margin-bottom:0">
+      <strong>Keterbatasan.</strong> GSMaP NOW adalah estimasi satelit tanpa
+      koreksi penakar hujan dan merupakan produk GSMaP yang paling kurang
+      akurat. Menurut catatan rilis JAXA, algoritma gelombang mikro sejak
+      versi 8 cenderung menaksir berlebih hujan lebat seperti hujan konvektif,
+      sementara hujan lemah umumnya sulit terdeteksi; hujan orografis juga
+      masih dapat ditaksir berlebih atau terdeteksi palsu. Untuk analisis
+      kuantitatif, bandingkan dengan data pos hujan setempat. Penjelasan
+      lengkap ada di halaman
+      <a href="https://www.heslab-uper.com/data/hujan-satelit/gsmap-now/" target="_blank" rel="noopener">GSMaP NOW</a>
+      situs HESLab.
     </p>
   </section>
 
@@ -943,10 +981,10 @@ aria-current="true">Rainfall Monitoring</a>
       (<a href="https://sharaku.eorc.jaxa.jp/GSMaP/" target="_blank" rel="noopener">laman resmi ↗</a>)</dd>
 
     <dt>Produk</dt>
-    <dd><strong>GSMaP NOW (nowcast)</strong> — Estimasi hujan hampir seketika — latensi mendekati 0 jam. Pendekatan nowcasting: ekstrapolasi citra satelit terkini tanpa koreksi data penakar hujan permukaan.</dd>
+    <dd><strong>GSMaP NOW (nowcast)</strong> — Estimasi hujan seketika (latensi 0 jam menurut JAXA). Pendekatan nowcasting: ekstrapolasi citra satelit terkini tanpa koreksi data penakar hujan permukaan.</dd>
 
     <dt>Latency</dt>
-    <dd>~0,5 jam (near real-time)</dd>
+    <dd>0 jam menurut JAXA (realtime); diterbitkan JAXA setiap 30 menit</dd>
 
     <dt>Resolusi asal</dt>
     <dd>0,1° × 0,1° (±11 km), resolusi temporal 1 jam.</dd>
@@ -974,7 +1012,7 @@ aria-current="true">Rainfall Monitoring</a>
     <dd>Idham Riyando Moe, Ph.D. (idham.moe (at) gmail.com)</dd>
 
     <dt>Kontak</dt>
-    <dd><a href="mailto:nurul.fj@universitaspertamina.ac.id">nurul.fj@universitaspertamina.ac.id</a>      atau <a href="mailto:heslab.uper@gmail.com">heslab.uper@gmail.com</a></dd>
+    <dd>nurul.fj (at) universitaspertamina.ac.id      atau heslab.uper (at) gmail.com</dd>
 
   </dl>
 </section>
@@ -1009,8 +1047,8 @@ aria-current="true">Rainfall Monitoring</a>
         <ul>
           <li>Hydro-Environmental System Lab</li>
           <li>Program Studi Teknik Sipil, Universitas Pertamina</li>
-          <li><a href="mailto:nurul.fj@universitaspertamina.ac.id">nurul.fj@universitaspertamina.ac.id</a></li>
-          <li><a href="mailto:heslab.uper@gmail.com">heslab.uper@gmail.com</a></li>
+          <li>nurul.fj (at) universitaspertamina.ac.id</li>
+          <li>heslab.uper (at) gmail.com</li>
           <li><a href="https://www.heslab-uper.com" target="_blank" rel="noopener">Website laboratorium ↗</a></li>
           <li><a href="https://heslab-uper.com/tentang/" target="_blank" rel="noopener">Tentang ↗</a></li>
           <li><a href="https://heslab-uper.com/kontak/" target="_blank" rel="noopener">Kontak ↗</a></li>
@@ -1025,7 +1063,7 @@ aria-current="true">Rainfall Monitoring</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 22-10-2026 04:03 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 22-10-2026 05:51 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
@@ -1710,4 +1748,4 @@ aria-current="true">Rainfall Monitoring</a>
 </script>
 </body>
 </html>
-<!-- heslab-content: a34d58eaa3f6a97c -->
+<!-- heslab-content: 49fa33e2b9afd4b2 -->

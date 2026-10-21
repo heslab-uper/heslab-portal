@@ -1,7 +1,7 @@
 {
   "targets": {
     "shell": {
-      "last_build_wib": "2026-10-22T05:45:22+07:00",
+      "last_build_wib": "2026-10-22T05:51:54+07:00",
       "pages": [
         "home",
         "rainfall-daily",
@@ -20,17 +20,17 @@
         "rainfall-daily-standard-v9",
         "rainfall-dasarian-standard-v9"
       ],
-      "note": "produk=semua"
+      "note": "dijalankan dari jalankan.py"
     },
     "rainfall-animation": {
-      "last_build_wib": "2026-10-22T05:03:16+07:00",
+      "last_build_wib": "2026-10-22T05:51:55+07:00",
       "pages": [
         "rainfall"
       ],
-      "note": "produk=semua"
+      "note": "dijalankan dari jalankan.py"
     },
     "rainfall-daily": {
-      "last_build_wib": "2026-10-22T05:45:28+07:00",
+      "last_build_wib": "2026-10-22T05:51:56+07:00",
       "pages": [
         "rainfall-daily-now",
         "rainfall-daily-nrt",
@@ -39,10 +39,10 @@
         "rainfall-daily-standard-v9",
         "rainfall-daily"
       ],
-      "note": "produk=semua"
+      "note": "dijalankan dari jalankan.py"
     },
     "rainfall-dasarian": {
-      "last_build_wib": "2026-10-21T21:44:58+07:00",
+      "last_build_wib": "2026-10-22T05:52:39+07:00",
       "pages": [
         "rainfall-dasarian-now",
         "rainfall-dasarian-nrt",

@@ -415,6 +415,25 @@ a:hover { color: var(--current); }
 }
 .dashcard:hover .dashcard__go { transform: translateX(3px); }
 
+/* Gambar modul aktif (16:9), rata ke tepi atas kartu. Dibuat
+   buat_gambar_modul.py; width/height di <img> mencegah loncatan tata letak. */
+.dashcard__media {
+  display: block;
+  width: calc(100% + 2 * var(--sp-5));
+  max-width: none;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  margin: calc(-1 * var(--sp-5)) calc(-1 * var(--sp-5)) 0;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+/* Kelompok kartu: modul aktif di atas, "Dalam pengembangan" di bawah. */
+.dashgroup + .dashgroup { margin-top: var(--sp-5); }
+.dashgrid--compact { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+.dashgrid--compact .dashcard { padding: var(--sp-4); gap: var(--sp-2); }
+
 .grid {
   display: grid;
   gap: var(--sp-4);
@@ -830,10 +849,13 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
     </p>
   </section>
 
-  <section aria-label="Dasbor portal">
+
+  <section class="dashgroup" aria-label="Modul aktif">
     <div class="dashgrid">
       <a class="dashcard" href="rainfall/index.html"
          style="--dash-accent: var(--river-700)">
+        <img class="dashcard__media" src="assets/img/modul-rainfall.webp" alt="Peta akumulasi hujan lima hari dari satelit GSMaP di wilayah Indonesia"
+             width="1200" height="675" loading="lazy" decoding="async">
         <div class="dashcard__head">
           <span class="dashcard__icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -855,6 +877,8 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
       </a>
       <a class="dashcard" href="climate/index.html"
          style="--dash-accent: var(--river-700)">
+        <img class="dashcard__media" src="assets/img/modul-climate.webp" alt="Grafik prakiraan ensemble Niño3.4 dan DMI enam bulan ke depan dengan pita sebaran anggota"
+             width="1200" height="675" loading="lazy" decoding="async">
         <div class="dashcard__head">
           <span class="dashcard__icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -874,6 +898,12 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
           <span class="dashcard__go">Buka →</span>
         </span>
       </a>
+    </div>
+  </section>
+
+  <section class="dashgroup" aria-labelledby="dev-h">
+    <h2 id="dev-h" class="eyebrow">Dalam pengembangan</h2>
+    <div class="dashgrid dashgrid--compact">
       <a class="dashcard" href="fews/index.html"
          style="--dash-accent: var(--river-500)">
         <div class="dashcard__head">
@@ -1040,11 +1070,11 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 22-10-2026 05:29 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 22-10-2026 05:51 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
 
 </body>
 </html>
-<!-- heslab-content: 9e94595ae11e5999 -->
+<!-- heslab-content: 6d5f29e1b39806c3 -->

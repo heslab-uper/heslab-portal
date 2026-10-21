@@ -415,6 +415,25 @@ a:hover { color: var(--current); }
 }
 .dashcard:hover .dashcard__go { transform: translateX(3px); }
 
+/* Gambar modul aktif (16:9), rata ke tepi atas kartu. Dibuat
+   buat_gambar_modul.py; width/height di <img> mencegah loncatan tata letak. */
+.dashcard__media {
+  display: block;
+  width: calc(100% + 2 * var(--sp-5));
+  max-width: none;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  margin: calc(-1 * var(--sp-5)) calc(-1 * var(--sp-5)) 0;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+/* Kelompok kartu: modul aktif di atas, "Dalam pengembangan" di bawah. */
+.dashgroup + .dashgroup { margin-top: var(--sp-5); }
+.dashgrid--compact { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+.dashgrid--compact .dashcard { padding: var(--sp-4); gap: var(--sp-2); }
+
 .grid {
   display: grid;
   gap: var(--sp-4);
@@ -996,11 +1015,11 @@ aria-current="true">Rainfall Monitoring</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 22-10-2026 05:29 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 22-10-2026 05:51 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
 
 </body>
 </html>
-<!-- heslab-content: 0d5edb6f8789d6ee -->
+<!-- heslab-content: 9398ba22aa3ed7bf -->
