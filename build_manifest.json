@@ -23,11 +23,11 @@
       "note": "dijalankan dari jalankan.py"
     },
     "rainfall-animation": {
-      "last_build_wib": "2026-10-21T21:44:44+07:00",
+      "last_build_wib": "2026-10-21T22:03:13+07:00",
       "pages": [
         "rainfall"
       ],
-      "note": "dijalankan dari jalankan.py"
+      "note": "produk=semua"
     },
     "rainfall-daily": {
       "last_build_wib": "2026-10-21T21:44:45+07:00",
@@ -54,7 +54,7 @@
       "note": "dijalankan dari jalankan.py"
     },
     "rainfall-forecast": {
-      "last_build_wib": "2026-10-21T21:03:07+07:00",
+      "last_build_wib": "2026-10-21T22:03:07+07:00",
       "pages": [
         "rainfall-forecast"
       ],
