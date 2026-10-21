@@ -1,7 +1,7 @@
 {
   "targets": {
     "shell": {
-      "last_build_wib": "2026-10-21T11:45:39+07:00",
+      "last_build_wib": "2026-10-21T17:45:23+07:00",
       "pages": [
         "home",
         "rainfall-daily",
@@ -13,8 +13,12 @@
         "rainfall-dasarian-now",
         "rainfall-daily-nrt",
         "rainfall-dasarian-nrt",
+        "rainfall-daily-nrt-v9",
+        "rainfall-dasarian-nrt-v9",
         "rainfall-daily-standard",
-        "rainfall-dasarian-standard"
+        "rainfall-dasarian-standard",
+        "rainfall-daily-standard-v9",
+        "rainfall-dasarian-standard-v9"
       ],
       "note": "produk=semua"
     },
@@ -26,11 +30,13 @@
       "note": "produk=semua"
     },
     "rainfall-daily": {
-      "last_build_wib": "2026-10-21T11:45:45+07:00",
+      "last_build_wib": "2026-10-21T17:45:30+07:00",
       "pages": [
         "rainfall-daily-now",
         "rainfall-daily-nrt",
+        "rainfall-daily-nrt-v9",
         "rainfall-daily-standard",
+        "rainfall-daily-standard-v9",
         "rainfall-daily"
       ],
       "note": "produk=semua"
