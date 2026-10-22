@@ -36,57 +36,44 @@
    ========================================================================== */
 
 :root {
-  /* Warna dasar — teks & permukaan netral */
-  --ink-900: #0E1B24;
-  --ink-700: #1E3542;
-  --ink-500: #4A6472;
-  --muted:   #6E848F;
-  --line:    #D7E1E4;
-  --line-soft: #E7EEF0;
-  --paper:   #EEF3F5;
+  /* ---- Palet identitas (pemilik 2026-10-22, Fase C) ------------------
+     Lima warna inti: biru #0077C0, biru tua #005990, hitam #231F20,
+     abu-cokelat #73675A, abu terang #F2F2F2. Tanpa warna aksen dekoratif.
+     Dua tint turunan (#E6F1F8 dari biru, #DDD9D3/#ECEAE6 dari abu-cokelat)
+     hanya untuk latar label, catatan, dan garis. Nama variabel lama
+     dipertahankan agar aturan di bawah tidak perlu diubah satu-satu.
+
+     Kontras WCAG AA (teks biasa minimal 4,5:1), dihitung 2026-10-22:
+       --ink-900 #231F20 di atas putih   : 16,30:1
+       --muted   #73675A di atas putih   :  5,50:1   (dulu #6E848F 3,92:1, gagal)
+       --muted   di atas --paper #F2F2F2 :  4,91:1
+       --river-700 #0077C0 di atas putih :  4,77:1
+       --river-700 di atas --paper       :  4,26:1 -> untuk teks kecil di atas
+                                            latar abu pakai --river-800
+       putih di atas --river-900 #005990 :  7,42:1 */
+  --ink-900: #231F20;     /* teks utama, judul */
+  --ink-700: #231F20;
+  --ink-500: #73675A;     /* teks sekunder */
+  --muted:   #73675A;     /* teks samar, metadata */
+  --line:    #DDD9D3;     /* garis, batas kartu */
+  --line-soft: #ECEAE6;
+  --paper:   #F2F2F2;     /* latar halaman */
   --surface: #ffffff;
 
-  /* ---- Biru Universitas Pertamina ------------------------------------
-     Nilai #0077C0 diambil langsung dari berkas logo resmi UPer
-     (piksel daun biru, 19,15% dari seluruh piksel opak logo).
-     H=203° S=100% L=38%. Seluruh tingkat lain diturunkan dari nilai itu
-     dengan hue dan saturasi dipertahankan, hanya lightness yang digeser.
+  --river-900: #005990;   /* kepala halaman */
+  --river-800: #005990;   /* hover, tautan di atas latar abu */
+  --river-700: #0077C0;   /* PRIMARY — biru resmi UPer */
+  --river-600: #005990;   /* hover elemen */
+  --river-500: #0077C0;   /* garis dan ikon */
+  --river-100: #E6F1F8;   /* tint biru: label "aktif", catatan */
 
-     Verifikasi kontras WCAG AA:
-       putih di atas --river-900  : 11,04:1  lulus
-       putih di atas --river-700  :  4,77:1  lulus
-       --river-700 sbg teks/putih :  4,77:1  lulus
-       --river-600 hanya 3,49:1 -> JANGAN dipakai untuk teks, hanya untuk
-       hover pada latar berwarna, garis, dan elemen non-teks. */
-  --river-900: #003F66;   /* masthead */
-  --river-800: #00558A;
-  --river-700: #0077C0;   /* PRIMARY — biru resmi UPer, tanpa modifikasi */
-  --river-600: #008EE6;   /* hover & elemen non-teks saja */
-  --river-500: #1AA8FF;   /* aksen, garis, ikon */
-  --river-300: #66C5FF;
-  --river-200: #A8DEFF;   /* pinggir kartu */
-  --river-100: #E5F5FF;   /* latar tint pucat */
-
-  /* Hijau daun UPer (#C1D544) — dicadangkan sebagai aksen institusional,
-     belum dipakai. Merah (#ED1C24) sengaja TIDAK diadopsi: pada portal
-     hidrologi, merah harus tetap berarti peringatan, bukan identitas. */
-  --uper-green: #C1D544;
-
-  /* Aksen air — hue digeser dari biru UPer ke arah cyan (203° -> 188°),
-     cukup jauh untuk terbaca sebagai "air" tapi masih satu keluarga
-     dengan warna institusi. Dipakai hanya untuk motif ombak, bukan teks. */
-  --wave-600: #00A5C4;
-  --wave-300: #7FD9EA;
-
-  /* current/current-dark/current-soft dipertahankan sebagai alias supaya
-     komponen lama (tag, tautan, tombol) tidak perlu diubah satu-satu. */
   --current:      var(--river-700);
   --current-dark: var(--river-800);
   --current-soft: var(--river-100);
 
-  /* Aksen hangat — SEKARANG KHUSUS untuk peringatan/catatan metodologis,
-     bukan lagi warna dekoratif. Portal ini sengaja didominasi biru+air,
-     sehingga saat amber muncul, artinya sungguh "perhatikan ini". */
+  /* Pengecualian fungsional, bukan aksen: KHUSUS peringatan (pita "Data
+     belum diperbarui", catatan metodologis). Skala warna data (kelas hujan,
+     zona ENSO, grafik) diatur di config.py dan JS, tidak di sini. */
   --alert:        #B4531B;
   --alert-soft:   #FBEEE4;
 
@@ -170,7 +157,7 @@ a:hover { color: var(--current); }
 
 .masthead {
   background: var(--river-900);
-  color: #DCE9EE;
+  color: #E6F1F8;
 }
 
 .masthead__top {
@@ -207,23 +194,23 @@ a:hover { color: var(--current); }
 .brand__sub {
   font-family: var(--font-mono);
   font-size: var(--step--1);
-  color: #70BCEB;
+  color: #E6F1F8;
   letter-spacing: 0.02em;
 }
 
 .masthead a.outlink {
   font-family: var(--font-mono);
   font-size: var(--step--1);
-  color: #91CAED;
+  color: #E6F1F8;
   text-decoration: none;
-  border: 1px solid #08639B;
+  border: 1px solid rgba(255, 255, 255, .35);
   padding: var(--sp-2) var(--sp-3);
   border-radius: var(--radius);
 }
 .masthead a.outlink:hover { border-color: var(--current); color: #fff; }
 
 .mainnav {
-  border-top: 1px solid #07517E;
+  border-top: 1px solid rgba(255, 255, 255, .2);
   display: flex;
   flex-wrap: wrap;
   gap: var(--sp-5);
@@ -235,7 +222,7 @@ a:hover { color: var(--current); }
   font-family: var(--font-display);
   font-size: var(--step-0);
   letter-spacing: 0.02em;
-  color: #A4CFEA;
+  color: #E6F1F8;
   text-decoration: none;
   border-bottom: 2px solid transparent;
 }
@@ -248,7 +235,7 @@ a:hover { color: var(--current); }
   text-transform: uppercase;
   letter-spacing: 0.08em;
   margin-left: var(--sp-2);
-  color: #6BA4C7;
+  color: #E6F1F8;
 }
 
 /* Pita intensitas: motif tanda tangan portal, sekaligus kunci warna modul. */
@@ -363,7 +350,7 @@ a:hover { color: var(--current); }
 .dashcard:hover {
   border-color: var(--river-500);
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(7, 51, 105, .10);
+  box-shadow: 0 4px 16px rgba(35, 31, 32, .10);
 }
 
 .dashcard__head {
@@ -673,7 +660,7 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
   border: 1px dashed var(--line);
   border-radius: var(--radius);
   background: repeating-linear-gradient(
-    135deg, var(--surface), var(--surface) 10px, #f7fafb 10px, #f7fafb 20px);
+    135deg, var(--surface), var(--surface) 10px, #F2F2F2 10px, #F2F2F2 20px);
   padding: var(--sp-7) var(--sp-5);
   text-align: center;
   color: var(--muted);
@@ -712,24 +699,24 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
 
 .foot {
   background: var(--ink-900);
-  color: #92BAD3;
+  color: #F2F2F2;
   margin-top: var(--sp-7);
   padding: var(--sp-6) 0;
   font-size: var(--step--1);
 }
-.foot a { color: #C4DEEE; }
+.foot a { color: #FFFFFF; }
 .foot__grid { display: grid; gap: var(--sp-5); grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
 .foot h4 {
   font-family: var(--font-mono);
   font-size: 0.6875rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: #6BA4C7;
+  color: #DDD9D3;
   margin: 0 0 var(--sp-3);
 }
 .foot ul { list-style: none; margin: 0; padding: 0; }
 .foot li { margin-bottom: var(--sp-2); }
-.foot__legal { border-top: 1px solid #07517E; margin-top: var(--sp-5); padding-top: var(--sp-4); color: #6BA4C7; }
+.foot__legal { border-top: 1px solid rgba(255, 255, 255, .2); margin-top: var(--sp-5); padding-top: var(--sp-4); color: #DDD9D3; }
 
 /* ------------------------------------------------------------ preferensi -- */
 
@@ -825,9 +812,9 @@ aria-current="true">Rainfall Monitoring</a>
 <div class="wave-rule" aria-hidden="true">
   <svg viewBox="0 0 400 10" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,5 C 50,0 100,10 150,5 C 200,0 250,10 300,5 C 350,0 400,10 400,5 L400,10 L0,10 Z"
-          fill="var(--wave-600)" opacity="0.55"/>
+          fill="var(--river-700)" opacity="0.55"/>
     <path d="M0,7 C 50,3 100,11 150,7 C 200,3 250,11 300,7 C 350,3 400,11 400,7 L400,10 L0,10 Z"
-          fill="var(--wave-300)" opacity="0.35"/>
+          fill="var(--river-800)" opacity="0.35"/>
   </svg>
 </div>
 
@@ -846,7 +833,7 @@ aria-current="true">Rainfall Monitoring</a>
 </div>
 
 <main id="main">
-<!-- heslab-sidik: 892063f95efac022 -->
+<!-- heslab-sidik: 3a18aaa5a53f74e0 -->
 <div class="wrap">
 
   <section class="pagehead">
@@ -1034,7 +1021,7 @@ aria-current="true">Rainfall Monitoring</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 22-10-2026 09:03 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 22-10-2026 10:03 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
@@ -1144,7 +1131,7 @@ aria-current="true">Rainfall Monitoring</a>
     if (nodata) {
       var op = nodata.opacity === undefined ? 1 : nodata.opacity;
       html += '<li style="margin-left:.5rem">' +
-              '<i style="background:#f5f7f8;position:relative;overflow:hidden">' +
+              '<i style="background:#F2F2F2;position:relative;overflow:hidden">' +
                 '<span style="position:absolute;inset:0;background:' + nodata.color +
                 ';opacity:' + op + '"></span>' +
               '</i><span>' + nodata.label + "</span></li>";
@@ -1260,7 +1247,7 @@ aria-current="true">Rainfall Monitoring</a>
       },
       margin: { r: 0, t: 0, l: 0, b: 0 },
       paper_bgcolor: "rgba(0,0,0,0)",
-      font: { family: "IBM Plex Sans, system-ui, sans-serif", size: 12, color: "#16333f" },
+      font: { family: "IBM Plex Sans, system-ui, sans-serif", size: 12, color: "#231F20" },
       dragmode: "pan"
     };
 
@@ -1674,7 +1661,7 @@ aria-current="true">Rainfall Monitoring</a>
     var tr = pita("min", "max", "min–maks", "rgba(99,172,211,0.20)")
       .concat(pita("p10", "p90", "p10–p90 (80% member)", "rgba(46,125,184,0.40)"))
       .concat([{ x: x, y: col("ens_mean"), mode: "lines+markers", name: "rerata",
-                 line: { color: "#16333f", width: 2 }, marker: { size: 5 },
+                 line: { color: "#231F20", width: 2 }, marker: { size: 5 },
                  customdata: p10.map(function (a, j) { return [a, p90[j], mx[j]]; }),
                  hovertemplate: "%{x|%d %b %H.%M} WIB<br>rerata %{y:.1f} mm<br>" +
                    "p10–p90 %{customdata[0]:.1f}–%{customdata[1]:.1f}<br>maks %{customdata[2]:.1f}<extra></extra>" }]);
@@ -1690,9 +1677,9 @@ aria-current="true">Rainfall Monitoring</a>
     Plotly.react(band, tr, {
       margin: { l: 44, r: 8, t: 8, b: 36 }, height: 260,
       paper_bgcolor: "rgba(0,0,0,0)", plot_bgcolor: "rgba(0,0,0,0)",
-      font: { family: "IBM Plex Sans, system-ui, sans-serif", size: 11, color: "#16333f" },
-      yaxis: { title: { text: "mm per " + P.period_hours + " jam" }, rangemode: "tozero", gridcolor: "#e6ecee" },
-      xaxis: { tickformat: "%d %b\n%H.%M", gridcolor: "#e6ecee" },
+      font: { family: "IBM Plex Sans, system-ui, sans-serif", size: 11, color: "#231F20" },
+      yaxis: { title: { text: "mm per " + P.period_hours + " jam" }, rangemode: "tozero", gridcolor: "#ECEAE6" },
+      xaxis: { tickformat: "%d %b\n%H.%M", gridcolor: "#ECEAE6" },
       legend: { orientation: "h", y: -0.25, font: { size: 10 } }, shapes: shapes, hovermode: "x"
     }, HES.plotConfig("heslab_prakiraan_pita"));
 
@@ -1835,4 +1822,4 @@ aria-current="true">Rainfall Monitoring</a>
 </script>
 </body>
 </html>
-<!-- heslab-content: d07b8e345fe56c63 -->
+<!-- heslab-content: e0959334674409aa -->
