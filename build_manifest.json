@@ -23,7 +23,7 @@
       "note": "produk=semua"
     },
     "rainfall-animation": {
-      "last_build_wib": "2026-10-24T00:03:13+07:00",
+      "last_build_wib": "2026-10-24T01:03:13+07:00",
       "pages": [
         "rainfall"
       ],
@@ -54,7 +54,7 @@
       "note": "produk=semua"
     },
     "rainfall-forecast": {
-      "last_build_wib": "2026-10-24T00:03:07+07:00",
+      "last_build_wib": "2026-10-24T01:03:07+07:00",
       "pages": [
         "rainfall-forecast"
       ],
