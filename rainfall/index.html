@@ -848,7 +848,7 @@ aria-current="true">Rainfall Monitoring</a>
     </p>
   </section>
 
-  <div class="readout">
+  <div class="readout" id="anim-readout">
   <div class="readout__cell">
     <span class="readout__k">Produk</span>
     <span class="readout__v">GSMaP NOW</span>
@@ -887,10 +887,21 @@ aria-current="true">Rainfall Monitoring</a>
   <section class="panel" aria-labelledby="anim-h">
     <div class="panel__head">
       <h2 id="anim-h">Animasi hujan jam-jaman</h2>
-      <span class="tag">GSMaP NOW · mm/jam</span>
+      <span class="tag" id="anim-tag">GSMaP NOW · mm/jam</span>
     </div>
 
     <div id="anim-stage">
+      <div class="playbar" role="group" aria-label="Produk GSMaP" id="anim-products">
+        <button class="btn btn--primary" type="button"
+                data-i="0" aria-pressed="true"
+>NOW</button>
+        <button class="btn" type="button"
+                data-i="1" aria-pressed="false"
+>NRT v8</button>
+        <button class="btn" type="button"
+                data-i="2" aria-pressed="false"
+disabled title="Data GSMaP NRT v9 belum tersedia">NRT v9</button>
+      </div>
       <div class="playbar">
         <button class="btn btn--primary" id="anim-play" type="button"
                 aria-pressed="false" disabled>▶ Putar</button>
@@ -917,8 +928,17 @@ aria-current="true">Rainfall Monitoring</a>
       disimpan sebagai 0 pada arsip HESLab, sehingga keduanya tampil sama.
     </p>
     <p style="font-size:.8125rem;color:var(--muted);margin-top:.75rem;margin-bottom:0">
-      <strong>Keterbatasan.</strong> GSMaP NOW adalah estimasi satelit tanpa
-      koreksi penakar hujan dan merupakan produk GSMaP yang paling kurang
+      <strong>Pilihan produk.</strong> <strong>NOW</strong> tersedia hampir
+      tanpa jeda, tetapi paling kurang akurat. <strong>NRT</strong> terlambat
+      sekitar 4 jam dan umumnya lebih akurat; jam terakhir yang belum tersedia
+      sebagai NRT ditampilkan dengan data NOW dan diberi keterangan
+      "NOW (NRT belum tersedia)". <strong>NRT v9</strong> memakai algoritma
+      terbaru JAXA (data tersedia sejak 19 Oktober 2026) dan dapat berbeda cukup jauh dari
+      v8; angka harian dan dasarian di portal ini memakai versi 8.
+    </p>
+    <p style="font-size:.8125rem;color:var(--muted);margin-top:.75rem;margin-bottom:0">
+      <strong>Keterbatasan.</strong> Ketiga produk adalah estimasi satelit tanpa
+      koreksi penakar hujan (NGA); GSMaP NOW adalah yang paling kurang
       akurat. Menurut catatan rilis JAXA, algoritma gelombang mikro sejak
       versi 8 cenderung menaksir berlebih hujan lebat seperti hujan konvektif,
       sementara hujan lemah umumnya sulit terdeteksi; hujan orografis juga
@@ -1056,12 +1076,12 @@ aria-current="true">Rainfall Monitoring</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 24-10-2026 04:03 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 24-10-2026 05:54 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
 
-<script id="payload" type="application/json">{"kind":"rainfall-animation-raster","frames":[{"url":"../assets/frames/now/20261023T04-7d665d.png","label":"23 Okt 2026 · 04:00–05:00 WIB"},{"url":"../assets/frames/now/20261023T05-7d665d.png","label":"23 Okt 2026 · 05:00–06:00 WIB"},{"url":"../assets/frames/now/20261023T06-7d665d.png","label":"23 Okt 2026 · 06:00–07:00 WIB"},{"url":"../assets/frames/now/20261023T07-7d665d.png","label":"23 Okt 2026 · 07:00–08:00 WIB"},{"url":"../assets/frames/now/20261023T08-7d665d.png","label":"23 Okt 2026 · 08:00–09:00 WIB"},{"url":"../assets/frames/now/20261023T09-7d665d.png","label":"23 Okt 2026 · 09:00–10:00 WIB"},{"url":"../assets/frames/now/20261023T10-7d665d.png","label":"23 Okt 2026 · 10:00–11:00 WIB"},{"url":"../assets/frames/now/20261023T11-7d665d.png","label":"23 Okt 2026 · 11:00–12:00 WIB"},{"url":"../assets/frames/now/20261023T12-7d665d.png","label":"23 Okt 2026 · 12:00–13:00 WIB"},{"url":"../assets/frames/now/20261023T13-7d665d.png","label":"23 Okt 2026 · 13:00–14:00 WIB"},{"url":"../assets/frames/now/20261023T14-7d665d.png","label":"23 Okt 2026 · 14:00–15:00 WIB"},{"url":"../assets/frames/now/20261023T15-7d665d.png","label":"23 Okt 2026 · 15:00–16:00 WIB"},{"url":"../assets/frames/now/20261023T16-7d665d.png","label":"23 Okt 2026 · 16:00–17:00 WIB"},{"url":"../assets/frames/now/20261023T17-7d665d.png","label":"23 Okt 2026 · 17:00–18:00 WIB"},{"url":"../assets/frames/now/20261023T18-7d665d.png","label":"23 Okt 2026 · 18:00–19:00 WIB"},{"url":"../assets/frames/now/20261023T19-7d665d.png","label":"23 Okt 2026 · 19:00–20:00 WIB"},{"url":"../assets/frames/now/20261023T20-7d665d.png","label":"23 Okt 2026 · 20:00–21:00 WIB"},{"url":"../assets/frames/now/20261023T21-7d665d.png","label":"23 Okt 2026 · 21:00–22:00 WIB"},{"url":"../assets/frames/now/20261023T22-7d665d.png","label":"23 Okt 2026 · 22:00–23:00 WIB"},{"url":"../assets/frames/now/20261023T23-7d665d.png","label":"23 Okt 2026 · 23:00 – 24 Okt 00:00 WIB"},{"url":"../assets/frames/now/20261024T00-7d665d.png","label":"24 Okt 2026 · 00:00–01:00 WIB"},{"url":"../assets/frames/now/20261024T01-7d665d.png","label":"24 Okt 2026 · 01:00–02:00 WIB"},{"url":"../assets/frames/now/20261024T02-7d665d.png","label":"24 Okt 2026 · 02:00–03:00 WIB"},{"url":"../assets/frames/now/20261024T03-7d665d.png","label":"24 Okt 2026 · 03:00–04:00 WIB"}],"bounds":{"west":90.0,"east":150.10000000000002,"north":15.100000000000001,"south":-15.100000000000001},"classes":[{"min":0.02,"max":0.1,"label":"Gerimis","color":"#142AA6"},{"min":0.1,"max":0.5,"label":"Sangat ringan","color":"#147AFA"},{"min":0.5,"max":2.0,"label":"Ringan","color":"#14BAFA"},{"min":2.0,"max":5.0,"label":"Ringan–sedang","color":"#66D1E6"},{"min":5.0,"max":10.0,"label":"Sedang","color":"#3DD994"},{"min":10.0,"max":20.0,"label":"Lebat","color":"#90E669"},{"min":20.0,"max":40.0,"label":"Sangat lebat","color":"#E0F62E"},{"min":40.0,"max":60.0,"label":"Ekstrem","color":"#FA6414"},{"min":60.0,"max":null,"label":"Ekstrem tinggi","color":"#D01414"}],"dry_label":"Tidak hujan","floor":0.02,"opacity":0.82,"unit":"mm/jam","map":{"center":{"lat":-2.5,"lon":118.0},"zoom":3.5,"style":"white-bg","layers":[{"below":"traces","sourcetype":"raster","sourceattribution":"Esri, HERE, Garmin, © OpenStreetMap contributors","source":["https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"]},{"below":"traces","sourcetype":"raster","source":["https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}"]}]},"autoplay":true,"frame_ms":650,"end_pause_ms":2000}</script>
+<script id="payload" type="application/json">{"kind":"rainfall-animation-raster","products":[{"key":"now","button":"NOW","label":"GSMaP NOW","frames":[{"url":"../assets/frames/now/20261023T04-7d665d.png","label":"23 Okt 2026 · 04:00–05:00 WIB","stamp":"20261023T04","source":null},{"url":"../assets/frames/now/20261023T05-7d665d.png","label":"23 Okt 2026 · 05:00–06:00 WIB","stamp":"20261023T05","source":null},{"url":"../assets/frames/now/20261023T06-7d665d.png","label":"23 Okt 2026 · 06:00–07:00 WIB","stamp":"20261023T06","source":null},{"url":"../assets/frames/now/20261023T07-7d665d.png","label":"23 Okt 2026 · 07:00–08:00 WIB","stamp":"20261023T07","source":null},{"url":"../assets/frames/now/20261023T08-7d665d.png","label":"23 Okt 2026 · 08:00–09:00 WIB","stamp":"20261023T08","source":null},{"url":"../assets/frames/now/20261023T09-7d665d.png","label":"23 Okt 2026 · 09:00–10:00 WIB","stamp":"20261023T09","source":null},{"url":"../assets/frames/now/20261023T10-7d665d.png","label":"23 Okt 2026 · 10:00–11:00 WIB","stamp":"20261023T10","source":null},{"url":"../assets/frames/now/20261023T11-7d665d.png","label":"23 Okt 2026 · 11:00–12:00 WIB","stamp":"20261023T11","source":null},{"url":"../assets/frames/now/20261023T12-7d665d.png","label":"23 Okt 2026 · 12:00–13:00 WIB","stamp":"20261023T12","source":null},{"url":"../assets/frames/now/20261023T13-7d665d.png","label":"23 Okt 2026 · 13:00–14:00 WIB","stamp":"20261023T13","source":null},{"url":"../assets/frames/now/20261023T14-7d665d.png","label":"23 Okt 2026 · 14:00–15:00 WIB","stamp":"20261023T14","source":null},{"url":"../assets/frames/now/20261023T15-7d665d.png","label":"23 Okt 2026 · 15:00–16:00 WIB","stamp":"20261023T15","source":null},{"url":"../assets/frames/now/20261023T16-7d665d.png","label":"23 Okt 2026 · 16:00–17:00 WIB","stamp":"20261023T16","source":null},{"url":"../assets/frames/now/20261023T17-7d665d.png","label":"23 Okt 2026 · 17:00–18:00 WIB","stamp":"20261023T17","source":null},{"url":"../assets/frames/now/20261023T18-7d665d.png","label":"23 Okt 2026 · 18:00–19:00 WIB","stamp":"20261023T18","source":null},{"url":"../assets/frames/now/20261023T19-7d665d.png","label":"23 Okt 2026 · 19:00–20:00 WIB","stamp":"20261023T19","source":null},{"url":"../assets/frames/now/20261023T20-7d665d.png","label":"23 Okt 2026 · 20:00–21:00 WIB","stamp":"20261023T20","source":null},{"url":"../assets/frames/now/20261023T21-7d665d.png","label":"23 Okt 2026 · 21:00–22:00 WIB","stamp":"20261023T21","source":null},{"url":"../assets/frames/now/20261023T22-7d665d.png","label":"23 Okt 2026 · 22:00–23:00 WIB","stamp":"20261023T22","source":null},{"url":"../assets/frames/now/20261023T23-7d665d.png","label":"23 Okt 2026 · 23:00 – 24 Okt 00:00 WIB","stamp":"20261023T23","source":null},{"url":"../assets/frames/now/20261024T00-7d665d.png","label":"24 Okt 2026 · 00:00–01:00 WIB","stamp":"20261024T00","source":null},{"url":"../assets/frames/now/20261024T01-7d665d.png","label":"24 Okt 2026 · 01:00–02:00 WIB","stamp":"20261024T01","source":null},{"url":"../assets/frames/now/20261024T02-7d665d.png","label":"24 Okt 2026 · 02:00–03:00 WIB","stamp":"20261024T02","source":null},{"url":"../assets/frames/now/20261024T03-7d665d.png","label":"24 Okt 2026 · 03:00–04:00 WIB","stamp":"20261024T03","source":null}],"readout":[{"k":"Produk","v":"GSMaP NOW"},{"k":"Jendela waktu","v":"24 jam terakhir"},{"k":"Data terakhir","v":"24 Okt 2026 · 03:00–04:00 WIB"},{"k":"Hujan wilayah Indonesia","v":"7.1% · maks 127.6 mm/jam"}]},{"key":"nrt","button":"NRT v8","label":"GSMaP NRT v8","frames":[{"url":"../assets/frames/nrt/20261023T04-7d665d.png","label":"23 Okt 2026 · 04:00–05:00 WIB","stamp":"20261023T04","source":null},{"url":"../assets/frames/nrt/20261023T05-7d665d.png","label":"23 Okt 2026 · 05:00–06:00 WIB","stamp":"20261023T05","source":null},{"url":"../assets/frames/nrt/20261023T06-7d665d.png","label":"23 Okt 2026 · 06:00–07:00 WIB","stamp":"20261023T06","source":null},{"url":"../assets/frames/nrt/20261023T07-7d665d.png","label":"23 Okt 2026 · 07:00–08:00 WIB","stamp":"20261023T07","source":null},{"url":"../assets/frames/nrt/20261023T08-7d665d.png","label":"23 Okt 2026 · 08:00–09:00 WIB","stamp":"20261023T08","source":null},{"url":"../assets/frames/nrt/20261023T09-7d665d.png","label":"23 Okt 2026 · 09:00–10:00 WIB","stamp":"20261023T09","source":null},{"url":"../assets/frames/nrt/20261023T10-7d665d.png","label":"23 Okt 2026 · 10:00–11:00 WIB","stamp":"20261023T10","source":null},{"url":"../assets/frames/nrt/20261023T11-7d665d.png","label":"23 Okt 2026 · 11:00–12:00 WIB","stamp":"20261023T11","source":null},{"url":"../assets/frames/nrt/20261023T12-7d665d.png","label":"23 Okt 2026 · 12:00–13:00 WIB","stamp":"20261023T12","source":null},{"url":"../assets/frames/nrt/20261023T13-7d665d.png","label":"23 Okt 2026 · 13:00–14:00 WIB","stamp":"20261023T13","source":null},{"url":"../assets/frames/nrt/20261023T14-7d665d.png","label":"23 Okt 2026 · 14:00–15:00 WIB","stamp":"20261023T14","source":null},{"url":"../assets/frames/nrt/20261023T15-7d665d.png","label":"23 Okt 2026 · 15:00–16:00 WIB","stamp":"20261023T15","source":null},{"url":"../assets/frames/nrt/20261023T16-7d665d.png","label":"23 Okt 2026 · 16:00–17:00 WIB","stamp":"20261023T16","source":null},{"url":"../assets/frames/nrt/20261023T17-7d665d.png","label":"23 Okt 2026 · 17:00–18:00 WIB","stamp":"20261023T17","source":null},{"url":"../assets/frames/nrt/20261023T18-7d665d.png","label":"23 Okt 2026 · 18:00–19:00 WIB","stamp":"20261023T18","source":null},{"url":"../assets/frames/nrt/20261023T19-7d665d.png","label":"23 Okt 2026 · 19:00–20:00 WIB","stamp":"20261023T19","source":null},{"url":"../assets/frames/nrt/20261023T20-7d665d.png","label":"23 Okt 2026 · 20:00–21:00 WIB","stamp":"20261023T20","source":null},{"url":"../assets/frames/nrt/20261023T21-7d665d.png","label":"23 Okt 2026 · 21:00–22:00 WIB","stamp":"20261023T21","source":null},{"url":"../assets/frames/nrt/20261023T22-7d665d.png","label":"23 Okt 2026 · 22:00–23:00 WIB","stamp":"20261023T22","source":null},{"url":"../assets/frames/nrt/20261023T23-7d665d.png","label":"23 Okt 2026 · 23:00 – 24 Okt 00:00 WIB","stamp":"20261023T23","source":null},{"url":"../assets/frames/nrt/20261024T00-7d665d.png","label":"24 Okt 2026 · 00:00–01:00 WIB","stamp":"20261024T00","source":null},{"url":"../assets/frames/now/20261024T01-7d665d.png","label":"24 Okt 2026 · 01:00–02:00 WIB","stamp":"20261024T01","source":"NOW (NRT belum tersedia)"},{"url":"../assets/frames/now/20261024T02-7d665d.png","label":"24 Okt 2026 · 02:00–03:00 WIB","stamp":"20261024T02","source":"NOW (NRT belum tersedia)"},{"url":"../assets/frames/now/20261024T03-7d665d.png","label":"24 Okt 2026 · 03:00–04:00 WIB","stamp":"20261024T03","source":"NOW (NRT belum tersedia)"}],"readout":[{"k":"Produk","v":"GSMaP NRT v8"},{"k":"Jendela waktu","v":"24 jam terakhir"},{"k":"Data terakhir","v":"24 Okt 2026 · 03:00–04:00 WIB · NOW (NRT belum tersedia)"},{"k":"Hujan wilayah Indonesia","v":"7.1% · maks 127.6 mm/jam"}]},{"key":"nrt-v9","button":"NRT v9","label":"GSMaP NRT v9","frames":[],"readout":[{"k":"Produk","v":"GSMaP NRT v9"},{"k":"Jendela waktu","v":"24 jam terakhir"},{"k":"Data terakhir","v":"Menunggu data"},{"k":"Resolusi","v":"0,1° (± 11 km)"}]}],"default":0,"bounds":{"west":90.0,"east":150.10000000000002,"north":15.100000000000001,"south":-15.100000000000001},"classes":[{"min":0.02,"max":0.1,"label":"Gerimis","color":"#142AA6"},{"min":0.1,"max":0.5,"label":"Sangat ringan","color":"#147AFA"},{"min":0.5,"max":2.0,"label":"Ringan","color":"#14BAFA"},{"min":2.0,"max":5.0,"label":"Ringan–sedang","color":"#66D1E6"},{"min":5.0,"max":10.0,"label":"Sedang","color":"#3DD994"},{"min":10.0,"max":20.0,"label":"Lebat","color":"#90E669"},{"min":20.0,"max":40.0,"label":"Sangat lebat","color":"#E0F62E"},{"min":40.0,"max":60.0,"label":"Ekstrem","color":"#FA6414"},{"min":60.0,"max":null,"label":"Ekstrem tinggi","color":"#D01414"}],"dry_label":"Tidak hujan","floor":0.02,"opacity":0.82,"unit":"mm/jam","map":{"center":{"lat":-2.5,"lon":118.0},"zoom":3.5,"style":"white-bg","layers":[{"below":"traces","sourcetype":"raster","sourceattribution":"Esri, HERE, Garmin, © OpenStreetMap contributors","source":["https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"]},{"below":"traces","sourcetype":"raster","source":["https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}"]}]},"autoplay":true,"frame_ms":650,"end_pause_ms":2000}</script>
 <script src="https://cdn.plot.ly/plotly-2.32.0.min.js" integrity="sha384-7TVmlZWH60iKX5Uk7lSvQhjtcgw2tkFjuwLcXoRSR4zXTyWFJRm9aPAguMh7CIra" crossorigin="anonymous" charset="utf-8"></script>
 <script>/* ==========================================================================
    Utilitas bersama HESLab Portal.
@@ -1507,6 +1527,12 @@ aria-current="true">Rainfall Monitoring</a>
   var ready = false;
   var kunciZoom = null;      // { awal, refresh } dari HES.kunciZoomKeBatas
 
+  /* Tiga produk (2026-10-23): NOW | NRT v8 | NRT v9. Hanya citra produk yang
+     sedang dipilih yang dimuat; produk lain dimuat saat tombolnya ditekan. */
+  var cur = P["default"] || 0;
+  var dimuat = {};
+  function F() { return P.products[cur].frames; }
+
   renderLegend();
 
   /* Legenda: kelas hujan + satu entri khusus "tidak hujan" yang transparan. */
@@ -1534,7 +1560,7 @@ aria-current="true">Rainfall Monitoring</a>
     var b = P.bounds;
     return {
       sourcetype: "image",
-      source: P.frames[i].url,
+      source: F()[i].url,
       /* Urutan sudut wajib: kiri-atas, kanan-atas, kanan-bawah, kiri-bawah. */
       coordinates: [
         [b.west, b.north],
@@ -1562,7 +1588,9 @@ aria-current="true">Rainfall Monitoring</a>
   function setFrame(i) {
     if (!ready) return;
     Plotly.relayout(plotEl, { "mapbox.layers": layersFor(i) });
-    stamp.textContent = P.frames[i].label;
+    var f = F()[i];
+    /* Jam NRT yang masih berisi NOW diberi keterangan sumbernya. */
+    stamp.textContent = f.source ? f.label + " · " + f.source : f.label;
     slider.value = i;
   }
 
@@ -1582,11 +1610,11 @@ aria-current="true">Rainfall Monitoring</a>
    */
   function jadwalkanLangkah() {
     var kini = Number(slider.value);
-    var diAkhir = kini === P.frames.length - 1;
+    var diAkhir = kini === F().length - 1;
     var jeda = diAkhir ? (P.end_pause_ms || 2000) : (P.frame_ms || 650);
 
     timer = setTimeout(function () {
-      setFrame((kini + 1) % P.frames.length);   // modulo -> mengulang sendiri
+      setFrame((kini + 1) % F().length);   // modulo -> mengulang sendiri
       jadwalkanLangkah();
     }, jeda);
   }
@@ -1598,20 +1626,66 @@ aria-current="true">Rainfall Monitoring</a>
     jadwalkanLangkah();
   }
 
-  /* Muat semua citra lebih dulu; kembalikan janji yang selesai saat siap. */
+  /* Muat semua citra produk aktif lebih dulu; kembalikan janji yang selesai
+     saat siap. Produk yang sudah pernah dimuat tidak dimuat ulang. */
   function preload() {
-    var sisa = P.frames.length;
+    var frames = F();
+    if (dimuat[cur]) return Promise.resolve();
+    var sisa = frames.length;
     return new Promise(function (resolve) {
-      P.frames.forEach(function (f) {
+      frames.forEach(function (f) {
         var img = new Image();
         img.onload = img.onerror = function () {
           sisa -= 1;
           stamp.textContent = "memuat citra… " +
-            Math.round(100 * (P.frames.length - sisa) / P.frames.length) + "%";
-          if (sisa === 0) resolve();
+            Math.round(100 * (frames.length - sisa) / frames.length) + "%";
+          if (sisa === 0) { dimuat[cur] = true; resolve(); }
         };
         img.src = f.url;
       });
+    });
+  }
+
+  /* Ganti produk: hentikan animasi, muat citranya, lompat ke jam terakhir,
+     dan ganti label produk serta panel pembacaan di atas halaman. */
+  function gantiProduk(k) {
+    if (k === cur || !P.products[k].frames.length) return;
+    stop();
+    ready = false;
+    cur = k;
+    var tombol = document.querySelectorAll("#anim-products button");
+    Array.prototype.forEach.call(tombol, function (b) {
+      var aktif = Number(b.getAttribute("data-i")) === k;
+      b.classList.toggle("btn--primary", aktif);
+      b.setAttribute("aria-pressed", aktif ? "true" : "false");
+    });
+    var tag = document.getElementById("anim-tag");
+    if (tag) tag.textContent = P.products[k].label + " · " + P.unit;
+    tulisPembacaan(P.products[k].readout);
+    preload().then(function () {
+      ready = true;
+      slider.max = String(F().length - 1);
+      setFrame(F().length - 1);
+    });
+  }
+
+  /* Panel pembacaan atas halaman; teks dipasang lewat textContent. */
+  function tulisPembacaan(sel) {
+    var el = document.getElementById("anim-readout");
+    if (!el) return;
+    el.textContent = "";
+    sel.forEach(function (c) {
+      var d = document.createElement("div");
+      d.className = "readout__cell";
+      var k = document.createElement("span");
+      k.className = "readout__k";
+      k.textContent = c.k;
+      var v = document.createElement("span");
+      v.className = "readout__v";
+      v.textContent = c.v;
+      d.appendChild(k);
+      d.appendChild(v);
+      el.appendChild(d);
     });
   }
 
@@ -1619,7 +1693,7 @@ aria-current="true">Rainfall Monitoring</a>
   // agar seluruh domain muat di wadah (lihat HES.fitBounds).
   var B = HES.fitBounds(plotEl, P.bounds);
   var layout = HES.mapLayout(P.map, B);
-  layout.mapbox.layers = layersFor(P.frames.length - 1);
+  layout.mapbox.layers = layersFor(F().length - 1);
 
   /* Plotly TIDAK membentuk subplot mapbox bila daftar trace kosong — basemap
      tidak akan muncul sama sekali. Karena halaman ini hanya menampilkan citra
@@ -1651,7 +1725,7 @@ aria-current="true">Rainfall Monitoring</a>
         }
       });
 
-      slider.max = String(P.frames.length - 1);
+      slider.max = String(F().length - 1);
       slider.disabled = false;
       playBtn.disabled = false;
       if (fsBtn) fsBtn.disabled = false;
@@ -1679,14 +1753,20 @@ aria-current="true">Rainfall Monitoring</a>
       /* Mulai dari gambar TERAKHIR, bukan yang pertama. Pengunjung yang baru
          membuka halaman ingin melihat kondisi terkini lebih dulu; jeda akhir
          menahannya sejenak sebelum animasi mengulang dari 24 jam yang lalu. */
-      setFrame(P.frames.length - 1);
+      setFrame(F().length - 1);
+
+      /* Tombol produk aktif setelah peta siap. */
+      var tombol = document.querySelectorAll("#anim-products button");
+      Array.prototype.forEach.call(tombol, function (b) {
+        b.addEventListener("click", function () { gantiProduk(Number(b.getAttribute("data-i"))); });
+      });
 
       /* Pemutaran otomatis dilewati bila pengguna menyetel
          `prefers-reduced-motion` pada sistemnya. Tombol putar tetap ada. */
       if (!HES.reducedMotion() && P.autoplay) play();
     })
     .catch(function (err) {
-      HES.fail(plotEl, err.message, P.frames[0] && P.frames[0].url);
+      HES.fail(plotEl, err.message, F()[0] && F()[0].url);
     });
 
   slider.addEventListener("input", function () {
@@ -1741,4 +1821,4 @@ aria-current="true">Rainfall Monitoring</a>
 </script>
 </body>
 </html>
-<!-- heslab-content: 80eb8bcdc454a2da -->
+<!-- heslab-content: 90f5594a77cdb04c -->
