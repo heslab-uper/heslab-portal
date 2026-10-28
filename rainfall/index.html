@@ -1076,7 +1076,7 @@ aria-current="true">Rainfall Monitoring</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 28-10-2026 19:26 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 28-10-2026 19:44 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
@@ -1633,6 +1633,9 @@ aria-current="true">Rainfall Monitoring</a>
     return new Promise(function (resolve) {
       frames.forEach(function (f) {
         var img = new Image();
+        // Frame di R2 (data.heslab-uper.com): muat dalam mode CORS seperti peta. Tanpa ini respons tanpa
+        // izin CORS tersimpan di cache peramban dan peta lalu menolak frame yang sama (2026-10-28).
+        img.crossOrigin = "anonymous";
         img.onload = img.onerror = function () {
           sisa -= 1;
           stamp.textContent = "memuat citra… " +
@@ -1819,4 +1822,4 @@ aria-current="true">Rainfall Monitoring</a>
 </script>
 </body>
 </html>
-<!-- heslab-content: d368f34f3698b81a -->
+<!-- heslab-content: 8626ad4a08edb099 -->
