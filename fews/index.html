@@ -840,7 +840,7 @@ aria-current="true">FEWS</a>
     <p class="lede">
       Status debit setiap wilayah sungai dari model hujan-limpasan UPerRRM yang dijalankan tiap jam dengan hujan
       satelit GSMaP yang sudah turun (NRT GA lalu NOW), kemudian 72 jam tanpa hujan. Warna wilayah sungai = tingkat
-      tertinggi yang dicapai salah satu ruasnya dari T0 ke depan. Klik wilayah sungai untuk membuka skema sungainya.
+      tertinggi yang dicapai salah satu ruasnya sejak awal prediksi. Klik wilayah sungai untuk membuka skema sungainya.
     </p>
   </section>
 
@@ -864,12 +864,13 @@ aria-current="true">FEWS</a>
     <h2 id="list-h">Wilayah sungai</h2>
     <div class="tablewrap">
       <table id="fews-list">
-        <thead><tr><th>Wilayah sungai</th><th>T0 (WIB)</th><th>Tingkat tertinggi</th>
+        <thead><tr><th>Wilayah sungai</th><th>Awal prediksi (WIB)</th><th>Tingkat tertinggi</th>
 <th>waspada</th><th>siaga</th><th>awas</th><th>Ruas</th><th>Skema</th></tr></thead>
         <tbody><tr><td colspan="8">memuat…</td></tr></tbody>
       </table>
     </div>
-    <p>T0 = jam terakhir hujan yang sudah turun. Wilayah sungai yang belum tampil belum dipasang.</p>
+    <p>Awal prediksi (T0) = awal simulasi ke depan: sampai jam itu model memakai hujan yang sudah turun, sesudahnya
+    tanpa hujan. Wilayah sungai yang belum tampil belum dipasang.</p>
   </section>
 
   
@@ -919,7 +920,7 @@ aria-current="true">FEWS</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 29-10-2026 04:12 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 29-10-2026 05:29 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
@@ -1404,7 +1405,7 @@ aria-current="true">FEWS</a>
       var g = groups[col] || (groups[col] = { features: [], locations: [], text: [], urls: [] });
       g.features.push({ type: "Feature", id: b.basin, properties: {}, geometry: geo.geometry });
       g.locations.push(b.basin);
-      g.text.push(b.label + "<br>" + (stale ? "data lama, T0 " : "T0 ") + label(b.t0_wib) + " WIB<br>tingkat tertinggi: " +
+      g.text.push(b.label + "<br>" + (stale ? "data lama, awal prediksi " : "awal prediksi ") + label(b.t0_wib) + " WIB<br>tingkat tertinggi: " +
                   b.highest + "<br>waspada " + (b.levels.waspada || 0) + " · siaga " + (b.levels.siaga || 0) +
                   " · awas " + (b.levels.awas || 0) + " ruas");
       g.urls.push(b.page_url);
@@ -1446,4 +1447,4 @@ aria-current="true">FEWS</a>
 </script>
 </body>
 </html>
-<!-- heslab-content: 7d08ceea435d33ad -->
+<!-- heslab-content: 6d1f4c157409677e -->
