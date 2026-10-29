@@ -18,7 +18,7 @@
   </url>
   <url>
     <loc>https://portal.heslab-uper.com/rainfall/prakiraan/</loc>
-    <lastmod>2026-10-28</lastmod>
+    <lastmod>2026-10-29</lastmod>
   </url>
   <url>
     <loc>https://portal.heslab-uper.com/rainfall/harian/now/</loc>
@@ -66,10 +66,14 @@
   </url>
   <url>
     <loc>https://portal.heslab-uper.com/fews/</loc>
-    <lastmod>2026-10-28</lastmod>
+    <lastmod>2026-10-29</lastmod>
   </url>
   <url>
     <loc>https://portal.heslab-uper.com/climate/202610/</loc>
     <lastmod>2026-10-28</lastmod>
+  </url>
+  <url>
+    <loc>https://portal.heslab-uper.com/fews/ciliwung-cisadane/</loc>
+    <lastmod>2026-10-29</lastmod>
   </url>
 </urlset>
