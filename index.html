@@ -516,7 +516,7 @@ a.card:hover h3 { color: var(--current-dark); }
   letter-spacing: 0.08em;
   color: var(--muted);
 }
-select, button.btn {
+select, button.btn, a.btn {
   font-family: var(--font-body);
   font-size: var(--step-0);
   padding: var(--sp-2) var(--sp-3);
@@ -528,12 +528,13 @@ select, button.btn {
 }
 select:disabled { color: var(--muted); background: var(--paper); }
 button.btn { cursor: pointer; }
-button.btn:hover { border-color: var(--current); color: var(--current-dark); }
-button.btn--primary {
+a.btn { display: inline-flex; align-items: center; text-decoration: none; }
+button.btn:hover, a.btn:hover { border-color: var(--current); color: var(--current-dark); }
+button.btn--primary, a.btn--primary {
   background: var(--current); border-color: var(--current); color: #fff;
   font-family: var(--font-mono); letter-spacing: 0.03em;
 }
-button.btn--primary:hover { background: var(--current-dark); color: #fff; }
+button.btn--primary:hover, a.btn--primary:hover { background: var(--current-dark); color: #fff; }
 
 .playbar { display: flex; align-items: center; gap: var(--sp-3); flex-wrap: wrap; }
 .playbar input[type="range"] { flex: 1; min-width: 180px; accent-color: var(--current); }
@@ -1063,11 +1064,11 @@ gtag('config', 'G-Z0TXGDFW5L');
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 29-10-2026 04:10 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 29-10-2026 11:45 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
 
 </body>
 </html>
-<!-- heslab-content: a57feef2def96ab4 -->
+<!-- heslab-content: bbd57be8dbbdbf17 -->
