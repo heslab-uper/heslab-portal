@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Streamflow WS Ciliwung-Cisadane — HESLab Portal</title>
+<meta name="description" content="Prakiraan sifat debit per dasarian WS Ciliwung-Cisadane, enam bulan ke depan (bukan prakiraan resmi) — Hydro-Environmental System Lab.">
+<meta name="author" content="Hydro-Environmental System Lab">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://portal.heslab-uper.com/streamflow/ciliwung-cisadane/">
+<meta property="og:title" content="Streamflow WS Ciliwung-Cisadane — HESLab Portal">
+<meta property="og:description" content="Prakiraan sifat debit per dasarian WS Ciliwung-Cisadane, enam bulan ke depan (bukan prakiraan resmi)">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://portal.heslab-uper.com/streamflow/ciliwung-cisadane/">
+<meta property="og:image" content="https://portal.heslab-uper.com/assets/img/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="HESLab Portal">
+<meta property="og:locale" content="id_ID">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Streamflow WS Ciliwung-Cisadane — HESLab Portal">
+<meta name="twitter:description" content="Prakiraan sifat debit per dasarian WS Ciliwung-Cisadane, enam bulan ke depan (bukan prakiraan resmi)">
+<meta name="twitter:image" content="https://portal.heslab-uper.com/assets/img/og-cover.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   HESLab Portal — lembar gaya tunggal.
+   Berkas ini di-inline ke dalam setiap HTML oleh rendering.py, sehingga tiap
+   halaman berdiri sendiri (tidak ada permintaan CSS eksternal).
+
+   Bahasa visual: panel instrumen ukur. Angka memakai huruf monospasi, judul
+   memakai huruf kondensasi, dan pita intensitas hujan dipakai sebagai motif
+   pengikat antar halaman.
+   ========================================================================== */
+
+:root {
+  /* ---- Palet identitas (pemilik 2026-10-22, Fase C) ------------------
+     Lima warna inti: biru #0077C0, biru tua #005990, hitam #231F20,
+     abu-cokelat #73675A, abu terang #F2F2F2. Tanpa warna aksen dekoratif.
+     Dua tint turunan (#E6F1F8 dari biru, #DDD9D3/#ECEAE6 dari abu-cokelat)
+     hanya untuk latar label, catatan, dan garis. Nama variabel lama
+     dipertahankan agar aturan di bawah tidak perlu diubah satu-satu.
+
+     Kontras WCAG AA (teks biasa minimal 4,5:1), dihitung 2026-10-22:
+       --ink-900 #231F20 di atas putih   : 16,30:1
+       --muted   #73675A di atas putih   :  5,50:1   (dulu #6E848F 3,92:1, gagal)
+       --muted   di atas --paper #F2F2F2 :  4,91:1
+       --river-700 #0077C0 di atas putih :  4,77:1
+       --river-700 di atas --paper       :  4,26:1 -> untuk teks kecil di atas
+                                            latar abu pakai --river-800
+       putih di atas --river-900 #005990 :  7,42:1 */
+  --ink-900: #231F20;     /* teks utama, judul */
+  --ink-700: #231F20;
+  --ink-500: #73675A;     /* teks sekunder */
+  --muted:   #73675A;     /* teks samar, metadata */
+  --line:    #DDD9D3;     /* garis, batas kartu */
+  --line-soft: #ECEAE6;
+  --paper:   #F2F2F2;     /* latar halaman */
+  --surface: #ffffff;
+
+  --river-900: #005990;   /* kepala halaman */
+  --river-800: #005990;   /* hover, tautan di atas latar abu */
+  --river-700: #0077C0;   /* PRIMARY — biru resmi UPer */
+  --river-600: #005990;   /* hover elemen */
+  --river-500: #0077C0;   /* garis dan ikon */
+  --river-100: #E6F1F8;   /* tint biru: label "aktif", catatan */
+
+  --current:      var(--river-700);
+  --current-dark: var(--river-800);
+  --current-soft: var(--river-100);
+
+  /* Pengecualian fungsional, bukan aksen: KHUSUS peringatan (pita "Data
+     belum diperbarui", catatan metodologis). Skala warna data (kelas hujan,
+     zona ENSO, grafik) diatur di config.py dan JS, tidak di sini. */
+  --alert:        #B4531B;
+  --alert-soft:   #FBEEE4;
+
+  /* Huruf */
+  --font-display: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+
+  /* Ukuran */
+  --step--1: 0.8125rem;
+  --step-0:  0.9375rem;
+  --step-1:  1.125rem;
+  --step-2:  1.4375rem;
+  --step-3:  1.875rem;
+  --step-4:  2.5rem;
+
+  /* Ruang */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+
+  --radius: 3px;
+  --maxw: 1180px;
+}
+
+/* ---------------------------------------------------------------- reset -- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink-700);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--ink-900);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--sp-3);
+  font-weight: 600;
+}
+
+h1 { font-size: var(--step-4); }
+h2 { font-size: var(--step-2); }
+h3 { font-size: var(--step-1); }
+
+p { margin: 0 0 var(--sp-4); }
+
+a { color: var(--current-dark); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { color: var(--current); }
+
+:focus-visible {
+  outline: 2px solid var(--current);
+  outline-offset: 2px;
+}
+
+.wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--sp-5);
+}
+
+.skip {
+  position: absolute; left: -9999px;
+  background: var(--surface); padding: var(--sp-3) var(--sp-4); z-index: 100;
+}
+.skip:focus { left: var(--sp-4); top: var(--sp-4); }
+
+/* --------------------------------------------------------------- header -- */
+
+.masthead {
+  background: var(--river-900);
+  color: #E6F1F8;
+}
+
+.masthead__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding: var(--sp-4) 0;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  text-decoration: none;
+  color: inherit;
+}
+.brand__icon { flex: none; }
+.brand__logo {
+  flex: none;
+  height: 40px;
+  width: auto;
+  display: block;
+}
+.brand__text { display: flex; flex-direction: column; line-height: 1.15; }
+.brand__mark {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #fff;
+}
+.brand__sub {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: #E6F1F8;
+  letter-spacing: 0.02em;
+}
+
+.masthead a.outlink {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: #E6F1F8;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, .35);
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--radius);
+}
+.masthead a.outlink:hover { border-color: var(--current); color: #fff; }
+
+.mainnav {
+  border-top: 1px solid rgba(255, 255, 255, .2);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-5);
+  padding: 0;
+}
+.mainnav a {
+  display: block;
+  padding: var(--sp-3) 0;
+  font-family: var(--font-display);
+  font-size: var(--step-0);
+  letter-spacing: 0.02em;
+  color: #E6F1F8;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+}
+.mainnav a:hover { color: #fff; }
+.mainnav a[aria-current="true"] { color: #fff; border-bottom-color: var(--current); }
+.mainnav a[data-status="planned"]::after {
+  content: "segera";
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-left: var(--sp-2);
+  color: #E6F1F8;
+}
+
+/* Pita intensitas: motif tanda tangan portal, sekaligus kunci warna modul. */
+.ramp-rule {
+  display: flex;
+  height: 4px;
+}
+.ramp-rule span { flex: 1; }
+
+/* Garis ombak — elemen air eksplisit, dipasang di bawah masthead pada
+   setiap halaman. Bukan dekorasi acak: bentuknya gelombang sinus tunggal,
+   menegaskan tema hidrologi tanpa berebut perhatian dengan konten. */
+.wave-rule {
+  display: block;
+  width: 100%;
+  height: 10px;
+  background: var(--river-900);
+}
+.wave-rule svg { display: block; width: 100%; height: 100%; }
+
+/* ----------------------------------------------------------- breadcrumb -- */
+
+.crumbs {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--muted);
+  padding: var(--sp-4) 0 0;
+}
+.crumbs a { color: var(--ink-500); text-decoration: none; }
+.crumbs a:hover { color: var(--current); text-decoration: underline; }
+.crumbs span[aria-hidden] { padding: 0 var(--sp-2); color: var(--line); }
+
+/* --------------------------------------------------------- page header -- */
+
+.pagehead { padding: var(--sp-4) 0 var(--sp-5); }
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--current-dark);
+  margin: 0 0 var(--sp-2);
+}
+.pagehead p.lede {
+  font-size: var(--step-1);
+  color: var(--ink-500);
+  max-width: 62ch;
+  margin: var(--sp-2) 0 0;
+}
+
+/* Panel pembacaan instrumen: status data yang sedang ditampilkan. */
+.readout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin: var(--sp-5) 0;
+  overflow: hidden;
+}
+.readout__cell { background: var(--surface); padding: var(--sp-3) var(--sp-4); }
+.readout__k {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--muted);
+  display: block;
+}
+.readout__v {
+  font-family: var(--font-mono);
+  font-size: var(--step-0);
+  color: var(--ink-900);
+  font-weight: 500;
+  word-break: break-word;
+}
+
+/* --------------------------------------------------------- kartu dasbor -- */
+/* Kartu modul utama pada beranda. Sengaja dibuat 2 kolom (bukan 4) agar tiap
+   kartu punya bobot visual cukup untuk menjadi pintu masuk utama portal. */
+
+.dashgrid {
+  display: grid;
+  gap: var(--sp-4);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  margin-top: var(--sp-2);
+}
+
+.dashcard {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: var(--sp-5);
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  position: relative;
+  overflow: hidden;
+  transition: border-color .16s ease, transform .16s ease, box-shadow .16s ease;
+}
+/* Pita aksen kiri: penanda modul, warnanya diset per-kartu di bawah. */
+.dashcard::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--dash-accent, var(--river-500));
+}
+.dashcard:hover {
+  border-color: var(--river-500);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(35, 31, 32, .10);
+}
+
+.dashcard__head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+.dashcard__icon {
+  flex: none;
+  width: 42px; height: 42px;
+  border-radius: 5px;
+  background: var(--river-100);
+  color: var(--dash-accent, var(--river-700));
+  display: flex; align-items: center; justify-content: center;
+}
+.dashcard__icon svg { display: block; }
+.dashcard__titles { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.dashcard__no {
+  font-family: var(--font-mono);
+  font-size: .66rem;
+  letter-spacing: .1em;
+  color: var(--muted);
+}
+.dashcard h3 { margin: 0; font-size: var(--step-1); }
+.dashcard p {
+  margin: 0;
+  font-size: var(--step--1);
+  color: var(--ink-500);
+  flex: 1;
+}
+.dashcard__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin-top: var(--sp-2);
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--line-soft);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--muted);
+}
+.dashcard__go {
+  color: var(--river-700);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: transform .16s ease;
+  display: inline-block;
+}
+.dashcard:hover .dashcard__go { transform: translateX(3px); }
+
+/* Gambar modul aktif (16:9), rata ke tepi atas kartu. Dibuat
+   buat_gambar_modul.py; width/height di <img> mencegah loncatan tata letak. */
+.dashcard__media {
+  display: block;
+  width: calc(100% + 2 * var(--sp-5));
+  max-width: none;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  margin: calc(-1 * var(--sp-5)) calc(-1 * var(--sp-5)) 0;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+/* Kelompok kartu: modul aktif di atas, "Dalam pengembangan" di bawah. */
+.dashgroup + .dashgroup { margin-top: var(--sp-5); }
+.dashgrid--compact { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+.dashgrid--compact .dashcard { padding: var(--sp-4); gap: var(--sp-2); }
+
+.grid {
+  display: grid;
+  gap: var(--sp-4);
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+a.card:hover { border-color: var(--current); transform: translateY(-2px); }
+a.card:hover h3 { color: var(--current-dark); }
+
+.card__num {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: var(--sp-3);
+}
+.card p { color: var(--ink-500); font-size: var(--step--1); margin-bottom: var(--sp-4); }
+.card__foot {
+  margin-top: auto;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--current-dark);
+}
+
+.tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 2px 7px;
+  border-radius: 2px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  background: var(--paper);
+}
+.tag--live { border-color: var(--current); color: var(--current-dark); background: var(--current-soft); }
+.tag--planned { border-color: var(--line); color: var(--muted); }
+
+/* -------------------------------------------------------------- panel  -- */
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--sp-5);
+  margin-bottom: var(--sp-5);
+}
+.panel > h2 { margin-top: 0; }
+.panel__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--sp-4);
+}
+
+.split {
+  display: grid;
+  gap: var(--sp-5);
+  grid-template-columns: minmax(0, 2.1fr) minmax(0, 1fr);
+  align-items: start;
+}
+@media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
+
+/* ------------------------------------------------------------- kendali -- */
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  align-items: flex-end;
+  margin-bottom: var(--sp-4);
+}
+.field { display: flex; flex-direction: column; gap: var(--sp-1); }
+.field label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+select, button.btn, a.btn {
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  padding: var(--sp-2) var(--sp-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink-900);
+  min-height: 38px;
+}
+select:disabled { color: var(--muted); background: var(--paper); }
+button.btn { cursor: pointer; }
+a.btn { display: inline-flex; align-items: center; text-decoration: none; }
+button.btn:hover, a.btn:hover { border-color: var(--current); color: var(--current-dark); }
+button.btn--primary, a.btn--primary {
+  background: var(--current); border-color: var(--current); color: #fff;
+  font-family: var(--font-mono); letter-spacing: 0.03em;
+}
+button.btn--primary:hover, a.btn--primary:hover { background: var(--current-dark); color: #fff; }
+
+.playbar { display: flex; align-items: center; gap: var(--sp-3); flex-wrap: wrap; }
+.playbar input[type="range"] { flex: 1; min-width: 180px; accent-color: var(--current); }
+.playbar output {
+  font-family: var(--font-mono);
+  font-size: var(--step-0);
+  color: var(--ink-900);
+  min-width: 15ch;
+}
+
+/* -------------------------------------------------------------- legenda -- */
+
+.legend { display: flex; flex-wrap: wrap; gap: var(--sp-1) var(--sp-4); margin: var(--sp-4) 0 0; padding: 0; list-style: none; }
+.legend li { display: flex; align-items: center; gap: var(--sp-2); font-family: var(--font-mono); font-size: var(--step--1); color: var(--ink-500); }
+.legend i { width: 14px; height: 14px; border: 1px solid rgba(0,0,0,0.12); border-radius: 2px; display: block; }
+
+/* --------------------------------------------------------------- tabel -- */
+
+.tablewrap { overflow-x: auto; }
+table.data {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--step--1);
+}
+table.data caption {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--muted);
+  padding-bottom: var(--sp-3);
+}
+table.data th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+  padding: var(--sp-2) var(--sp-3);
+  white-space: nowrap;
+}
+table.data td {
+  padding: var(--sp-2) var(--sp-3);
+  border-bottom: 1px solid var(--line-soft);
+  vertical-align: middle;
+}
+table.data td.num, table.data th.num { text-align: right; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+table.data tbody tr:hover { background: var(--current-soft); }
+td .swatch {
+  display: inline-block; width: 10px; height: 10px; border-radius: 2px;
+  margin-right: var(--sp-2); border: 1px solid rgba(0,0,0,0.12);
+}
+.rank { font-family: var(--font-mono); color: var(--muted); }
+/* Nama wilayah di tabel peringkat: tombol yang tampil seperti teks. */
+button.linkbtn {
+  font: inherit; color: inherit; text-align: left;
+  background: none; border: 0; padding: 0; cursor: pointer;
+}
+button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
+
+/* --------------------------------------------------------- panel detail -- */
+
+.detail {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--sp-4);
+  background: var(--paper);
+  min-height: 220px;
+}
+.detail__empty { color: var(--muted); font-size: var(--step--1); }
+.detail__title { font-family: var(--font-display); font-size: var(--step-1); color: var(--ink-900); margin: 0 0 var(--sp-1); }
+.detail__prov { font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); margin-bottom: var(--sp-4); }
+.detail__big {
+  font-family: var(--font-mono);
+  font-size: var(--step-3);
+  color: var(--ink-900);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.detail__unit { font-size: var(--step-0); color: var(--muted); margin-left: var(--sp-1); }
+.detail dl { display: grid; grid-template-columns: auto 1fr; gap: var(--sp-2) var(--sp-4); margin: var(--sp-4) 0 0; font-size: var(--step--1); }
+.detail dt { font-family: var(--font-mono); color: var(--muted); }
+.detail dd { margin: 0; font-family: var(--font-mono); color: var(--ink-900); text-align: right; }
+/* Riwayat 7 hari di panel detail harian: batang per tanggal. */
+.spark {
+  list-style: none; margin: var(--sp-2) 0 0; padding: 0;
+  display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 4px;
+  font-family: var(--font-mono); font-size: 0.6875rem; color: var(--muted);
+}
+.spark__col { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 0; }
+.spark__val { white-space: nowrap; }
+.spark__track {
+  display: flex; align-items: flex-end; width: 100%; height: 64px;
+  border-bottom: 1px solid var(--line);
+}
+.spark__bar { display: block; width: 100%; border-radius: 2px 2px 0 0; outline: 1px solid rgba(0,0,0,0.08); }
+.spark__col.is-current { color: var(--ink-900); font-weight: 600; }
+.spark__col.is-current .spark__bar { outline: 2px solid var(--ink-700); }
+
+/* -------------------------------------------------------------- catatan -- */
+
+.note {
+  border-left: 3px solid var(--current);
+  background: var(--current-soft);
+  padding: var(--sp-4);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-size: var(--step--1);
+  margin-bottom: var(--sp-5);
+}
+.note--warn { border-left-color: var(--alert); background: var(--alert-soft); }
+.note--wait { border-left-color: var(--muted); background: var(--surface); border: 1px dashed var(--line); border-left: 3px solid var(--muted); }
+.note strong { color: var(--ink-900); }
+
+/* Teks pembahasan (Climate Outlook, discussion.md): lebar baca terbatas. */
+.prose { max-width: 72ch; }
+.prose p, .prose ul { margin: 0 0 var(--sp-4); }
+.prose h3, .prose h4 { margin: var(--sp-5) 0 var(--sp-2); }
+.prose > :last-child { margin-bottom: 0; }
+.note p:last-child { margin-bottom: 0; }
+
+/* Kotak "menunggu data": ruang yang sudah ada, isinya menyusul. */
+.awaiting {
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  background: repeating-linear-gradient(
+    135deg, var(--surface), var(--surface) 10px, #F2F2F2 10px, #F2F2F2 20px);
+  padding: var(--sp-7) var(--sp-5);
+  text-align: center;
+  color: var(--muted);
+}
+.awaiting h3 { color: var(--ink-500); }
+.awaiting code {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 1px 5px;
+  border-radius: 2px;
+  color: var(--ink-700);
+}
+
+/* -------------------------------------------------------------- sumber -- */
+
+.source {
+  border-top: 1px solid var(--line);
+  padding-top: var(--sp-4);
+  margin-top: var(--sp-6);
+  font-size: var(--step--1);
+  color: var(--ink-500);
+}
+.source dl { display: grid; grid-template-columns: minmax(120px, max-content) 1fr; gap: var(--sp-2) var(--sp-4); margin: 0; }
+.source dt { font-family: var(--font-mono); font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); }
+.source dd { margin: 0; }
+
+/* --------------------------------------------------------------- plot  -- */
+
+.plot { width: 100%; min-height: 460px; }
+.plot--tall { min-height: 520px; }
+.plot--chart { min-height: 400px; }
+
+/* -------------------------------------------------------------- footer -- */
+
+.foot {
+  background: var(--ink-900);
+  color: #F2F2F2;
+  margin-top: var(--sp-7);
+  padding: var(--sp-6) 0;
+  font-size: var(--step--1);
+}
+.foot a { color: #FFFFFF; }
+.foot__grid { display: grid; gap: var(--sp-5); grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.foot h4 {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #DDD9D3;
+  margin: 0 0 var(--sp-3);
+}
+.foot ul { list-style: none; margin: 0; padding: 0; }
+.foot li { margin-bottom: var(--sp-2); }
+.foot__legal { border-top: 1px solid rgba(255, 255, 255, .2); margin-top: var(--sp-5); padding-top: var(--sp-4); color: #DDD9D3; }
+
+/* ------------------------------------------------------------ preferensi -- */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------------------------------------------------------- layar penuh -- */
+
+/* Kelas dipasang dari JS, bukan pseudo-class :fullscreen — penulisan
+   berprefiksnya berbeda antar peramban dan satu selektor yang tidak dikenal
+   membatalkan seluruh aturan. */
+#anim-stage.is-fullscreen {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: var(--sp-4);
+  background: var(--surface);
+}
+
+/* min-height dari .plot / .plot--tall harus dilepas, jika tidak peta tidak
+   dapat menyusut mengikuti sisa ruang di dalam flex column. */
+#anim-stage.is-fullscreen .plot { flex: 1 1 auto; min-height: 0; }
+#anim-stage.is-fullscreen .legend { margin-top: 0; }
+
+/* ------------------------------------------- prakiraan hujan (ENS) ----- */
+/* Tombol bersegmen: satu pilihan aktif per kelompok (btn--primary). */
+.fc-controls { display: flex; flex-wrap: wrap; gap: var(--sp-3) var(--sp-5); align-items: flex-end; margin-bottom: var(--sp-3); }
+.fc-controls__k { display: block; font-size: var(--step--1); color: var(--muted); margin-bottom: var(--sp-1); }
+.seg { display: inline-flex; }
+.seg button.btn { border-radius: 0; margin-left: -1px; }
+.seg button.btn:first-child { border-radius: var(--radius) 0 0 var(--radius); margin-left: 0; }
+.seg button.btn:last-child { border-radius: 0 var(--radius) var(--radius) 0; }
+/* Tinggi peta diatur map_forecast.js dari rasio domain ENS; min-height .plot dilepas di sana. */
+.fc-small { font-size: var(--step--1); color: var(--muted); margin: var(--sp-3) 0 0; }
+.fc-legend-title { font-size: var(--step--1); color: var(--muted); margin: var(--sp-3) 0 var(--sp-1); }
+.fc-daytable { width: 100%; font-size: var(--step--1); margin-top: var(--sp-3); border-collapse: collapse; }
+.fc-daytable th, .fc-daytable td { padding: var(--sp-1) var(--sp-2); border-bottom: 1px solid var(--line-soft); text-align: right; font-variant-numeric: tabular-nums; }
+.fc-daytable th:first-child, .fc-daytable td:first-child { text-align: left; }
+
+@media print {
+  .masthead, .foot, .controls, .playbar, .fc-controls { display: none; }
+  body { background: #fff; }
+}
+
+</style><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8857637749916805" crossorigin="anonymous"></script><script async src="https://www.googletagmanager.com/gtag/js?id=G-Z0TXGDFW5L"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-Z0TXGDFW5L');
+</script></head>
+<body>
+<a class="skip" href="#main">Lewati ke konten</a>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="masthead__top">
+      <a class="brand" href="../../index.html">
+        <img class="brand__logo" src="../../assets/img/uper-lambang.png"
+             alt="Lambang Universitas Pertamina" width="40" height="41">
+        <span class="brand__text">
+          <span class="brand__mark">HESLab Portal</span>
+          <span class="brand__sub">Pemantauan dan Prakiraan Hidrologi</span>
+        </span>
+      </a>
+      <a class="outlink" href="https://www.heslab-uper.com" target="_blank" rel="noopener">
+        Website Laboratorium ↗
+      </a>
+    </div>
+    <nav class="mainnav" aria-label="Navigasi utama">
+      <a href="../../rainfall/index.html"
+         data-status="live"
+>Rainfall Monitoring</a>
+      <a href="../../climate/index.html"
+         data-status="live"
+>Climate Outlook</a>
+      <a href="../../fews/index.html"
+         data-status="live"
+>FEWS</a>
+      <a href="../../streamflow/index.html"
+         data-status="live"
+aria-current="true">Streamflow Forecast</a>
+      <a href="../../drought/index.html"
+         data-status="planned"
+>Drought Risk</a>
+    </nav>
+  </div>
+  <div class="ramp-rule" aria-hidden="true">
+<span style="background:#F7FAFB"></span><span style="background:#DCEBF2"></span><span style="background:#A9D4E6"></span><span style="background:#63ACD3"></span><span style="background:#2E7DB8"></span><span style="background:#6B3FA0"></span><span style="background:#A81F5E"></span>  </div>
+</header>
+
+<div class="wave-rule" aria-hidden="true">
+  <svg viewBox="0 0 400 10" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,5 C 50,0 100,10 150,5 C 200,0 250,10 300,5 C 350,0 400,10 400,5 L400,10 L0,10 Z"
+          fill="var(--river-700)" opacity="0.55"/>
+    <path d="M0,7 C 50,3 100,11 150,7 C 200,3 250,11 300,7 C 350,3 400,11 400,7 L400,10 L0,10 Z"
+          fill="var(--river-800)" opacity="0.35"/>
+  </svg>
+</div>
+
+<div class="wrap">
+  <nav class="crumbs" aria-label="Remah roti">
+        <a href="../../index.html">HESLab Portal</a><span aria-hidden="true">/</span>
+        <a href="../../streamflow/index.html">Streamflow Forecast</a><span aria-hidden="true">/</span>
+        <span>Streamflow WS Ciliwung-Cisadane</span>
+  </nav>
+</div>
+
+<main id="main">
+<div class="wrap">
+
+  <section class="pagehead">
+    <h1>Streamflow WS Ciliwung-Cisadane</h1>
+    <p class="lede">
+      Prakiraan sifat debit per dasarian hingga enam bulan ke depan untuk ruas-ruas sungai di WS Ciliwung-Cisadane, dari
+      model hujan-limpasan UPerRRM yang digerakkan prakiraan musiman ECMWF SEAS5, diperbarui sekali per run SEAS5
+      bulanan, dengan debit andalan Q50, Q80, Q90 sebagai pembanding.
+    </p>
+  </section>
+
+  <div class="readout" id="sf-readout">
+    <div class="readout__cell"><span class="readout__k">Run SEAS5</span>
+      <span class="readout__v" data-k="seas5">memuat…</span></div>
+    <div class="readout__cell"><span class="readout__k">Awal prakiraan</span>
+      <span class="readout__v" data-k="start">memuat…</span></div>
+    <div class="readout__cell"><span class="readout__k">Ruas outlet</span>
+      <span class="readout__v" data-k="outlet">memuat…</span></div>
+    <div class="readout__cell"><span class="readout__k">Ruas dimodelkan</span>
+      <span class="readout__v" data-k="reaches">memuat…</span></div>
+  </div>
+
+  <div class="note">
+    <p style="margin-bottom:0"><strong>Bukan prakiraan resmi.</strong> Sifat debit di halaman ini adalah hasil model
+    untuk riset dan pemantauan, digerakkan prakiraan musiman ECMWF SEAS5. Untuk prakiraan iklim resmi, acu BMKG; untuk
+    pengelolaan air, BBWS/BWS WS Ciliwung-Cisadane.</p>
+  </div>
+
+  <section class="panel" aria-labelledby="map-h">
+    <div class="panel__head">
+      <h2 id="map-h">Peta sungai WS Ciliwung-Cisadane</h2>
+      <span class="tag">dibuka di tab baru</span>
+    </div>
+    <p>Peta citra satelit dengan setiap ruas sungai, bangunan air, dan suplesi. Pilih dasarian dan tampilan (Median,
+    P10 skenario kering, P90 skenario basah, Keandalan); klik ruas atau bangunan untuk melihat hujan DAS hulu, debit
+    rerata dasarian terhadap normal dan debit andalan, peluang sifat debit, dan tabel per dasarian.</p>
+    <p><a class="btn btn--primary" href="https://data.heslab-uper.com/portal/assets/streamflow/ws_ciliwung_cisadane/skema.html" target="_blank" rel="noopener">Buka peta sungai →</a></p>
+  </section>
+
+  <section class="panel" aria-labelledby="out-h">
+    <h2 id="out-h">Sifat debit ruas outlet per dasarian</h2>
+    <div class="tablewrap">
+      <table id="sf-outlet">
+        <thead><tr><th>Dasarian</th><th>Median</th><th>P10 (skenario kering)</th><th>P90 (skenario basah)</th>
+          <th>Keandalan median</th></tr></thead>
+        <tbody><tr><td colspan="5">memuat…</td></tr></tbody>
+      </table>
+    </div>
+    <p style="font-size:.8125rem;color:var(--muted)">Ruas outlet = ruas dengan luas hulu terbesar; warnanya juga warna
+    WS Ciliwung-Cisadane di peta Indonesia. Sifat: debit rerata dasarian dibandingkan dengan normalnya (rerata debit model pada
+    dasarian yang sama, 2015–2025): Bawah Normal &lt; 85 %,
+    Normal 85–115 %, Atas Normal &gt; 115 %. Keandalan: letak median terhadap debit andalan Q50, Q80, Q90, yaitu debit
+    harian model yang disamai atau dilampaui pada 50, 80, 90 % hari dasarian itu pada tahun yang sama.</p>
+  </section>
+
+  <section class="panel" aria-labelledby="ws-h">
+    <h2 id="ws-h">Tentang model WS Ciliwung-Cisadane</h2>
+    <p>WS Ciliwung-Cisadane dimodelkan dengan 1641 ruas sungai, model yang sama dengan
+    <a href="../../fews/">FEWS</a>, termasuk bangunan dan suplesinya.</p>
+    <p>Model dijalankan sekali per run SEAS5 (51 anggota, hujan terkoreksi bias), dari keadaan model pada tanggal
+    prakiraan.</p>
+    <p><strong>Keterbatasan.</strong> Dasarian yang jauh menunjukkan kecenderungan saja: SEAS5 tidak dapat memastikan
+    waktu satu dasarian beberapa bulan ke depan. Model memakai parameter bawaan yang belum dikalibrasi terhadap debit
+    terukur.</p>
+    <p><a href="../">← Semua wilayah sungai</a></p>
+  </section>
+
+  
+</div>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <h4>Portal</h4>
+        <ul>
+          <li><a href="../../rainfall/index.html">Rainfall Monitoring</a></li>
+          <li><a href="../../climate/index.html">Climate Outlook</a></li>
+          <li><a href="../../fews/index.html">FEWS</a></li>
+          <li><a href="../../streamflow/index.html">Streamflow Forecast</a></li>
+          <li><a href="../../drought/index.html">Drought Risk</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Sumber data</h4>
+        <ul>
+          <li><a href="https://sharaku.eorc.jaxa.jp/GSMaP/" target="_blank" rel="noopener">JAXA Global Rainfall Watch (GSMaP) ↗</a></li>
+          <li>Badan Informasi Geospasial —
+            <a href="https://tanahair.indonesia.go.id/portal-web/" target="_blank" rel="noopener">Ina-Geoportal ↗</a>, DEMNAS</li>
+          <li><a href="https://livingatlas.arcgis.com/landcoverexplorer/" target="_blank" rel="noopener">Esri Sentinel-2 Land Cover Explorer ↗</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Laboratorium</h4>
+        <ul>
+          <li>Hydro-Environmental System Lab</li>
+          <li>Program Studi Teknik Sipil, Universitas Pertamina</li>
+          <li>nurul.fj (at) universitaspertamina.ac.id</li>
+          <li>heslab.uper (at) gmail.com</li>
+          <li><a href="https://www.heslab-uper.com" target="_blank" rel="noopener">Website laboratorium ↗</a></li>
+          <li><a href="https://heslab-uper.com/tentang/" target="_blank" rel="noopener">Tentang ↗</a></li>
+          <li><a href="https://heslab-uper.com/kontak/" target="_blank" rel="noopener">Kontak ↗</a></li>
+          <li><a href="https://heslab-uper.com/kebijakan-privasi/" target="_blank" rel="noopener">Kebijakan Privasi ↗</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="foot__legal" style="margin-bottom:.25rem;letter-spacing:.06em">
+      <span style="font-family:'IBM Plex Mono',monospace;text-transform:uppercase;font-size:.85em">
+        Berilmu · Bermanfaat · Berdampak</span>
+    </p>
+    <p class="foot__legal">
+      Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
+      resmi tetap mengacu pada BMKG dan instansi berwenang.
+      Halaman dibangun 30-10-2026 13:06 WIB · © 2026 Hydro-Environmental System Lab.
+    </p>
+  </div>
+</footer>
+
+<script id="payload" type="application/json">{"status_url":"https://data.heslab-uper.com/portal/assets/streamflow/ws_ciliwung_cisadane/status.json","classes":["Bawah Normal","Normal","Atas Normal"],"colors":{"Bawah Normal":"#b5651d","Normal":"#2e8b57","Atas Normal":"#1f6fb4"},"max_age_days":45}</script>
+<script>/* ==========================================================================
+   Utilitas bersama HESLab Portal.
+   Semua berkas JS di-inline oleh rendering.py; tidak ada modul ES eksternal.
+   ========================================================================== */
+(function (global) {
+  "use strict";
+
+  var H = {};
+
+  /* Ambil payload data yang ditanam di HTML sebagai <script type="application/json">. */
+  H.payload = function (elementId) {
+    var el = document.getElementById(elementId || "payload");
+    if (!el) throw new Error("Payload '" + elementId + "' tidak ditemukan.");
+    return JSON.parse(el.textContent);
+  };
+
+  /* Escape teks sebelum disisipkan lewat innerHTML. */
+  H.esc = function (s) {
+    return String(s === null || s === undefined ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  };
+
+  /* Format angka dengan konvensi Indonesia: koma desimal, titik ribuan. */
+  H.num = function (v, dec) {
+    if (v === null || v === undefined || isNaN(v)) return "–";
+    return Number(v).toLocaleString("id-ID", {
+      minimumFractionDigits: dec === undefined ? 1 : dec,
+      maximumFractionDigits: dec === undefined ? 1 : dec
+    });
+  };
+
+  /* Cari kelas intensitas untuk sebuah nilai. Kelas terakhir bersifat terbuka. */
+  H.classify = function (classes, v) {
+    if (v === null || v === undefined || isNaN(v)) return null;
+    for (var i = 0; i < classes.length; i++) {
+      var c = classes[i];
+      if (v >= c.min && (c.max === null || v < c.max)) return c;
+    }
+    return classes[classes.length - 1];
+  };
+
+  H.colorOf = function (classes, v) {
+    var c = H.classify(classes, v);
+    return c ? c.color : "#ffffff";
+  };
+
+  H.labelOf = function (classes, v) {
+    var c = H.classify(classes, v);
+    return c ? c.label : "Tidak tersedia";
+  };
+
+  /* Batas atas skala warna: sedikit di atas ambang kelas terakhir. */
+  H.zmax = function (classes) {
+    var last = classes[classes.length - 1];
+    return last.max !== null ? last.max : last.min * 1.5;
+  };
+
+  /*
+   * Colorscale diskret untuk Plotly.
+   * Plotly hanya menerima skala kontinu 0..1, jadi setiap kelas ditulis sebagai
+   * dua titik henti dengan warna sama agar transisinya bertingkat, bukan gradual.
+   */
+  H.discreteColorscale = function (classes) {
+    var zmax = H.zmax(classes);
+    var scale = [];
+    classes.forEach(function (c, i) {
+      var lo = c.min / zmax;
+      var hi = (c.max === null ? zmax : Math.min(c.max, zmax)) / zmax;
+      scale.push([Math.max(0, Math.min(1, lo)), c.color]);
+      scale.push([Math.max(0, Math.min(1, hi)), c.color]);
+      if (i === classes.length - 1) scale[scale.length - 1][0] = 1;
+    });
+    return scale;
+  };
+
+  /* Legenda HTML dari daftar kelas, ditutup entri "tidak ada data". */
+  H.renderLegend = function (container, classes, unit, nodata) {
+    if (!container) return;
+    var html = classes.map(function (c) {
+      // c.legend (opsional) menggantikan teks rentang otomatis, mis. kelas
+      // sifat hujan yang batasnya [31, 51) tetapi ditulis "31–50%".
+      if (c.legend) {
+        return '<li><i style="background:' + c.color + '"></i><span>' + c.legend + "</span></li>";
+      }
+      // Desimal secukupnya: 5 -> "5", 0,5 -> "0,5", 0,02 -> "0,02".
+      var dec = function (x) { return x % 1 === 0 ? 0 : (Math.round(x * 10) === x * 10 ? 1 : 2); };
+      var range = c.max === null
+        ? "≥ " + H.num(c.min, dec(c.min))
+        : H.num(c.min, dec(c.min)) + "–" + H.num(c.max, dec(c.max));
+      return '<li><i style="background:' + c.color + '"></i>' +
+             '<span>' + range + " " + unit + "</span></li>";
+    }).join("");
+
+    // Wilayah tanpa data harus punya kunci warnanya sendiri. Tanpa ini,
+    // pembaca akan menyimpulkan abu-abu berarti "tidak hujan".
+    //
+    // Contoh warnanya dibuat setransparan tampilan di peta, dengan latar
+    // seterang basemap. Legenda yang menampilkan abu-abu pekat sementara
+    // petanya tembus pandang akan membuat pembaca mencari warna yang salah.
+    if (nodata) {
+      var op = nodata.opacity === undefined ? 1 : nodata.opacity;
+      html += '<li style="margin-left:.5rem">' +
+              '<i style="background:#F2F2F2;position:relative;overflow:hidden">' +
+                '<span style="position:absolute;inset:0;background:' + nodata.color +
+                ';opacity:' + op + '"></span>' +
+              '</i><span>' + nodata.label + "</span></li>";
+    }
+    container.innerHTML = html;
+  };
+
+  /* Daftar wilayah yang nilainya tidak tersedia pada satu langkah waktu. */
+  H.missingIds = function (ids, values) {
+    var out = [];
+    for (var i = 0; i < ids.length; i++) {
+      var v = values[i];
+      if (v === null || v === undefined || isNaN(v)) out.push(ids[i]);
+    }
+    return out;
+  };
+
+  /*
+   * Lapisan terpisah untuk wilayah tanpa data.
+   *
+   * Plotly tidak dapat mewarnai nilai z yang null — poligonnya dibiarkan
+   * transparan sehingga menyerupai basemap dan tak terbedakan dari wilayah
+   * yang benar-benar tidak hujan. Karena itu wilayah tanpa data digambar
+   * sebagai trace kedua dengan satu warna tetap.
+   *
+   * Tingkat transparansinya diatur lewat config.NODATA.opacity. Garis tepi
+   * sengaja diberi warna sendiri: ketika isian dibuat tembus pandang, garis
+   * tepilah yang menjaga poligon tetap terbaca sebagai wilayah, bukan sebagai
+   * lubang pada peta.
+   */
+  H.nodataTrace = function (geo, featureidkey, ids, nodata) {
+    return {
+      type: "choroplethmapbox",
+      geojson: geo,
+      featureidkey: featureidkey,
+      locations: ids,
+      z: ids.map(function () { return 0; }),
+      colorscale: [[0, nodata.color], [1, nodata.color]],
+      zmin: 0,
+      zmax: 1,
+      opacity: nodata.opacity === undefined ? 1 : nodata.opacity,
+      showscale: false,
+      hoverinfo: "text",
+      text: ids.map(function () { return nodata.label; }),
+      marker: {
+        line: {
+          width: nodata.line_width === undefined ? 0.6 : nodata.line_width,
+          color: nodata.line_color || "rgba(255,255,255,0.65)"
+        }
+      }
+    };
+  };
+
+  /*
+   * Ambil dan simpan cache satu URL JSON. Dipakai untuk geometri kabupaten
+   * maupun untuk data dasarian per provinsi yang diambil sesuai permintaan —
+   * keduanya butuh perilaku sama: ambil sekali, simpan di memori, pakai ulang.
+   */
+  var jsonCache = {};
+  H.fetchJSON = function (url) {
+    if (!jsonCache[url]) {
+      jsonCache[url] = fetch(url).then(function (r) {
+        if (!r.ok) throw new Error("Gagal memuat " + url + " (" + r.status + ")");
+        return r.json();
+      }).catch(function (err) {
+        delete jsonCache[url];     // gangguan sesaat tidak boleh menetap sampai muat ulang
+        throw err;
+      });
+    }
+    return jsonCache[url];
+  };
+
+  /* Muat GeoJSON sekali, lalu simpan di cache promise. */
+  H.loadGeoJSON = function (url) {
+    return H.fetchJSON(url);
+  };
+
+  /* Tampilkan pesan galat di dalam wadah plot, bukan hanya di konsol. */
+  H.fail = function (container, message, hint) {
+    container.innerHTML =
+      '<div class="awaiting"><h3>Peta tidak dapat ditampilkan</h3>' +
+      '<p>' + message + '</p>' +
+      (hint ? '<p><code>' + hint + '</code></p>' : '') + '</div>';
+  };
+
+  H.reducedMotion = function () {
+    return global.matchMedia &&
+           global.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  };
+
+  /* Konfigurasi Plotly yang seragam di seluruh portal. */
+  H.plotConfig = function (filename) {
+    return {
+      displaylogo: false,
+      responsive: true,
+      // Roda mouse menggulir halaman, bukan memperbesar peta/grafik; zoom
+      // tetap tersedia lewat tombol +/- di bilah alat.
+      scrollZoom: false,
+      toImageButtonOptions: { format: "png", filename: filename, scale: 2 },
+      modeBarButtonsToRemove: ["lasso2d", "select2d", "toggleSpikelines"]
+    };
+  };
+
+  H.mapLayout = function (map, bounds) {
+    var layout = {
+      mapbox: {
+        style: map.style,
+        center: { lat: map.center.lat, lon: map.center.lon },
+        zoom: map.zoom,
+        /* Lapisan basemap raster (Esri Light Gray Canvas). Bila kosong,
+           mapbox memakai gaya bawaan saja — peta tetap tampil. */
+        layers: map.layers || []
+      },
+      margin: { r: 0, t: 0, l: 0, b: 0 },
+      paper_bgcolor: "rgba(0,0,0,0)",
+      font: { family: "IBM Plex Sans, system-ui, sans-serif", size: 12, color: "#231F20" },
+      dragmode: "pan"
+    };
+
+    /* Batasi geseran peta agar tidak keluar dari cakupan data. Bila versi
+       plotly.js yang dipakai belum mengenal properti ini, ia diabaikan
+       tanpa menimbulkan galat. */
+    if (bounds) {
+      layout.mapbox.bounds = {
+        west: bounds.west, east: bounds.east,
+        south: bounds.south, north: bounds.north
+      };
+    }
+    return layout;
+  };
+
+  /*
+   * Hitung tingkat zoom terkecil yang masih menampilkan seluruh cakupan data.
+   *
+   * Web Mercator: pada zoom z, lebar dunia = 512 * 2^z piksel. Zoom yang pas
+   * mengisi lebar wadah dihitung dari perbandingan rentang bujur terhadap
+   * 360 derajat; hal serupa untuk lintang, memakai proyeksi Mercator.
+   *
+   * Diambil nilai TERKECIL dari keduanya, karena itulah zoom saat seluruh
+   * data baru muat di layar. Zoom di bawahnya akan menampilkan wilayah di
+   * luar cakupan data — persis yang ingin dicegah.
+   */
+  function mercatorY(lat) {
+    var r = lat * Math.PI / 180;
+    return Math.log(Math.tan(Math.PI / 4 + r / 2));
+  }
+
+  /*
+   * Perluas kotak pembatas ke utara-selatan agar rasio-nya sama dengan wadah.
+   *
+   * mapbox.bounds tidak mengizinkan tampilan keluar dari kotak. Kotak
+   * Indonesia jauh lebih lebar daripada tingginya; pada wadah yang relatif
+   * lebih tinggi, zoom terkecil yang diizinkan ditentukan oleh TINGGI kotak,
+   * sehingga ujung barat (Aceh) dan timur (Papua) terpotong. Dengan menambah
+   * lintang di atas dan bawah sampai rasionya pas, lebar kotaklah yang
+   * menentukan, dan seluruh Indonesia selalu terlihat.
+   */
+  function mercatorLat(y) {
+    return (2 * Math.atan(Math.exp(y)) - Math.PI / 2) * 180 / Math.PI;
+  }
+
+  H.fitBounds = function (el, bounds) {
+    var lebar = el.clientWidth || 800;
+    var tinggi = el.clientHeight || 460;
+    var spanX = Math.abs(bounds.east - bounds.west) * Math.PI / 180;
+    var yN = mercatorY(bounds.north), yS = mercatorY(bounds.south);
+    var perlu = spanX * tinggi / lebar;
+    if (perlu <= yN - yS) return bounds;
+    var tambah = (perlu - (yN - yS)) / 2;
+    return {
+      west: bounds.west, east: bounds.east,
+      north: Math.min(85, mercatorLat(yN + tambah)),
+      south: Math.max(-85, mercatorLat(yS - tambah))
+    };
+  };
+
+  H.zoomMinimum = function (el, bounds) {
+    var lebar = el.clientWidth || 800;
+    var tinggi = el.clientHeight || 460;
+
+    var spanLon = Math.abs(bounds.east - bounds.west);
+    var zLebar = Math.log2(lebar * 360 / (512 * spanLon));
+
+    var spanY = Math.abs(mercatorY(bounds.north) - mercatorY(bounds.south));
+    var zTinggi = Math.log2(tinggi * (2 * Math.PI) / (512 * spanY));
+
+    return Math.min(zLebar, zTinggi);
+  };
+
+  /*
+   * Kunci zoom agar tidak bisa diperkecil melampaui cakupan data.
+   *
+   * plotly.js tidak menyediakan pengaturan zoom minimum, sehingga dipakai
+   * pendekatan koreksi: setiap kali peta selesai digeser atau di-zoom,
+   * nilai zoom diperiksa dan dikembalikan bila terlalu kecil.
+   *
+   * `sedangKoreksi` mencegah relayout korektif memicu dirinya sendiri.
+   * Batas dihitung ulang saat ukuran jendela berubah, karena zoom minimum
+   * bergantung pada lebar wadah peta.
+   */
+  H.kunciZoomKeBatas = function (el, bounds) {
+    var minZoom = H.zoomMinimum(el, bounds);
+    var sedangKoreksi = false;
+
+    function koreksi(ev) {
+      if (sedangKoreksi) return;
+      var z = ev && ev["mapbox.zoom"];
+      if (typeof z !== "number" || z >= minZoom - 1e-3) return;
+      sedangKoreksi = true;
+      Plotly.relayout(el, { "mapbox.zoom": minZoom }).then(function () {
+        sedangKoreksi = false;
+      });
+    }
+
+    el.on("plotly_relayout", koreksi);
+
+    /*
+     * Hitung ulang batas zoom karena ukuran wadah berubah.
+     *
+     * Dipanggil dari event resize jendela DAN dari luar (masuk/keluar layar
+     * penuh). Layar penuh tidak selalu memicu resize jendela, dan kalaupun
+     * memicu, ukuran wadahnya belum tentu sudah final saat event itu menyala.
+     */
+    function hitungUlang() {
+      minZoom = H.zoomMinimum(el, bounds);
+      var kini = el._fullLayout && el._fullLayout.mapbox && el._fullLayout.mapbox.zoom;
+      if (typeof kini === "number" && kini < minZoom) {
+        Plotly.relayout(el, { "mapbox.zoom": minZoom });
+      }
+      return minZoom;
+    }
+
+    global.addEventListener("resize", hitungUlang);
+
+    /* Mengembalikan objek, bukan angka: pemanggil butuh nilai awal untuk
+       menyetel tampilan pertama, dan butuh cara memaksa hitung ulang. */
+    return { awal: minZoom, refresh: hitungUlang };
+  };
+
+  /* ------------------------------------------------------------ layar penuh --
+
+     Layar penuh dipasang pada WADAH, bukan pada elemen petanya. Kalau hanya
+     elemen peta yang dijadikan layar penuh, tombol putar, penggeser waktu,
+     dan legenda ikut hilang dari layar.
+
+     Peramban yang tidak mendukung Fullscreen API untuk elemen sembarang
+     (antara lain Safari di iPhone) tidak diberi jalur khusus: tombolnya
+     disembunyikan, bukan dibiarkan gagal saat diklik.
+  */
+
+  function elemenFullscreen() {
+    return document.fullscreenElement || document.webkitFullscreenElement || null;
+  }
+
+  H.fullscreenDidukung = function (el) {
+    return !!(el && (el.requestFullscreen || el.webkitRequestFullscreen));
+  };
+
+  /*
+   * Pasang tombol layar penuh pada sebuah wadah.
+   *
+   *   opts.wadah   elemen yang dijadikan layar penuh
+   *   opts.tombol  tombol pemicu
+   *   opts.kelas   kelas CSS yang dipasang pada wadah selama layar penuh
+   *                (bawaan "is-fullscreen"); dipakai agar CSS tidak perlu
+   *                bergantung pada pseudo-class :fullscreen yang penulisan
+   *                berprefiksnya berbeda antar peramban
+   *   opts.label   { masuk, keluar } teks tombol pada kedua keadaan
+   *   opts.onUbah  dipanggil dengan (aktif: boolean) SETELAH ukuran wadah
+   *                stabil — tempat memanggil ulang penyesuaian ukuran plot
+   */
+  H.pasangFullscreen = function (opts) {
+    var wadah = opts.wadah;
+    var tombol = opts.tombol;
+    var kelas = opts.kelas || "is-fullscreen";
+    var label = opts.label || { masuk: "\u2921 Layar penuh", keluar: "\u2922 Keluar" };
+    if (!wadah || !tombol) return;
+
+    if (!H.fullscreenDidukung(wadah)) { tombol.hidden = true; return; }
+
+    tombol.addEventListener("click", function () {
+      var janji;
+      if (elemenFullscreen() === wadah) {
+        janji = (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+      } else {
+        janji = (wadah.requestFullscreen || wadah.webkitRequestFullscreen).call(wadah);
+      }
+      /* Permintaan layar penuh dapat ditolak peramban (mis. kebijakan izin).
+         Penolakan diabaikan diam-diam: halaman tetap berfungsi seperti biasa. */
+      if (janji && janji.catch) janji.catch(function () {});
+    });
+
+    function berubah() {
+      var aktif = elemenFullscreen() === wadah;
+      if (aktif) wadah.classList.add(kelas); else wadah.classList.remove(kelas);
+      tombol.setAttribute("aria-pressed", aktif ? "true" : "false");
+      tombol.textContent = aktif ? label.keluar : label.masuk;
+
+      /* Dua rangka tunda: ukuran wadah baru final setelah peramban selesai
+         menata ulang, bukan pada saat fullscreenchange menyala. */
+      global.requestAnimationFrame(function () {
+        global.requestAnimationFrame(function () {
+          if (opts.onUbah) opts.onUbah(aktif);
+        });
+      });
+    }
+
+    /* Tombol Esc keluar dari layar penuh tanpa melewati tombol di atas;
+       event inilah satu-satunya penanda keadaan yang dapat dipercaya. */
+    document.addEventListener("fullscreenchange", berubah);
+    document.addEventListener("webkitfullscreenchange", berubah);
+  };
+
+  global.HES = H;
+})(window);
+
+/* Streamflow: halaman satu wilayah sungai /streamflow/<slug>/ (pemilik 2026-10-30, "mirip dengan fews").
+
+   Data: payload (alamat status.json WS ini, sifat dan warnanya, batas umur) di halaman; status.json dari R2
+   (heslab/builders/streamflow.py). Halaman tidak menghitung apa pun: sifat ruas outlet per dasarian dibaca apa adanya
+   dari "views" (Median, P10, P90) dan "reliability" (Keandalan); "data lama" bila tanggal prakiraan lebih tua dari
+   max_age_days (tanggal pengunjung). */
+(function () {
+  "use strict";
+  var P = JSON.parse(document.getElementById("payload").textContent);
+  var tbody = document.querySelector("#sf-outlet tbody");
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  }
+  function set(k, v) {
+    var el = document.querySelector('#sf-readout [data-k="' + k + '"]');
+    if (el) el.textContent = v;
+  }
+  function dateLabel(s) {
+    s = String(s || "").slice(0, 10);
+    return s.length === 10 ? s.slice(8, 10) + "/" + s.slice(5, 7) + "/" + s.slice(0, 4) : (s || "–");
+  }
+  function seas5Label(m) {
+    m = String(m || "");
+    return m.length === 6 ? m.slice(4, 6) + "/" + m.slice(0, 4) : (m || "–");
+  }
+  function cell(label, colour) {
+    if (!label) return "<td>–</td>";
+    return '<td><i style="display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;background:' +
+      esc(colour || "#d5dbe1") + '"></i>' + esc(label) + "</td>";
+  }
+
+  HES.fetchJSON(P.status_url).then(function (st) {
+    var t = new Date(String(st.forecast_date).slice(0, 10) + "T07:00:00+07:00");
+    var stale = isNaN(t) || (Date.now() - t.getTime()) > P.max_age_days * 86400 * 1000;
+    var out = st.outlet || {};
+    set("seas5", seas5Label(st.seas5_month));
+    set("start", dateLabel(st.forecast_date) + (stale ? " (data lama)" : ""));
+    set("outlet", (out.name || "ruas " + (out.reach || "–")) + (out.upstream_km2 ?
+      " · " + Number(out.upstream_km2).toLocaleString("id-ID", { maximumFractionDigits: 0 }) + " km²" : ""));
+    set("reaches", st.reaches);
+    var views = {};
+    (st.views || []).forEach(function (v) { views[v.key] = v.outlet || []; });
+    if (!st.views) views["class"] = (out.classes || []);
+    var rel = st.reliability || null;
+    var relColour = {};
+    if (rel) rel.labels.forEach(function (l, k) { relColour[l] = rel.colours[k]; });
+    tbody.innerHTML = (st.dasarian || []).map(function (d, k) {
+      return "<tr><td>" + esc(d) + "</td>" +
+        ["class", "p10", "p90"].map(function (key) {
+          var c = (views[key] || [])[k];
+          return cell(stale && c ? c + " (data lama)" : c, P.colors[c]);
+        }).join("") +
+        cell(rel ? rel.outlet[k] : null, rel ? relColour[rel.outlet[k]] : null) + "</tr>";
+    }).join("") || '<tr><td colspan="5">Belum ada dasarian.</td></tr>';
+  }).catch(function (err) {
+    ["seas5", "start", "outlet", "reaches"].forEach(function (k) { set(k, "–"); });
+    tbody.innerHTML = '<tr><td colspan="5">Data Streamflow belum tersedia (' + esc(err.message) + ").</td></tr>";
+  });
+})();
+</script>
+</body>
+</html>
+<!-- heslab-content: bb8d4072530f5e93 -->

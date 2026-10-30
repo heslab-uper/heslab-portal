@@ -894,7 +894,8 @@ aria-current="true">Streamflow Forecast</a>
 
   <section class="panel" aria-labelledby="list-h">
     <h2 id="list-h">Wilayah sungai</h2>
-    <p>Terpasang: Streamflow WS Ciliwung-Cisadane.</p>
+    <p>Halaman tiap wilayah sungai:
+<a href="ciliwung-cisadane/">Streamflow WS Ciliwung-Cisadane</a>.</p>
     <div class="tablewrap">
       <table id="sf-list">
         <thead><tr><th>Wilayah sungai</th><th>Run SEAS5</th><th>Awal prakiraan</th><th>Sifat</th>
@@ -953,7 +954,7 @@ aria-current="true">Streamflow Forecast</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 30-10-2026 08:48 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 30-10-2026 13:06 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
@@ -1456,7 +1457,8 @@ aria-current="true">Streamflow Forecast</a>
       var c = classOf(b, label);                  // of the chosen view (Median, P10, P90)
       var text = stale ? "data lama" : (c || "tanpa nilai");
       var counts = P.classes.map(function (n) { return "<td>" + (k < 0 ? "–" : (viewOf(b).counts[k][n] || 0)) + "</td>"; }).join("");
-      return "<tr><td>" + esc(b.label) + "</td><td>" + esc(seas5Label(b.seas5_month)) + "</td><td>" +
+      var name = b.info_url ? '<a href="' + esc(b.info_url) + '">' + esc(b.label) + "</a>" : esc(b.label);
+      return "<tr><td>" + name + "</td><td>" + esc(seas5Label(b.seas5_month)) + "</td><td>" +
         esc(dateLabel(b.forecast_date)) + "</td>" +
         '<td><i style="display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;background:' +
         colorOf(b, label) + '"></i>' + esc(text) + "</td>" + counts + "<td>" + esc(b.reaches) + "</td>" +
@@ -1543,4 +1545,4 @@ aria-current="true">Streamflow Forecast</a>
 </script>
 </body>
 </html>
-<!-- heslab-content: 9ac9bfcc87b6cdec -->
+<!-- heslab-content: a7eb305ca5bf20b9 -->
