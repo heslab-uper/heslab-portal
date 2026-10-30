@@ -22,7 +22,7 @@
       "note": "produk=semua"
     },
     "rainfall-animation": {
-      "last_build_wib": "2026-10-30T07:07:26+07:00",
+      "last_build_wib": "2026-10-30T08:08:23+07:00",
       "pages": [
         "rainfall"
       ],
@@ -53,7 +53,7 @@
       "note": "produk=semua"
     },
     "rainfall-forecast": {
-      "last_build_wib": "2026-10-30T07:06:43+07:00",
+      "last_build_wib": "2026-10-30T08:07:02+07:00",
       "pages": [
         "rainfall-forecast"
       ],
@@ -68,7 +68,7 @@
       "note": "produk=semua"
     },
     "fews": {
-      "last_build_wib": "2026-10-30T07:06:54+07:00",
+      "last_build_wib": "2026-10-30T08:07:30+07:00",
       "pages": [
         "fews",
         "fews-ws_ciliwung_cisadane"
@@ -76,7 +76,7 @@
       "note": "produk=semua"
     },
     "streamflow": {
-      "last_build_wib": "2026-10-30T07:07:07+07:00",
+      "last_build_wib": "2026-10-30T08:07:53+07:00",
       "pages": [],
       "note": "produk=semua"
     }
