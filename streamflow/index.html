@@ -805,7 +805,7 @@ gtag('config', 'G-Z0TXGDFW5L');
          data-status="live"
 >FEWS</a>
       <a href="../streamflow/index.html"
-         data-status="planned"
+         data-status="live"
 aria-current="true">Streamflow Forecast</a>
       <a href="../drought/index.html"
          data-status="planned"
@@ -836,68 +836,77 @@ aria-current="true">Streamflow Forecast</a>
 <div class="wrap">
 
   <section class="pagehead">
-    <p class="eyebrow">Dasbor 04 · dalam penyiapan</p>
     <h1>Streamflow Forecast</h1>
-    <p class="lede">Modul prakiraan debit dan ketersediaan air. Metode prakiraan dan horizon waktu masih dalam perancangan.</p>
-  </section>
-
-  <div class="readout">
-  <div class="readout__cell">
-    <span class="readout__k">Status</span>
-    <span class="readout__v">Ruang halaman siap, isi menyusul</span>
-  </div>
-  <div class="readout__cell">
-    <span class="readout__k">Frekuensi pembaruan</span>
-    <span class="readout__v">Belum ditetapkan</span>
-  </div>
-  <div class="readout__cell">
-    <span class="readout__k">Cakupan</span>
-    <span class="readout__v">Belum ditetapkan</span>
-  </div>
-  <div class="readout__cell">
-    <span class="readout__k">Penanggung jawab</span>
-    <span class="readout__v">Hydro-Environmental System Lab</span>
-  </div>
-</div>
-
-
-  <section class="panel" aria-labelledby="scope-h">
-    <h2 id="scope-h">Cakupan yang direncanakan</h2>
-    <p>
-      Daftar berikut adalah kerangka awal, bukan komitmen keluaran. Rincian produk,
-      metode, dan frekuensi pembaruan akan ditetapkan pada tahap perancangan modul.
+    <p class="lede">
+      Prakiraan sifat debit setiap wilayah sungai per dasarian hingga enam bulan ke depan, dari model hujan-limpasan
+      UPerRRM yang digerakkan prakiraan musiman ECMWF SEAS5, diperbarui sekali per run SEAS5 bulanan. Klik wilayah
+      sungai untuk membuka peta sungainya.
     </p>
-    <ul>
-      <li>Prakiraan debit bulanan dan musiman</li>
-      <li>Prakiraan probabilistik dengan kuantil Q1, Q2, dan Q3</li>
-      <li>Penilaian ketersediaan air untuk irigasi dan air baku</li>
-      <li>Verifikasi prakiraan terhadap pengamatan</li>
-    </ul>
   </section>
 
-  <section class="panel" aria-labelledby="need-h">
-    <h2 id="need-h">Yang dibutuhkan sebelum modul dapat dibangun</h2>
-    <ul>
-      <li>Deret debit historis yang cukup panjang untuk kalibrasi</li>
-      <li>Masukan prakiraan hujan musiman beserta ukuran ketidakpastiannya</li>
-      <li>Penetapan pos duga air yang akan diprakirakan</li>
-      <li>Protokol verifikasi dan pelaporan skor prakiraan</li>
+  <div class="readout" id="sf-readout">
+    <div class="readout__cell"><span class="readout__k">Wilayah sungai</span>
+      <span class="readout__v" data-k="basins">memuat…</span></div>
+    <div class="readout__cell"><span class="readout__k">Run SEAS5</span>
+      <span class="readout__v" data-k="seas5">memuat…</span></div>
+    <div class="readout__cell"><span class="readout__k">Awal prakiraan</span>
+      <span class="readout__v" data-k="start">memuat…</span></div>
+    <div class="readout__cell"><span class="readout__k">Dasarian</span>
+      <span class="readout__v" data-k="dasarian">memuat…</span></div>
+  </div>
+
+  <div class="note">
+    <p style="margin-bottom:0"><strong>Bukan prakiraan resmi.</strong> Sifat debit di halaman ini adalah hasil model
+    untuk riset dan pemantauan, digerakkan prakiraan musiman ECMWF SEAS5. Untuk prakiraan iklim resmi, acu BMKG; untuk
+    pengelolaan air, BBWS/BWS wilayah sungai terkait.</p>
+  </div>
+
+  <section class="panel" aria-labelledby="map-h">
+    <div class="panel__head">
+      <h2 id="map-h">Peta sifat debit wilayah sungai</h2>
+      <span>
+        <label class="tag" for="sf-view">tampilan
+          <select id="sf-view" aria-label="Pilih tampilan"><option>memuat…</option></select>
+        </label>
+        <label class="tag" for="sf-dasarian">dasarian
+          <select id="sf-dasarian" aria-label="Pilih dasarian"><option>memuat…</option></select>
+        </label>
+      </span>
+    </div>
+    <div class="plot plot--tall" id="sf-map" role="img" aria-label="Peta wilayah sungai berwarna sifat debit"></div>
+    <ul class="legend" id="sf-legend">
+<li><i style="background:#b5651d"></i>Bawah Normal</li><li><i style="background:#2e8b57"></i>Normal</li><li><i style="background:#1f6fb4"></i>Atas Normal</li>      <li><i style="background:#9aa5b1"></i>data lama (&gt; 45 hari)</li>
     </ul>
+    <p style="font-size:.8125rem;color:var(--muted);margin-top:1rem;margin-bottom:0">
+      Debit rerata tiap dasarian dari 51 anggota SEAS5 dibandingkan dengan debit normalnya (rerata debit model pada
+      dasarian yang sama, 2015 s.d. tahun lalu): Bawah Normal &lt; 85 %, Normal 85–115 %, Atas Normal &gt; 115 %.
+      Warna wilayah sungai = sifat debit ruas outlet terbesarnya (luas hulu terbesar) pada dasarian terpilih; sifat dan
+      peluang tiap ruas ada di peta sungainya. Tampilan Median = debit tengah dari 51 anggota; P10 (skenario kering) dan
+      P90 (skenario basah) = debit yang hanya dilampaui ke bawah atau ke atas oleh 10 % anggota. Bila P90 pun Bawah
+      Normal, atau P10 pun Atas Normal, sinyalnya kuat.
+    </p>
+    <p style="font-size:.8125rem;color:var(--muted);margin-top:.75rem;margin-bottom:0">
+      <strong>Keterbatasan.</strong> Dasarian yang jauh menunjukkan kecenderungan saja: SEAS5 tidak dapat memastikan
+      waktu satu dasarian beberapa bulan ke depan. Model memakai parameter bawaan yang belum dikalibrasi terhadap debit
+      terukur.
+    </p>
   </section>
 
-  <div class="awaiting">
-  <h3>Modul belum tersedia</h3>
-  <p>URL halaman ini sudah permanen, sehingga tautan yang dibagikan sekarang tetap berlaku ketika modulnya aktif.</p>
-</div>
+  <section class="panel" aria-labelledby="list-h">
+    <h2 id="list-h">Wilayah sungai</h2>
+    <p>Terpasang: Streamflow WS Ciliwung-Cisadane.</p>
+    <div class="tablewrap">
+      <table id="sf-list">
+        <thead><tr><th>Wilayah sungai</th><th>Run SEAS5</th><th>Awal prakiraan</th><th>Sifat</th>
+<th>Bawah Normal</th><th>Normal</th><th>Atas Normal</th><th>Ruas</th><th>Peta sungai</th></tr></thead>
+        <tbody><tr><td colspan="9">memuat…</td></tr></tbody>
+      </table>
+    </div>
+    <p>Sifat = sifat ruas outlet terbesar; kolom sifat dan jumlah ruas mengikuti dasarian terpilih. Wilayah sungai yang
+    belum tampil belum dipasang.</p>
+  </section>
 
-
-  <p style="margin-top:2rem">
-    Modul yang sudah berjalan:
-<a href="../rainfall/index.html">Rainfall Monitoring</a>, <a href="../climate/index.html">Climate Outlook</a> dan <a href="../fews/index.html">FEWS</a>.
-    Pertanyaan dan usulan dapat dikirim ke
-    nurul.fj (at) universitaspertamina.ac.id    atau heslab.uper (at) gmail.com.
-  </p>
-
+  
 </div>
 </main>
 
@@ -944,11 +953,594 @@ aria-current="true">Streamflow Forecast</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 29-10-2026 11:45 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 30-10-2026 08:48 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
 
+<script id="payload" type="application/json">{"index_url":"https://data.heslab-uper.com/portal/assets/streamflow/index.json","classes":["Bawah Normal","Normal","Atas Normal"],"colors":{"Bawah Normal":"#b5651d","Normal":"#2e8b57","Atas Normal":"#1f6fb4"},"max_age_days":45,"map":{"center":{"lat":-2.5,"lon":118.0},"zoom":3.5,"style":"white-bg","layers":[{"below":"traces","sourcetype":"raster","sourceattribution":"Esri, HERE, Garmin, © OpenStreetMap contributors","source":["https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"]},{"below":"traces","sourcetype":"raster","source":["https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}"]}]},"bounds":{"west":93.5,"east":142.5,"south":-12.5,"north":7.5}}</script>
+<script src="https://cdn.plot.ly/plotly-2.32.0.min.js" integrity="sha384-7TVmlZWH60iKX5Uk7lSvQhjtcgw2tkFjuwLcXoRSR4zXTyWFJRm9aPAguMh7CIra" crossorigin="anonymous" charset="utf-8"></script>
+<script>/* ==========================================================================
+   Utilitas bersama HESLab Portal.
+   Semua berkas JS di-inline oleh rendering.py; tidak ada modul ES eksternal.
+   ========================================================================== */
+(function (global) {
+  "use strict";
+
+  var H = {};
+
+  /* Ambil payload data yang ditanam di HTML sebagai <script type="application/json">. */
+  H.payload = function (elementId) {
+    var el = document.getElementById(elementId || "payload");
+    if (!el) throw new Error("Payload '" + elementId + "' tidak ditemukan.");
+    return JSON.parse(el.textContent);
+  };
+
+  /* Escape teks sebelum disisipkan lewat innerHTML. */
+  H.esc = function (s) {
+    return String(s === null || s === undefined ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  };
+
+  /* Format angka dengan konvensi Indonesia: koma desimal, titik ribuan. */
+  H.num = function (v, dec) {
+    if (v === null || v === undefined || isNaN(v)) return "–";
+    return Number(v).toLocaleString("id-ID", {
+      minimumFractionDigits: dec === undefined ? 1 : dec,
+      maximumFractionDigits: dec === undefined ? 1 : dec
+    });
+  };
+
+  /* Cari kelas intensitas untuk sebuah nilai. Kelas terakhir bersifat terbuka. */
+  H.classify = function (classes, v) {
+    if (v === null || v === undefined || isNaN(v)) return null;
+    for (var i = 0; i < classes.length; i++) {
+      var c = classes[i];
+      if (v >= c.min && (c.max === null || v < c.max)) return c;
+    }
+    return classes[classes.length - 1];
+  };
+
+  H.colorOf = function (classes, v) {
+    var c = H.classify(classes, v);
+    return c ? c.color : "#ffffff";
+  };
+
+  H.labelOf = function (classes, v) {
+    var c = H.classify(classes, v);
+    return c ? c.label : "Tidak tersedia";
+  };
+
+  /* Batas atas skala warna: sedikit di atas ambang kelas terakhir. */
+  H.zmax = function (classes) {
+    var last = classes[classes.length - 1];
+    return last.max !== null ? last.max : last.min * 1.5;
+  };
+
+  /*
+   * Colorscale diskret untuk Plotly.
+   * Plotly hanya menerima skala kontinu 0..1, jadi setiap kelas ditulis sebagai
+   * dua titik henti dengan warna sama agar transisinya bertingkat, bukan gradual.
+   */
+  H.discreteColorscale = function (classes) {
+    var zmax = H.zmax(classes);
+    var scale = [];
+    classes.forEach(function (c, i) {
+      var lo = c.min / zmax;
+      var hi = (c.max === null ? zmax : Math.min(c.max, zmax)) / zmax;
+      scale.push([Math.max(0, Math.min(1, lo)), c.color]);
+      scale.push([Math.max(0, Math.min(1, hi)), c.color]);
+      if (i === classes.length - 1) scale[scale.length - 1][0] = 1;
+    });
+    return scale;
+  };
+
+  /* Legenda HTML dari daftar kelas, ditutup entri "tidak ada data". */
+  H.renderLegend = function (container, classes, unit, nodata) {
+    if (!container) return;
+    var html = classes.map(function (c) {
+      // c.legend (opsional) menggantikan teks rentang otomatis, mis. kelas
+      // sifat hujan yang batasnya [31, 51) tetapi ditulis "31–50%".
+      if (c.legend) {
+        return '<li><i style="background:' + c.color + '"></i><span>' + c.legend + "</span></li>";
+      }
+      // Desimal secukupnya: 5 -> "5", 0,5 -> "0,5", 0,02 -> "0,02".
+      var dec = function (x) { return x % 1 === 0 ? 0 : (Math.round(x * 10) === x * 10 ? 1 : 2); };
+      var range = c.max === null
+        ? "≥ " + H.num(c.min, dec(c.min))
+        : H.num(c.min, dec(c.min)) + "–" + H.num(c.max, dec(c.max));
+      return '<li><i style="background:' + c.color + '"></i>' +
+             '<span>' + range + " " + unit + "</span></li>";
+    }).join("");
+
+    // Wilayah tanpa data harus punya kunci warnanya sendiri. Tanpa ini,
+    // pembaca akan menyimpulkan abu-abu berarti "tidak hujan".
+    //
+    // Contoh warnanya dibuat setransparan tampilan di peta, dengan latar
+    // seterang basemap. Legenda yang menampilkan abu-abu pekat sementara
+    // petanya tembus pandang akan membuat pembaca mencari warna yang salah.
+    if (nodata) {
+      var op = nodata.opacity === undefined ? 1 : nodata.opacity;
+      html += '<li style="margin-left:.5rem">' +
+              '<i style="background:#F2F2F2;position:relative;overflow:hidden">' +
+                '<span style="position:absolute;inset:0;background:' + nodata.color +
+                ';opacity:' + op + '"></span>' +
+              '</i><span>' + nodata.label + "</span></li>";
+    }
+    container.innerHTML = html;
+  };
+
+  /* Daftar wilayah yang nilainya tidak tersedia pada satu langkah waktu. */
+  H.missingIds = function (ids, values) {
+    var out = [];
+    for (var i = 0; i < ids.length; i++) {
+      var v = values[i];
+      if (v === null || v === undefined || isNaN(v)) out.push(ids[i]);
+    }
+    return out;
+  };
+
+  /*
+   * Lapisan terpisah untuk wilayah tanpa data.
+   *
+   * Plotly tidak dapat mewarnai nilai z yang null — poligonnya dibiarkan
+   * transparan sehingga menyerupai basemap dan tak terbedakan dari wilayah
+   * yang benar-benar tidak hujan. Karena itu wilayah tanpa data digambar
+   * sebagai trace kedua dengan satu warna tetap.
+   *
+   * Tingkat transparansinya diatur lewat config.NODATA.opacity. Garis tepi
+   * sengaja diberi warna sendiri: ketika isian dibuat tembus pandang, garis
+   * tepilah yang menjaga poligon tetap terbaca sebagai wilayah, bukan sebagai
+   * lubang pada peta.
+   */
+  H.nodataTrace = function (geo, featureidkey, ids, nodata) {
+    return {
+      type: "choroplethmapbox",
+      geojson: geo,
+      featureidkey: featureidkey,
+      locations: ids,
+      z: ids.map(function () { return 0; }),
+      colorscale: [[0, nodata.color], [1, nodata.color]],
+      zmin: 0,
+      zmax: 1,
+      opacity: nodata.opacity === undefined ? 1 : nodata.opacity,
+      showscale: false,
+      hoverinfo: "text",
+      text: ids.map(function () { return nodata.label; }),
+      marker: {
+        line: {
+          width: nodata.line_width === undefined ? 0.6 : nodata.line_width,
+          color: nodata.line_color || "rgba(255,255,255,0.65)"
+        }
+      }
+    };
+  };
+
+  /*
+   * Ambil dan simpan cache satu URL JSON. Dipakai untuk geometri kabupaten
+   * maupun untuk data dasarian per provinsi yang diambil sesuai permintaan —
+   * keduanya butuh perilaku sama: ambil sekali, simpan di memori, pakai ulang.
+   */
+  var jsonCache = {};
+  H.fetchJSON = function (url) {
+    if (!jsonCache[url]) {
+      jsonCache[url] = fetch(url).then(function (r) {
+        if (!r.ok) throw new Error("Gagal memuat " + url + " (" + r.status + ")");
+        return r.json();
+      }).catch(function (err) {
+        delete jsonCache[url];     // gangguan sesaat tidak boleh menetap sampai muat ulang
+        throw err;
+      });
+    }
+    return jsonCache[url];
+  };
+
+  /* Muat GeoJSON sekali, lalu simpan di cache promise. */
+  H.loadGeoJSON = function (url) {
+    return H.fetchJSON(url);
+  };
+
+  /* Tampilkan pesan galat di dalam wadah plot, bukan hanya di konsol. */
+  H.fail = function (container, message, hint) {
+    container.innerHTML =
+      '<div class="awaiting"><h3>Peta tidak dapat ditampilkan</h3>' +
+      '<p>' + message + '</p>' +
+      (hint ? '<p><code>' + hint + '</code></p>' : '') + '</div>';
+  };
+
+  H.reducedMotion = function () {
+    return global.matchMedia &&
+           global.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  };
+
+  /* Konfigurasi Plotly yang seragam di seluruh portal. */
+  H.plotConfig = function (filename) {
+    return {
+      displaylogo: false,
+      responsive: true,
+      // Roda mouse menggulir halaman, bukan memperbesar peta/grafik; zoom
+      // tetap tersedia lewat tombol +/- di bilah alat.
+      scrollZoom: false,
+      toImageButtonOptions: { format: "png", filename: filename, scale: 2 },
+      modeBarButtonsToRemove: ["lasso2d", "select2d", "toggleSpikelines"]
+    };
+  };
+
+  H.mapLayout = function (map, bounds) {
+    var layout = {
+      mapbox: {
+        style: map.style,
+        center: { lat: map.center.lat, lon: map.center.lon },
+        zoom: map.zoom,
+        /* Lapisan basemap raster (Esri Light Gray Canvas). Bila kosong,
+           mapbox memakai gaya bawaan saja — peta tetap tampil. */
+        layers: map.layers || []
+      },
+      margin: { r: 0, t: 0, l: 0, b: 0 },
+      paper_bgcolor: "rgba(0,0,0,0)",
+      font: { family: "IBM Plex Sans, system-ui, sans-serif", size: 12, color: "#231F20" },
+      dragmode: "pan"
+    };
+
+    /* Batasi geseran peta agar tidak keluar dari cakupan data. Bila versi
+       plotly.js yang dipakai belum mengenal properti ini, ia diabaikan
+       tanpa menimbulkan galat. */
+    if (bounds) {
+      layout.mapbox.bounds = {
+        west: bounds.west, east: bounds.east,
+        south: bounds.south, north: bounds.north
+      };
+    }
+    return layout;
+  };
+
+  /*
+   * Hitung tingkat zoom terkecil yang masih menampilkan seluruh cakupan data.
+   *
+   * Web Mercator: pada zoom z, lebar dunia = 512 * 2^z piksel. Zoom yang pas
+   * mengisi lebar wadah dihitung dari perbandingan rentang bujur terhadap
+   * 360 derajat; hal serupa untuk lintang, memakai proyeksi Mercator.
+   *
+   * Diambil nilai TERKECIL dari keduanya, karena itulah zoom saat seluruh
+   * data baru muat di layar. Zoom di bawahnya akan menampilkan wilayah di
+   * luar cakupan data — persis yang ingin dicegah.
+   */
+  function mercatorY(lat) {
+    var r = lat * Math.PI / 180;
+    return Math.log(Math.tan(Math.PI / 4 + r / 2));
+  }
+
+  /*
+   * Perluas kotak pembatas ke utara-selatan agar rasio-nya sama dengan wadah.
+   *
+   * mapbox.bounds tidak mengizinkan tampilan keluar dari kotak. Kotak
+   * Indonesia jauh lebih lebar daripada tingginya; pada wadah yang relatif
+   * lebih tinggi, zoom terkecil yang diizinkan ditentukan oleh TINGGI kotak,
+   * sehingga ujung barat (Aceh) dan timur (Papua) terpotong. Dengan menambah
+   * lintang di atas dan bawah sampai rasionya pas, lebar kotaklah yang
+   * menentukan, dan seluruh Indonesia selalu terlihat.
+   */
+  function mercatorLat(y) {
+    return (2 * Math.atan(Math.exp(y)) - Math.PI / 2) * 180 / Math.PI;
+  }
+
+  H.fitBounds = function (el, bounds) {
+    var lebar = el.clientWidth || 800;
+    var tinggi = el.clientHeight || 460;
+    var spanX = Math.abs(bounds.east - bounds.west) * Math.PI / 180;
+    var yN = mercatorY(bounds.north), yS = mercatorY(bounds.south);
+    var perlu = spanX * tinggi / lebar;
+    if (perlu <= yN - yS) return bounds;
+    var tambah = (perlu - (yN - yS)) / 2;
+    return {
+      west: bounds.west, east: bounds.east,
+      north: Math.min(85, mercatorLat(yN + tambah)),
+      south: Math.max(-85, mercatorLat(yS - tambah))
+    };
+  };
+
+  H.zoomMinimum = function (el, bounds) {
+    var lebar = el.clientWidth || 800;
+    var tinggi = el.clientHeight || 460;
+
+    var spanLon = Math.abs(bounds.east - bounds.west);
+    var zLebar = Math.log2(lebar * 360 / (512 * spanLon));
+
+    var spanY = Math.abs(mercatorY(bounds.north) - mercatorY(bounds.south));
+    var zTinggi = Math.log2(tinggi * (2 * Math.PI) / (512 * spanY));
+
+    return Math.min(zLebar, zTinggi);
+  };
+
+  /*
+   * Kunci zoom agar tidak bisa diperkecil melampaui cakupan data.
+   *
+   * plotly.js tidak menyediakan pengaturan zoom minimum, sehingga dipakai
+   * pendekatan koreksi: setiap kali peta selesai digeser atau di-zoom,
+   * nilai zoom diperiksa dan dikembalikan bila terlalu kecil.
+   *
+   * `sedangKoreksi` mencegah relayout korektif memicu dirinya sendiri.
+   * Batas dihitung ulang saat ukuran jendela berubah, karena zoom minimum
+   * bergantung pada lebar wadah peta.
+   */
+  H.kunciZoomKeBatas = function (el, bounds) {
+    var minZoom = H.zoomMinimum(el, bounds);
+    var sedangKoreksi = false;
+
+    function koreksi(ev) {
+      if (sedangKoreksi) return;
+      var z = ev && ev["mapbox.zoom"];
+      if (typeof z !== "number" || z >= minZoom - 1e-3) return;
+      sedangKoreksi = true;
+      Plotly.relayout(el, { "mapbox.zoom": minZoom }).then(function () {
+        sedangKoreksi = false;
+      });
+    }
+
+    el.on("plotly_relayout", koreksi);
+
+    /*
+     * Hitung ulang batas zoom karena ukuran wadah berubah.
+     *
+     * Dipanggil dari event resize jendela DAN dari luar (masuk/keluar layar
+     * penuh). Layar penuh tidak selalu memicu resize jendela, dan kalaupun
+     * memicu, ukuran wadahnya belum tentu sudah final saat event itu menyala.
+     */
+    function hitungUlang() {
+      minZoom = H.zoomMinimum(el, bounds);
+      var kini = el._fullLayout && el._fullLayout.mapbox && el._fullLayout.mapbox.zoom;
+      if (typeof kini === "number" && kini < minZoom) {
+        Plotly.relayout(el, { "mapbox.zoom": minZoom });
+      }
+      return minZoom;
+    }
+
+    global.addEventListener("resize", hitungUlang);
+
+    /* Mengembalikan objek, bukan angka: pemanggil butuh nilai awal untuk
+       menyetel tampilan pertama, dan butuh cara memaksa hitung ulang. */
+    return { awal: minZoom, refresh: hitungUlang };
+  };
+
+  /* ------------------------------------------------------------ layar penuh --
+
+     Layar penuh dipasang pada WADAH, bukan pada elemen petanya. Kalau hanya
+     elemen peta yang dijadikan layar penuh, tombol putar, penggeser waktu,
+     dan legenda ikut hilang dari layar.
+
+     Peramban yang tidak mendukung Fullscreen API untuk elemen sembarang
+     (antara lain Safari di iPhone) tidak diberi jalur khusus: tombolnya
+     disembunyikan, bukan dibiarkan gagal saat diklik.
+  */
+
+  function elemenFullscreen() {
+    return document.fullscreenElement || document.webkitFullscreenElement || null;
+  }
+
+  H.fullscreenDidukung = function (el) {
+    return !!(el && (el.requestFullscreen || el.webkitRequestFullscreen));
+  };
+
+  /*
+   * Pasang tombol layar penuh pada sebuah wadah.
+   *
+   *   opts.wadah   elemen yang dijadikan layar penuh
+   *   opts.tombol  tombol pemicu
+   *   opts.kelas   kelas CSS yang dipasang pada wadah selama layar penuh
+   *                (bawaan "is-fullscreen"); dipakai agar CSS tidak perlu
+   *                bergantung pada pseudo-class :fullscreen yang penulisan
+   *                berprefiksnya berbeda antar peramban
+   *   opts.label   { masuk, keluar } teks tombol pada kedua keadaan
+   *   opts.onUbah  dipanggil dengan (aktif: boolean) SETELAH ukuran wadah
+   *                stabil — tempat memanggil ulang penyesuaian ukuran plot
+   */
+  H.pasangFullscreen = function (opts) {
+    var wadah = opts.wadah;
+    var tombol = opts.tombol;
+    var kelas = opts.kelas || "is-fullscreen";
+    var label = opts.label || { masuk: "\u2921 Layar penuh", keluar: "\u2922 Keluar" };
+    if (!wadah || !tombol) return;
+
+    if (!H.fullscreenDidukung(wadah)) { tombol.hidden = true; return; }
+
+    tombol.addEventListener("click", function () {
+      var janji;
+      if (elemenFullscreen() === wadah) {
+        janji = (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+      } else {
+        janji = (wadah.requestFullscreen || wadah.webkitRequestFullscreen).call(wadah);
+      }
+      /* Permintaan layar penuh dapat ditolak peramban (mis. kebijakan izin).
+         Penolakan diabaikan diam-diam: halaman tetap berfungsi seperti biasa. */
+      if (janji && janji.catch) janji.catch(function () {});
+    });
+
+    function berubah() {
+      var aktif = elemenFullscreen() === wadah;
+      if (aktif) wadah.classList.add(kelas); else wadah.classList.remove(kelas);
+      tombol.setAttribute("aria-pressed", aktif ? "true" : "false");
+      tombol.textContent = aktif ? label.keluar : label.masuk;
+
+      /* Dua rangka tunda: ukuran wadah baru final setelah peramban selesai
+         menata ulang, bukan pada saat fullscreenchange menyala. */
+      global.requestAnimationFrame(function () {
+        global.requestAnimationFrame(function () {
+          if (opts.onUbah) opts.onUbah(aktif);
+        });
+      });
+    }
+
+    /* Tombol Esc keluar dari layar penuh tanpa melewati tombol di atas;
+       event inilah satu-satunya penanda keadaan yang dapat dipercaya. */
+    document.addEventListener("fullscreenchange", berubah);
+    document.addEventListener("webkitfullscreenchange", berubah);
+  };
+
+  global.HES = H;
+})(window);
+
+/* Streamflow: peta Indonesia per wilayah sungai dan per dasarian (pemilik 2026-10-29).
+
+   Data: payload (alamat index.json, sifat dan warnanya, batas umur, konfigurasi peta) di halaman; index.json dan
+   outline.geojson tiap WS dari R2 (heslab/builders/streamflow.py). Halaman tidak menghitung apa pun: warna WS pada
+   dasarian terpilih = "classes" di index.json (sifat ruas outlet terbesar, pemilik 2026-10-29), atau abu-abu bila
+   tanggal prakiraannya lebih tua dari max_age_days
+   (tanggal pengunjung). Klik WS di peta atau "Buka peta" membuka peta sungai WS itu di tab baru. */
+(function () {
+  "use strict";
+  var P = JSON.parse(document.getElementById("payload").textContent);
+  var plotEl = document.getElementById("sf-map");
+  var tbody = document.querySelector("#sf-list tbody");
+  var select = document.getElementById("sf-dasarian");
+  var viewSelect = document.getElementById("sf-view");
+  var STALE = "#9aa5b1";
+  var NONE = "#d5dbe1";
+  var basins = [], shapes = [], labels = [], drawn = false, bounds = null, viewKey = null;
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  }
+  function isStale(b) {
+    var t = new Date(String(b.forecast_date).slice(0, 10) + "T07:00:00+07:00");
+    return isNaN(t) || (Date.now() - t.getTime()) > P.max_age_days * 86400 * 1000;
+  }
+  function dateLabel(s) {
+    s = String(s || "").slice(0, 10);
+    return s.length === 10 ? s.slice(8, 10) + "/" + s.slice(5, 7) + "/" + s.slice(0, 4) : (s || "–");
+  }
+  function seas5Label(m) {
+    m = String(m || "");
+    return m.length === 6 ? m.slice(4, 6) + "/" + m.slice(0, 4) : (m || "–");
+  }
+  function at(b, label) {                 // posisi dasarian terpilih di WS ini, -1 bila tidak ada
+    return (b.dasarian || []).indexOf(label);
+  }
+  // Pemilik 2026-10-30: tampilan Median (awal), P10 (skenario kering), P90 (skenario basah); WS tanpa tampilan itu
+  // memakai tampilan pertamanya.
+  function viewOf(b) {
+    var v = (b.views || []).filter(function (x) { return x.key === viewKey; })[0];
+    return v || (b.views && b.views[0]) || { classes: b.classes, counts: b.counts };
+  }
+  function classOf(b, label) {
+    var k = at(b, label);
+    return k < 0 ? null : viewOf(b).classes[k];
+  }
+  function colorOf(b, label) {
+    if (isStale(b)) return STALE;
+    var c = classOf(b, label);
+    return c ? P.colors[c] : NONE;
+  }
+
+  function renderReadout() {
+    function set(k, v) {
+      var el = document.querySelector('#sf-readout [data-k="' + k + '"]');
+      if (el) el.textContent = v;
+    }
+    var newest = basins.slice().sort(function (a, b) { return String(b.forecast_date).localeCompare(a.forecast_date); })[0];
+    set("basins", basins.length + " terpasang");
+    set("seas5", newest ? seas5Label(newest.seas5_month) : "–");
+    set("start", newest ? dateLabel(newest.forecast_date) : "–");
+    set("dasarian", labels.length ? labels[0] + " – " + labels[labels.length - 1] : "–");
+  }
+
+  function renderTable(label) {
+    if (!basins.length) {
+      tbody.innerHTML = '<tr><td colspan="9">Belum ada wilayah sungai yang terpasang.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = basins.map(function (b) {
+      var k = at(b, label), stale = isStale(b);
+      var c = classOf(b, label);                  // of the chosen view (Median, P10, P90)
+      var text = stale ? "data lama" : (c || "tanpa nilai");
+      var counts = P.classes.map(function (n) { return "<td>" + (k < 0 ? "–" : (viewOf(b).counts[k][n] || 0)) + "</td>"; }).join("");
+      return "<tr><td>" + esc(b.label) + "</td><td>" + esc(seas5Label(b.seas5_month)) + "</td><td>" +
+        esc(dateLabel(b.forecast_date)) + "</td>" +
+        '<td><i style="display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;background:' +
+        colorOf(b, label) + '"></i>' + esc(text) + "</td>" + counts + "<td>" + esc(b.reaches) + "</td>" +
+        '<td><a href="' + esc(b.page_url) + '" target="_blank" rel="noopener">Buka peta →</a></td></tr>';
+    }).join("");
+  }
+
+  function traces(label) {
+    var groups = {};                      // warna -> {features, locations, text, urls}
+    basins.forEach(function (b, i) {
+      var geo = shapes[i];
+      if (!geo) return;
+      var col = colorOf(b, label), k = at(b, label);
+      var g = groups[col] || (groups[col] = { features: [], locations: [], text: [], urls: [] });
+      g.features.push({ type: "Feature", id: b.basin, properties: {}, geometry: geo.geometry });
+      g.locations.push(b.basin);
+      var out = b.outlet || {};
+      g.text.push(b.label + "<br>" + (viewOf(b).label || "") + " · " + label + ", outlet " + (out.name || out.reach || "") + ": " +
+                  (isStale(b) ? "data lama" : (classOf(b, label) || "tanpa nilai")) +
+                  (k < 0 ? "" : "<br>" + P.classes.map(function (n) { return n + " " + (viewOf(b).counts[k][n] || 0); }).join(" · ") +
+                   " ruas") + "<br>SEAS5 " + seas5Label(b.seas5_month) + ", awal " + dateLabel(b.forecast_date));
+      g.urls.push(b.page_url);
+    });
+    return Object.keys(groups).map(function (col) {
+      var g = groups[col];
+      return {
+        type: "choroplethmapbox", geojson: { type: "FeatureCollection", features: g.features },
+        locations: g.locations, z: g.locations.map(function () { return 1; }),
+        colorscale: [[0, col], [1, col]], showscale: false, text: g.text, hoverinfo: "text",
+        customdata: g.urls, marker: { opacity: 0.75, line: { width: 1, color: "rgba(40,50,60,0.7)" } }
+      };
+    });
+  }
+
+  function renderMap(label) {
+    if (drawn) return Plotly.react(plotEl, traces(label), plotEl.layout);
+    bounds = HES.fitBounds(plotEl, P.bounds);
+    return Plotly.newPlot(plotEl, traces(label), HES.mapLayout(P.map, bounds), HES.plotConfig("heslab_streamflow"))
+      .then(function () {
+        drawn = true;
+        var kunci = HES.kunciZoomKeBatas(plotEl, bounds);
+        Plotly.relayout(plotEl, {
+          "mapbox.zoom": kunci.awal,
+          "mapbox.center": { lat: (bounds.north + bounds.south) / 2, lon: (bounds.west + bounds.east) / 2 }
+        });
+        plotEl.on("plotly_click", function (ev) {
+          var p = ev.points && ev.points[0];
+          if (p && p.customdata) window.open(p.customdata, "_blank", "noopener");
+        });
+      });
+  }
+
+  function show(label) {
+    renderTable(label);
+    return renderMap(label);
+  }
+
+  HES.fetchJSON(P.index_url).then(function (idx) {
+    basins = idx.basins || [];
+    var newest = basins.slice().sort(function (a, b) { return String(b.forecast_date).localeCompare(a.forecast_date); })[0];
+    labels = newest ? newest.dasarian.slice() : [];
+    select.innerHTML = labels.map(function (l) { return "<option>" + esc(l) + "</option>"; }).join("") ||
+      "<option>–</option>";
+    var views = (newest && newest.views) || [];
+    viewKey = views.length ? views[0].key : null;
+    viewSelect.innerHTML = views.map(function (v) {
+      return '<option value="' + esc(v.key) + '">' + esc(v.label) + "</option>";
+    }).join("") || "<option>–</option>";
+    renderReadout();
+    renderTable(labels[0]);
+    return Promise.all(basins.map(function (b) {
+      return b.outline_url ? HES.fetchJSON(b.outline_url).catch(function () { return null; }) : Promise.resolve(null);
+    })).then(function (s) {
+      shapes = s;
+      select.addEventListener("change", function () { show(select.value); });
+      viewSelect.addEventListener("change", function () { viewKey = viewSelect.value; show(select.value); });
+      return renderMap(labels[0]);
+    });
+  }).catch(function (err) {
+    tbody.innerHTML = '<tr><td colspan="9">Data Streamflow belum tersedia.</td></tr>';
+    HES.fail(plotEl, err.message, P.index_url);
+  });
+})();
+</script>
 </body>
 </html>
-<!-- heslab-content: f11042d522c5219e -->
+<!-- heslab-content: 9ac9bfcc87b6cdec -->

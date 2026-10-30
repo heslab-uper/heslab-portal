@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://portal.heslab-uper.com/</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://portal.heslab-uper.com/rainfall/</loc>
@@ -10,11 +10,11 @@
   </url>
   <url>
     <loc>https://portal.heslab-uper.com/rainfall/harian/</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://portal.heslab-uper.com/rainfall/dasarian/</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://portal.heslab-uper.com/rainfall/prakiraan/</loc>
@@ -22,43 +22,43 @@
   </url>
   <url>
     <loc>https://portal.heslab-uper.com/rainfall/harian/now/</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://portal.heslab-uper.com/rainfall/dasarian/now/</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://portal.heslab-uper.com/rainfall/harian/nrt/</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://portal.heslab-uper.com/rainfall/dasarian/nrt/</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://portal.heslab-uper.com/rainfall/harian/nrt-v9/</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://portal.heslab-uper.com/rainfall/dasarian/nrt-v9/</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://portal.heslab-uper.com/rainfall/harian/standard/</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://portal.heslab-uper.com/rainfall/dasarian/standard/</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://portal.heslab-uper.com/rainfall/harian/standard-v9/</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://portal.heslab-uper.com/rainfall/dasarian/standard-v9/</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://portal.heslab-uper.com/climate/</loc>
@@ -66,7 +66,11 @@
   </url>
   <url>
     <loc>https://portal.heslab-uper.com/fews/</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-30</lastmod>
+  </url>
+  <url>
+    <loc>https://portal.heslab-uper.com/streamflow/</loc>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://portal.heslab-uper.com/climate/202610/</loc>
@@ -74,6 +78,6 @@
   </url>
   <url>
     <loc>https://portal.heslab-uper.com/fews/ciliwung-cisadane/</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
 </urlset>
