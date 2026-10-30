@@ -850,12 +850,18 @@ Cisadane, Cikarang Bekasi Laut (CBL), Bekasi Lama, Cengkareng Drain, Cimanceuri,
     <div class="readout__cell"><span class="readout__k">Awal prediksi</span>
       <span class="readout__v" data-k="t0">memuat…</span></div>
     <div class="readout__cell"><span class="readout__k">Tingkat tertinggi</span>
-      <span class="readout__v" data-k="highest">memuat…</span></div>
+      <span class="readout__v" data-k="highest">normal</span></div>
     <div class="readout__cell"><span class="readout__k">Ruas waspada · siaga · awas</span>
-      <span class="readout__v" data-k="counts">memuat…</span></div>
+      <span class="readout__v" data-k="counts">0 · 0 · 0</span></div>
     <div class="readout__cell"><span class="readout__k">Ruas dimodelkan</span>
-      <span class="readout__v" data-k="reaches">memuat…</span></div>
+      <span class="readout__v" data-k="reaches">1641</span></div>
   </div>
+
+  <section class="panel" aria-labelledby="sum-h">
+    <h2 id="sum-h">Ringkasan</h2>
+    <p style="margin-bottom:0">Pada siklus terakhir, semua ruas sungai WS Ciliwung-Cisadane berstatus normal: tidak ada ruas di
+    atas ambang waspada. Status diperiksa setiap jam.</p>
+  </section>
 
   <div class="note">
     <p style="margin-bottom:0"><strong>Bukan peringatan resmi.</strong> Tingkat waspada, siaga, dan awas di halaman
@@ -877,8 +883,8 @@ Cisadane, Cikarang Bekasi Laut (CBL), Bekasi Lama, Cengkareng Drain, Cimanceuri,
     <h2 id="at-h">Ruas berstatus waspada, siaga, atau awas</h2>
     <div class="tablewrap">
       <table id="fews-at">
-        <thead><tr><th>Ruas</th><th>Sungai</th><th>Tingkat</th><th>Debit puncak (m³/s)</th><th>Waktu puncak (WIB)</th></tr></thead>
-        <tbody><tr><td colspan="5">memuat…</td></tr></tbody>
+        <thead><tr><th>Ruas</th><th>Sungai</th><th>Tingkat tertinggi</th><th>Waktu kejadian (WIB)</th><th>Debit puncak (m³/s)</th></tr></thead>
+        <tbody>          <tr><td colspan="5">Tidak ada ruas di atas ambang waspada pada siklus terakhir.</td></tr>        </tbody>
       </table>
     </div>
   </section>
@@ -949,7 +955,7 @@ Waduk 22, Pintu Air 4, Weir 2.</p>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 30-10-2026 19:06 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 31-10-2026 06:06 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
@@ -1402,6 +1408,16 @@ Waduk 22, Pintu Air 4, Weir 2.</p>
     var el = document.querySelector('#fews-readout [data-k="' + k + '"]');
     if (el) el.textContent = v;
   }
+  function hour(s) {                     // "2026-10-31 14:00:00" -> "31/10 14:00" (heslab/builders/fews.hour_label)
+    s = String(s == null ? "" : s);
+    return s.length >= 16 && s[4] === "-" && s[13] === ":" ?
+      s.slice(8, 10) + "/" + s.slice(5, 7) + " " + s.slice(11, 16) : s;
+  }
+  function spanText(sp) {                // sama dengan heslab/builders/fews.span_text
+    var a = hour(sp.from_wib), z = hour(sp.to_wib);
+    if (!z || z === a) return a;
+    return a + "–" + (z.slice(0, 5) === a.slice(0, 5) ? z.slice(6) : z);
+  }
   function swatch(col) {
     return '<i style="display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;background:' +
       col + '"></i>';
@@ -1421,11 +1437,15 @@ Waduk 22, Pintu Air 4, Weir 2.</p>
         esc(label(st.t0_wib)) + " WIB.</td></tr>";
       return;
     }
+    // pemilik 2026-10-31: waktu kejadian tiap tingkat (mulai–akhir), beberapa bila ada lebih dari satu kondisi
     tbody.innerHTML = rows.map(function (r) {
+      var spans = (r.spans || []).map(function (sp) {
+        return swatch(P.colors[sp.level] || "#9aa5b1") + esc(sp.level) + " " + esc(spanText(sp));
+      }).join("<br>") || "puncak " + esc(hour(r.peak_wib));
       return "<tr><td>" + esc(r.reach) + "</td><td>" + esc(r.name || "–") + "</td><td>" +
-        swatch(P.colors[r.level] || "#9aa5b1") + esc(r.level) + "</td><td>" +
-        esc(Number(r.q_peak_m3s).toLocaleString("id-ID", { maximumFractionDigits: 1 })) + "</td><td>" +
-        esc(String(r.peak_wib).slice(0, 16)) + "</td></tr>";
+        swatch(P.colors[r.level] || "#9aa5b1") + esc(r.level) + "</td><td>" + spans + "</td><td>" +
+        esc(Number(r.q_peak_m3s).toLocaleString("id-ID", { minimumFractionDigits: 1, maximumFractionDigits: 1 })) +
+        " (" + esc(hour(r.peak_wib)) + ")</td></tr>";
     }).join("");
   }).catch(function (err) {
     ["t0", "highest", "counts", "reaches"].forEach(function (k) { set(k, "–"); });
@@ -1435,4 +1455,4 @@ Waduk 22, Pintu Air 4, Weir 2.</p>
 </script>
 </body>
 </html>
-<!-- heslab-content: 4b38def326ff035c -->
+<!-- heslab-content: 0cef1d80233aacc3 -->
