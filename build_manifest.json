@@ -1,7 +1,7 @@
 {
   "targets": {
     "shell": {
-      "last_build_wib": "2026-10-30T17:45:24+07:00",
+      "last_build_wib": "2026-10-30T19:14:03+07:00",
       "pages": [
         "home",
         "rainfall-daily",
@@ -18,17 +18,17 @@
         "rainfall-daily-standard-v9",
         "rainfall-dasarian-standard-v9"
       ],
-      "note": "produk=semua"
+      "note": "dijalankan dari jalankan.py"
     },
     "rainfall-animation": {
-      "last_build_wib": "2026-10-30T19:07:12+07:00",
+      "last_build_wib": "2026-10-30T19:14:05+07:00",
       "pages": [
         "rainfall"
       ],
-      "note": "produk=semua"
+      "note": "dijalankan dari jalankan.py"
     },
     "rainfall-daily": {
-      "last_build_wib": "2026-10-30T17:45:33+07:00",
+      "last_build_wib": "2026-10-30T19:14:06+07:00",
       "pages": [
         "rainfall-daily-now",
         "rainfall-daily-nrt",
@@ -37,10 +37,10 @@
         "rainfall-daily-standard-v9",
         "rainfall-daily"
       ],
-      "note": "produk=semua"
+      "note": "dijalankan dari jalankan.py"
     },
     "rainfall-dasarian": {
-      "last_build_wib": "2026-10-30T12:00:23+07:00",
+      "last_build_wib": "2026-10-30T19:14:20+07:00",
       "pages": [
         "rainfall-dasarian-now",
         "rainfall-dasarian-nrt",
@@ -49,7 +49,7 @@
         "rainfall-dasarian-standard-v9",
         "rainfall-dasarian"
       ],
-      "note": "produk=semua"
+      "note": "dijalankan dari jalankan.py"
     },
     "rainfall-forecast": {
       "last_build_wib": "2026-10-30T19:06:40+07:00",
