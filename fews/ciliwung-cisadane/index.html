@@ -586,6 +586,7 @@ table.data td.num, table.data th.num { text-align: right; font-family: var(--fon
 table.data tbody tr:hover { background: var(--current-soft); }
 /* Judul kelompok pulau di tabel Wilayah sungai /fews/ dan /streamflow/ (pemilik 2026-10-31). */
 tr.ws-island th { text-align: left; background: var(--river-100); color: var(--ink-900); font-weight: 600; padding: .35rem .5rem; }
+tr.ws-none td { color: var(--muted); font-style: italic; }
 td .swatch {
   display: inline-block; width: 10px; height: 10px; border-radius: 2px;
   margin-right: var(--sp-2); border: 1px solid rgba(0,0,0,0.12);
@@ -957,7 +958,7 @@ Waduk 22, Pintu Air 4, Weir 2.</p>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 31-10-2026 16:06 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 31-10-2026 17:06 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
@@ -1381,12 +1382,14 @@ Waduk 22, Pintu Air 4, Weir 2.</p>
   };
 
   /* Baris tabel Wilayah sungai per pulau (pemilik 2026-10-31), sama dengan sitemap.island_groups di builder:
-     urut `islands`, pulau tanpa WS dilewati, urutan baris di dalam pulau dipertahankan. */
+     urut `islands`, semua pulau tampil (yang tanpa WS dengan baris "belum ada WS tersedia"), urutan baris di
+     dalam pulau dipertahankan. */
   H.islandRows = function (basins, islands, cols, rowHtml) {
     return islands.map(function (name) {
       var rows = basins.filter(function (b) { return b.island === name; });
-      return rows.length ? '<tr class="ws-island"><th colspan="' + cols + '" scope="colgroup">' + H.esc(name) +
-        "</th></tr>" + rows.map(rowHtml).join("") : "";
+      return '<tr class="ws-island"><th colspan="' + cols + '" scope="colgroup">' + H.esc(name) + "</th></tr>" +
+        (rows.length ? rows.map(rowHtml).join("") :
+          '<tr class="ws-none"><td colspan="' + cols + '">belum ada WS tersedia</td></tr>');
     }).join("");
   };
 
@@ -1467,4 +1470,4 @@ Waduk 22, Pintu Air 4, Weir 2.</p>
 </script>
 </body>
 </html>
-<!-- heslab-content: 1d759ce10124cc9c -->
+<!-- heslab-content: 2c3015b72f505cd1 -->

@@ -586,6 +586,7 @@ table.data td.num, table.data th.num { text-align: right; font-family: var(--fon
 table.data tbody tr:hover { background: var(--current-soft); }
 /* Judul kelompok pulau di tabel Wilayah sungai /fews/ dan /streamflow/ (pemilik 2026-10-31). */
 tr.ws-island th { text-align: left; background: var(--river-100); color: var(--ink-900); font-weight: 600; padding: .35rem .5rem; }
+tr.ws-none td { color: var(--muted); font-style: italic; }
 td .swatch {
   display: inline-block; width: 10px; height: 10px; border-radius: 2px;
   margin-right: var(--sp-2); border: 1px solid rgba(0,0,0,0.12);
@@ -902,15 +903,20 @@ aria-current="true">Streamflow Forecast</a>
         <thead><tr><th>Wilayah sungai</th><th>Run SEAS5</th><th>Awal prakiraan</th><th>Sifat</th>
 <th>Bawah Normal</th><th>Normal</th><th>Atas Normal</th><th>Ruas</th><th>Peta sungai</th></tr></thead>
         <tbody>
-          <tr class="ws-island"><th colspan="9" scope="colgroup">Jawa</th></tr>
+          <tr class="ws-island"><th colspan="9" scope="colgroup">Sumatera</th></tr>
+<tr class="ws-none"><td colspan="9">belum ada WS tersedia</td></tr>          <tr class="ws-island"><th colspan="9" scope="colgroup">Jawa</th></tr>
           <tr><td><a href="ciliwung-cisadane/">WS Ciliwung-Cisadane</a></td><td>10/2026</td><td>29/10/2026</td>
             <td>memuat…</td><td>–</td><td>–</td><td>–</td><td>1641</td>
             <td><a href="https://data.heslab-uper.com/portal/assets/streamflow/ws_ciliwung_cisadane/skema.html" target="_blank" rel="noopener">Buka peta →</a></td></tr>
-        </tbody>
+          <tr class="ws-island"><th colspan="9" scope="colgroup">Bali–Nusa Tenggara</th></tr>
+<tr class="ws-none"><td colspan="9">belum ada WS tersedia</td></tr>          <tr class="ws-island"><th colspan="9" scope="colgroup">Kalimantan</th></tr>
+<tr class="ws-none"><td colspan="9">belum ada WS tersedia</td></tr>          <tr class="ws-island"><th colspan="9" scope="colgroup">Sulawesi</th></tr>
+<tr class="ws-none"><td colspan="9">belum ada WS tersedia</td></tr>          <tr class="ws-island"><th colspan="9" scope="colgroup">Maluku</th></tr>
+<tr class="ws-none"><td colspan="9">belum ada WS tersedia</td></tr>          <tr class="ws-island"><th colspan="9" scope="colgroup">Papua</th></tr>
+<tr class="ws-none"><td colspan="9">belum ada WS tersedia</td></tr>        </tbody>
       </table>
     </div>
-    <p>Sifat = sifat ruas outlet terbesar; kolom sifat dan jumlah ruas mengikuti dasarian terpilih. Wilayah sungai yang
-    belum tampil belum dipasang.</p>
+    <p>Sifat = sifat ruas outlet terbesar; kolom sifat dan jumlah ruas mengikuti dasarian terpilih.</p>
   </section>
 
   
@@ -960,7 +966,7 @@ aria-current="true">Streamflow Forecast</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 31-10-2026 16:07 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 31-10-2026 17:07 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
@@ -1385,12 +1391,14 @@ aria-current="true">Streamflow Forecast</a>
   };
 
   /* Baris tabel Wilayah sungai per pulau (pemilik 2026-10-31), sama dengan sitemap.island_groups di builder:
-     urut `islands`, pulau tanpa WS dilewati, urutan baris di dalam pulau dipertahankan. */
+     urut `islands`, semua pulau tampil (yang tanpa WS dengan baris "belum ada WS tersedia"), urutan baris di
+     dalam pulau dipertahankan. */
   H.islandRows = function (basins, islands, cols, rowHtml) {
     return islands.map(function (name) {
       var rows = basins.filter(function (b) { return b.island === name; });
-      return rows.length ? '<tr class="ws-island"><th colspan="' + cols + '" scope="colgroup">' + H.esc(name) +
-        "</th></tr>" + rows.map(rowHtml).join("") : "";
+      return '<tr class="ws-island"><th colspan="' + cols + '" scope="colgroup">' + H.esc(name) + "</th></tr>" +
+        (rows.length ? rows.map(rowHtml).join("") :
+          '<tr class="ws-none"><td colspan="' + cols + '">belum ada WS tersedia</td></tr>');
     }).join("");
   };
 
@@ -1457,7 +1465,7 @@ aria-current="true">Streamflow Forecast</a>
       if (el) el.textContent = v;
     }
     var newest = basins.slice().sort(function (a, b) { return String(b.forecast_date).localeCompare(a.forecast_date); })[0];
-    set("basins", basins.length + " terpasang");
+    set("basins", basins.length + " tersedia");
     set("seas5", newest ? seas5Label(newest.seas5_month) : "–");
     set("start", newest ? dateLabel(newest.forecast_date) : "–");
     set("dasarian", labels.length ? labels[0] + " – " + labels[labels.length - 1] : "–");
@@ -1465,7 +1473,7 @@ aria-current="true">Streamflow Forecast</a>
 
   function renderTable(label) {
     if (!basins.length) {
-      tbody.innerHTML = '<tr><td colspan="9">Belum ada wilayah sungai yang terpasang.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="9">Belum ada wilayah sungai yang tersedia.</td></tr>';
       return;
     }
     tbody.innerHTML = HES.islandRows(basins, P.islands, 9, function (b) {
@@ -1561,4 +1569,4 @@ aria-current="true">Streamflow Forecast</a>
 </script>
 </body>
 </html>
-<!-- heslab-content: 7ba5543717434aba -->
+<!-- heslab-content: d103b8c622b2970f -->
