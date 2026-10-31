@@ -584,6 +584,8 @@ table.data td {
 }
 table.data td.num, table.data th.num { text-align: right; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
 table.data tbody tr:hover { background: var(--current-soft); }
+/* Judul kelompok pulau di tabel Wilayah sungai /fews/ dan /streamflow/ (pemilik 2026-10-31). */
+tr.ws-island th { text-align: left; background: var(--river-100); color: var(--ink-900); font-weight: 600; padding: .35rem .5rem; }
 td .swatch {
   display: inline-block; width: 10px; height: 10px; border-radius: 2px;
   margin-right: var(--sp-2); border: 1px solid rgba(0,0,0,0.12);
@@ -887,14 +889,15 @@ aria-current="true">FEWS</a>
         <thead><tr><th>Wilayah sungai</th><th>Awal prediksi (WIB)</th><th>Tingkat tertinggi</th>
 <th>waspada</th><th>siaga</th><th>awas</th><th>Ruas</th><th>Peta sungai</th></tr></thead>
         <tbody>
-          <tr><td><a href="citanduy/">WS Citanduy</a></td><td>memuat…</td>
-            <td><i style="display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;background:#d4a017"></i>waspada</td>
-<td>1</td><td>0</td><td>0</td><td>1341</td>
-            <td><a href="https://data.heslab-uper.com/portal/assets/fews/ws_citanduy/skema.html" target="_blank" rel="noopener">Buka peta →</a></td></tr>
+          <tr class="ws-island"><th colspan="8" scope="colgroup">Jawa</th></tr>
           <tr><td><a href="ciliwung-cisadane/">WS Ciliwung-Cisadane</a></td><td>memuat…</td>
             <td><i style="display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;background:#2f5fb3"></i>normal</td>
 <td>0</td><td>0</td><td>0</td><td>1641</td>
             <td><a href="https://data.heslab-uper.com/portal/assets/fews/ws_ciliwung_cisadane/skema.html" target="_blank" rel="noopener">Buka peta →</a></td></tr>
+          <tr><td><a href="citanduy/">WS Citanduy</a></td><td>memuat…</td>
+            <td><i style="display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;background:#2f5fb3"></i>normal</td>
+<td>0</td><td>0</td><td>0</td><td>1341</td>
+            <td><a href="https://data.heslab-uper.com/portal/assets/fews/ws_citanduy/skema.html" target="_blank" rel="noopener">Buka peta →</a></td></tr>
         </tbody>
       </table>
     </div>
@@ -949,12 +952,12 @@ aria-current="true">FEWS</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 31-10-2026 15:06 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 31-10-2026 16:06 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
 
-<script id="payload" type="application/json">{"index_url":"https://data.heslab-uper.com/portal/assets/fews/index.json","levels":["normal","waspada","siaga","awas"],"colors":{"normal":"#2f5fb3","waspada":"#d4a017","siaga":"#e8740c","awas":"#c0392b"},"max_age_hours":3,"map":{"center":{"lat":-2.5,"lon":118.0},"zoom":3.5,"style":"white-bg","layers":[{"below":"traces","sourcetype":"raster","sourceattribution":"Esri, HERE, Garmin, © OpenStreetMap contributors","source":["https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"]},{"below":"traces","sourcetype":"raster","source":["https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}"]}]},"bounds":{"west":93.5,"east":142.5,"south":-12.5,"north":7.5}}</script>
+<script id="payload" type="application/json">{"index_url":"https://data.heslab-uper.com/portal/assets/fews/index.json","levels":["normal","waspada","siaga","awas"],"colors":{"normal":"#2f5fb3","waspada":"#d4a017","siaga":"#e8740c","awas":"#c0392b"},"islands":["Sumatera","Jawa","Bali–Nusa Tenggara","Kalimantan","Sulawesi","Maluku","Papua"],"max_age_hours":3,"map":{"center":{"lat":-2.5,"lon":118.0},"zoom":3.5,"style":"white-bg","layers":[{"below":"traces","sourcetype":"raster","sourceattribution":"Esri, HERE, Garmin, © OpenStreetMap contributors","source":["https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"]},{"below":"traces","sourcetype":"raster","source":["https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}"]}]},"bounds":{"west":93.5,"east":142.5,"south":-12.5,"north":7.5}}</script>
 <script src="https://cdn.plot.ly/plotly-2.32.0.min.js" integrity="sha384-7TVmlZWH60iKX5Uk7lSvQhjtcgw2tkFjuwLcXoRSR4zXTyWFJRm9aPAguMh7CIra" crossorigin="anonymous" charset="utf-8"></script>
 <script>/* ==========================================================================
    Utilitas bersama HESLab Portal.
@@ -1373,6 +1376,16 @@ aria-current="true">FEWS</a>
     document.addEventListener("webkitfullscreenchange", berubah);
   };
 
+  /* Baris tabel Wilayah sungai per pulau (pemilik 2026-10-31), sama dengan sitemap.island_groups di builder:
+     urut `islands`, pulau tanpa WS dilewati, urutan baris di dalam pulau dipertahankan. */
+  H.islandRows = function (basins, islands, cols, rowHtml) {
+    return islands.map(function (name) {
+      var rows = basins.filter(function (b) { return b.island === name; });
+      return rows.length ? '<tr class="ws-island"><th colspan="' + cols + '" scope="colgroup">' + H.esc(name) +
+        "</th></tr>" + rows.map(rowHtml).join("") : "";
+    }).join("");
+  };
+
   global.HES = H;
 })(window);
 
@@ -1434,7 +1447,7 @@ aria-current="true">FEWS</a>
     var sorted = basins.slice().sort(function (a, b) {
       return (P.levels.indexOf(b.highest) - P.levels.indexOf(a.highest)) || (a.label < b.label ? -1 : a.label > b.label ? 1 : 0);
     });
-    tbody.innerHTML = sorted.map(function (b) {
+    tbody.innerHTML = HES.islandRows(sorted, P.islands, 8, function (b) {
       var stale = isStale(b);
       var lv = stale ? "data lama" : b.highest;
       var col = stale ? STALE : P.colors[b.highest];
@@ -1444,7 +1457,7 @@ aria-current="true">FEWS</a>
         '<td><i style="display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;background:' +
         col + '"></i>' + esc(lv) + "</td>" + counts + "<td>" + esc(b.reaches) + "</td>" +
         '<td><a href="' + esc(b.page_url) + '" target="_blank" rel="noopener">Buka peta →</a></td></tr>';
-    }).join("");
+    });
   }
 
   function renderMap(basins, shapes) {
@@ -1500,4 +1513,4 @@ aria-current="true">FEWS</a>
 </script>
 </body>
 </html>
-<!-- heslab-content: 0191451db38f23b4 -->
+<!-- heslab-content: c9d8ac54af78dd04 -->

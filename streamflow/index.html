@@ -584,6 +584,8 @@ table.data td {
 }
 table.data td.num, table.data th.num { text-align: right; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
 table.data tbody tr:hover { background: var(--current-soft); }
+/* Judul kelompok pulau di tabel Wilayah sungai /fews/ dan /streamflow/ (pemilik 2026-10-31). */
+tr.ws-island th { text-align: left; background: var(--river-100); color: var(--ink-900); font-weight: 600; padding: .35rem .5rem; }
 td .swatch {
   display: inline-block; width: 10px; height: 10px; border-radius: 2px;
   margin-right: var(--sp-2); border: 1px solid rgba(0,0,0,0.12);
@@ -900,6 +902,7 @@ aria-current="true">Streamflow Forecast</a>
         <thead><tr><th>Wilayah sungai</th><th>Run SEAS5</th><th>Awal prakiraan</th><th>Sifat</th>
 <th>Bawah Normal</th><th>Normal</th><th>Atas Normal</th><th>Ruas</th><th>Peta sungai</th></tr></thead>
         <tbody>
+          <tr class="ws-island"><th colspan="9" scope="colgroup">Jawa</th></tr>
           <tr><td><a href="ciliwung-cisadane/">WS Ciliwung-Cisadane</a></td><td>10/2026</td><td>29/10/2026</td>
             <td>memuat…</td><td>–</td><td>–</td><td>–</td><td>1641</td>
             <td><a href="https://data.heslab-uper.com/portal/assets/streamflow/ws_ciliwung_cisadane/skema.html" target="_blank" rel="noopener">Buka peta →</a></td></tr>
@@ -957,12 +960,12 @@ aria-current="true">Streamflow Forecast</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 31-10-2026 15:06 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 31-10-2026 16:07 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
 
-<script id="payload" type="application/json">{"index_url":"https://data.heslab-uper.com/portal/assets/streamflow/index.json","classes":["Bawah Normal","Normal","Atas Normal"],"colors":{"Bawah Normal":"#b5651d","Normal":"#2e8b57","Atas Normal":"#1f6fb4"},"max_age_days":45,"map":{"center":{"lat":-2.5,"lon":118.0},"zoom":3.5,"style":"white-bg","layers":[{"below":"traces","sourcetype":"raster","sourceattribution":"Esri, HERE, Garmin, © OpenStreetMap contributors","source":["https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"]},{"below":"traces","sourcetype":"raster","source":["https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}"]}]},"bounds":{"west":93.5,"east":142.5,"south":-12.5,"north":7.5}}</script>
+<script id="payload" type="application/json">{"index_url":"https://data.heslab-uper.com/portal/assets/streamflow/index.json","classes":["Bawah Normal","Normal","Atas Normal"],"colors":{"Bawah Normal":"#b5651d","Normal":"#2e8b57","Atas Normal":"#1f6fb4"},"islands":["Sumatera","Jawa","Bali–Nusa Tenggara","Kalimantan","Sulawesi","Maluku","Papua"],"max_age_days":45,"map":{"center":{"lat":-2.5,"lon":118.0},"zoom":3.5,"style":"white-bg","layers":[{"below":"traces","sourcetype":"raster","sourceattribution":"Esri, HERE, Garmin, © OpenStreetMap contributors","source":["https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"]},{"below":"traces","sourcetype":"raster","source":["https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}"]}]},"bounds":{"west":93.5,"east":142.5,"south":-12.5,"north":7.5}}</script>
 <script src="https://cdn.plot.ly/plotly-2.32.0.min.js" integrity="sha384-7TVmlZWH60iKX5Uk7lSvQhjtcgw2tkFjuwLcXoRSR4zXTyWFJRm9aPAguMh7CIra" crossorigin="anonymous" charset="utf-8"></script>
 <script>/* ==========================================================================
    Utilitas bersama HESLab Portal.
@@ -1381,6 +1384,16 @@ aria-current="true">Streamflow Forecast</a>
     document.addEventListener("webkitfullscreenchange", berubah);
   };
 
+  /* Baris tabel Wilayah sungai per pulau (pemilik 2026-10-31), sama dengan sitemap.island_groups di builder:
+     urut `islands`, pulau tanpa WS dilewati, urutan baris di dalam pulau dipertahankan. */
+  H.islandRows = function (basins, islands, cols, rowHtml) {
+    return islands.map(function (name) {
+      var rows = basins.filter(function (b) { return b.island === name; });
+      return rows.length ? '<tr class="ws-island"><th colspan="' + cols + '" scope="colgroup">' + H.esc(name) +
+        "</th></tr>" + rows.map(rowHtml).join("") : "";
+    }).join("");
+  };
+
   global.HES = H;
 })(window);
 
@@ -1455,7 +1468,7 @@ aria-current="true">Streamflow Forecast</a>
       tbody.innerHTML = '<tr><td colspan="9">Belum ada wilayah sungai yang terpasang.</td></tr>';
       return;
     }
-    tbody.innerHTML = basins.map(function (b) {
+    tbody.innerHTML = HES.islandRows(basins, P.islands, 9, function (b) {
       var k = at(b, label), stale = isStale(b);
       var c = classOf(b, label);                  // of the chosen view (Median, P10, P90)
       var text = stale ? "data lama" : (c || "tanpa nilai");
@@ -1466,7 +1479,7 @@ aria-current="true">Streamflow Forecast</a>
         '<td><i style="display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;background:' +
         colorOf(b, label) + '"></i>' + esc(text) + "</td>" + counts + "<td>" + esc(b.reaches) + "</td>" +
         '<td><a href="' + esc(b.page_url) + '" target="_blank" rel="noopener">Buka peta →</a></td></tr>';
-    }).join("");
+    });
   }
 
   function traces(label) {
@@ -1548,4 +1561,4 @@ aria-current="true">Streamflow Forecast</a>
 </script>
 </body>
 </html>
-<!-- heslab-content: dd0099d17c6d48d1 -->
+<!-- heslab-content: 7ba5543717434aba -->

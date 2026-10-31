@@ -584,6 +584,8 @@ table.data td {
 }
 table.data td.num, table.data th.num { text-align: right; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
 table.data tbody tr:hover { background: var(--current-soft); }
+/* Judul kelompok pulau di tabel Wilayah sungai /fews/ dan /streamflow/ (pemilik 2026-10-31). */
+tr.ws-island th { text-align: left; background: var(--river-100); color: var(--ink-900); font-weight: 600; padding: .35rem .5rem; }
 td .swatch {
   display: inline-block; width: 10px; height: 10px; border-radius: 2px;
   margin-right: var(--sp-2); border: 1px solid rgba(0,0,0,0.12);
@@ -847,20 +849,19 @@ aria-current="true">FEWS</a>
 
   <div class="readout" id="fews-readout">
     <div class="readout__cell"><span class="readout__k">Awal prediksi</span>
-      <span class="readout__v" data-k="t0">31/10/2026 14:00 WIB</span></div>
+      <span class="readout__v" data-k="t0">memuat…</span></div>
     <div class="readout__cell"><span class="readout__k">Tingkat tertinggi</span>
-      <span class="readout__v" data-k="highest">waspada</span></div>
+      <span class="readout__v" data-k="highest">normal</span></div>
     <div class="readout__cell"><span class="readout__k">Ruas waspada · siaga · awas</span>
-      <span class="readout__v" data-k="counts">1 · 0 · 0</span></div>
+      <span class="readout__v" data-k="counts">0 · 0 · 0</span></div>
     <div class="readout__cell"><span class="readout__k">Ruas dimodelkan</span>
       <span class="readout__v" data-k="reaches">1341</span></div>
   </div>
 
   <section class="panel" aria-labelledby="sum-h">
     <h2 id="sum-h">Ringkasan</h2>
-    <p style="margin-bottom:0">Siklus dengan awal prediksi 31/10/2026 14:00 WIB: tingkat tertinggi
-    <strong>waspada</strong>, dengan 1 ruas waspada, 0 ruas siaga, dan
-    0 ruas awas dari 1341 ruas yang dimodelkan.</p>
+    <p style="margin-bottom:0">Pada siklus terakhir, semua ruas sungai WS Citanduy berstatus normal: tidak ada ruas di
+    atas ambang waspada. Status diperiksa setiap jam.</p>
   </section>
 
   <div class="note">
@@ -884,7 +885,7 @@ aria-current="true">FEWS</a>
     <div class="tablewrap">
       <table id="fews-at">
         <thead><tr><th>Ruas</th><th>Sungai</th><th>Tingkat tertinggi</th><th>Waktu kejadian (WIB)</th><th>Debit puncak (m³/s)</th></tr></thead>
-        <tbody>          <tr><td>1214901</td><td>–</td><td><i style="display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;background:#d4a017"></i>waspada</td><td><i style="display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;background:#d4a017"></i>waspada 31/10 14:00–03/11 14:00</td><td>30,1 (31/10 14:00)</td></tr>        </tbody>
+        <tbody>          <tr><td colspan="5">Tidak ada ruas di atas ambang waspada pada siklus terakhir.</td></tr>        </tbody>
       </table>
     </div>
   </section>
@@ -892,6 +893,11 @@ aria-current="true">FEWS</a>
   <section class="panel" aria-labelledby="ws-h">
     <h2 id="ws-h">Tentang model WS Citanduy</h2>
     <p>WS Citanduy dimodelkan dengan 1341 ruas sungai    dengan luas 4.327 km².</p>
+    <h3>Bangunan air di model</h3>
+    <ul>
+<li>Bendung Manganti (Weir)</li><li>Bendung Pataruman (Weir)</li><li>Bendungan Leuwikeris (Waduk)</li>    </ul>
+    <p style="font-size:.8125rem;color:var(--muted)">Seluruh bangunan di model:
+Weir 2, Waduk 1.</p>
     <p>Model dijalankan tiap jam dengan hujan satelit GSMaP yang sudah turun (NRT GA lalu NOW), kemudian 72 jam tanpa
     hujan. Awal prediksi (T0) = awal simulasi ke depan.</p>
     <p><strong>Keterbatasan.</strong> Model memakai parameter bawaan yang belum dikalibrasi terhadap debit terukur, dan
@@ -946,7 +952,7 @@ aria-current="true">FEWS</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 31-10-2026 14:06 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 31-10-2026 16:06 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
@@ -1369,6 +1375,16 @@ aria-current="true">FEWS</a>
     document.addEventListener("webkitfullscreenchange", berubah);
   };
 
+  /* Baris tabel Wilayah sungai per pulau (pemilik 2026-10-31), sama dengan sitemap.island_groups di builder:
+     urut `islands`, pulau tanpa WS dilewati, urutan baris di dalam pulau dipertahankan. */
+  H.islandRows = function (basins, islands, cols, rowHtml) {
+    return islands.map(function (name) {
+      var rows = basins.filter(function (b) { return b.island === name; });
+      return rows.length ? '<tr class="ws-island"><th colspan="' + cols + '" scope="colgroup">' + H.esc(name) +
+        "</th></tr>" + rows.map(rowHtml).join("") : "";
+    }).join("");
+  };
+
   global.HES = H;
 })(window);
 
@@ -1446,4 +1462,4 @@ aria-current="true">FEWS</a>
 </script>
 </body>
 </html>
-<!-- heslab-content: 1845a470cac89897 -->
+<!-- heslab-content: 1e977e0ab46df2cc -->
