@@ -1,7 +1,7 @@
 {
   "targets": {
     "shell": {
-      "last_build_wib": "2026-11-03T17:45:26+07:00",
+      "last_build_wib": "2026-11-03T23:45:25+07:00",
       "pages": [
         "home",
         "rainfall-daily",
@@ -21,14 +21,14 @@
       "note": "produk=semua"
     },
     "rainfall-animation": {
-      "last_build_wib": "2026-11-03T22:07:22+07:00",
+      "last_build_wib": "2026-11-03T23:07:11+07:00",
       "pages": [
         "rainfall"
       ],
       "note": "produk=semua"
     },
     "rainfall-daily": {
-      "last_build_wib": "2026-11-03T17:45:36+07:00",
+      "last_build_wib": "2026-11-03T23:45:35+07:00",
       "pages": [
         "rainfall-daily-now",
         "rainfall-daily-nrt",
@@ -52,7 +52,7 @@
       "note": "produk=semua"
     },
     "rainfall-forecast": {
-      "last_build_wib": "2026-11-03T22:06:43+07:00",
+      "last_build_wib": "2026-11-03T23:06:40+07:00",
       "pages": [
         "rainfall-forecast"
       ],
@@ -67,7 +67,7 @@
       "note": "produk=semua"
     },
     "fews": {
-      "last_build_wib": "2026-11-03T22:06:57+07:00",
+      "last_build_wib": "2026-11-03T23:06:50+07:00",
       "pages": [
         "fews",
         "fews-ws_ciliwung_cisadane",
@@ -76,7 +76,7 @@
       "note": "produk=semua"
     },
     "streamflow": {
-      "last_build_wib": "2026-11-03T22:07:07+07:00",
+      "last_build_wib": "2026-11-03T23:06:59+07:00",
       "pages": [
         "streamflow",
         "streamflow-ws_ciliwung_cisadane"
