@@ -516,7 +516,7 @@ a.card:hover h3 { color: var(--current-dark); }
   letter-spacing: 0.08em;
   color: var(--muted);
 }
-select, button.btn {
+select, button.btn, a.btn {
   font-family: var(--font-body);
   font-size: var(--step-0);
   padding: var(--sp-2) var(--sp-3);
@@ -528,12 +528,13 @@ select, button.btn {
 }
 select:disabled { color: var(--muted); background: var(--paper); }
 button.btn { cursor: pointer; }
-button.btn:hover { border-color: var(--current); color: var(--current-dark); }
-button.btn--primary {
+a.btn { display: inline-flex; align-items: center; text-decoration: none; }
+button.btn:hover, a.btn:hover { border-color: var(--current); color: var(--current-dark); }
+button.btn--primary, a.btn--primary {
   background: var(--current); border-color: var(--current); color: #fff;
   font-family: var(--font-mono); letter-spacing: 0.03em;
 }
-button.btn--primary:hover { background: var(--current-dark); color: #fff; }
+button.btn--primary:hover, a.btn--primary:hover { background: var(--current-dark); color: #fff; }
 
 .playbar { display: flex; align-items: center; gap: var(--sp-3); flex-wrap: wrap; }
 .playbar input[type="range"] { flex: 1; min-width: 180px; accent-color: var(--current); }
@@ -583,6 +584,9 @@ table.data td {
 }
 table.data td.num, table.data th.num { text-align: right; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
 table.data tbody tr:hover { background: var(--current-soft); }
+/* Judul kelompok pulau di tabel Wilayah sungai /fews/ dan /streamflow/ (pemilik 2026-10-31). */
+tr.ws-island th { text-align: left; background: var(--river-100); color: var(--ink-900); font-weight: 600; padding: .35rem .5rem; }
+tr.ws-none td { color: var(--muted); font-style: italic; }
 td .swatch {
   display: inline-block; width: 10px; height: 10px; border-radius: 2px;
   margin-right: var(--sp-2); border: 1px solid rgba(0,0,0,0.12);
@@ -768,13 +772,14 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
   body { background: #fff; }
 }
 
-</style><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8857637749916805" crossorigin="anonymous"></script><script async src="https://www.googletagmanager.com/gtag/js?id=G-Z0TXGDFW5L"></script>
+</style><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8857637749916805" crossorigin="anonymous"></script><link rel="icon" type="image/png" href="../assets/img/uper-lambang.png"><script async src="https://www.googletagmanager.com/gtag/js?id=G-Z0TXGDFW5L"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-Z0TXGDFW5L');
-</script></head>
+</script>
+</head>
 <body>
 <a class="skip" href="#main">Lewati ke konten</a>
 
@@ -801,10 +806,10 @@ gtag('config', 'G-Z0TXGDFW5L');
          data-status="live"
 aria-current="true">Climate Outlook</a>
       <a href="../fews/index.html"
-         data-status="planned"
+         data-status="live"
 >FEWS</a>
       <a href="../streamflow/index.html"
-         data-status="planned"
+         data-status="live"
 >Streamflow Forecast</a>
       <a href="../drought/index.html"
          data-status="planned"
@@ -1022,7 +1027,7 @@ aria-current="true">Climate Outlook</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 28-10-2026 19:26 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 04-11-2026 10:00 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
@@ -1446,6 +1451,18 @@ aria-current="true">Climate Outlook</a>
     document.addEventListener("webkitfullscreenchange", berubah);
   };
 
+  /* Baris tabel Wilayah sungai per pulau (pemilik 2026-10-31), sama dengan sitemap.island_groups di builder:
+     urut `islands`, semua pulau tampil (yang tanpa WS dengan baris "belum ada WS tersedia"), urutan baris di
+     dalam pulau dipertahankan. */
+  H.islandRows = function (basins, islands, cols, rowHtml) {
+    return islands.map(function (name) {
+      var rows = basins.filter(function (b) { return b.island === name; });
+      return '<tr class="ws-island"><th colspan="' + cols + '" scope="colgroup">' + H.esc(name) + "</th></tr>" +
+        (rows.length ? rows.map(rowHtml).join("") :
+          '<tr class="ws-none"><td colspan="' + cols + '">belum ada WS tersedia</td></tr>');
+    }).join("");
+  };
+
   global.HES = H;
 })(window);
 
@@ -1784,4 +1801,4 @@ aria-current="true">Climate Outlook</a>
 </script>
 </body>
 </html>
-<!-- heslab-content: 3bf28c7829c5728f -->
+<!-- heslab-content: 58dd2c207a28aabf -->
