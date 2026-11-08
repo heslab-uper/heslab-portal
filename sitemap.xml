@@ -73,6 +73,10 @@
     <lastmod>2026-11-08</lastmod>
   </url>
   <url>
+    <loc>https://portal.heslab-uper.com/historis/</loc>
+    <lastmod>2026-11-08</lastmod>
+  </url>
+  <url>
     <loc>https://portal.heslab-uper.com/climate/202610/</loc>
     <lastmod>2026-11-07</lastmod>
   </url>
@@ -82,18 +86,30 @@
   </url>
   <url>
     <loc>https://portal.heslab-uper.com/fews/ciliwung-cisadane/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-08</lastmod>
   </url>
   <url>
     <loc>https://portal.heslab-uper.com/fews/citanduy/</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-08</lastmod>
   </url>
   <url>
     <loc>https://portal.heslab-uper.com/fews/citarum/</loc>
-    <lastmod>2026-11-06</lastmod>
+    <lastmod>2026-11-08</lastmod>
   </url>
   <url>
     <loc>https://portal.heslab-uper.com/streamflow/ciliwung-cisadane/</loc>
+    <lastmod>2026-11-08</lastmod>
+  </url>
+  <url>
+    <loc>https://portal.heslab-uper.com/historis/ciliwung-cisadane/</loc>
+    <lastmod>2026-11-08</lastmod>
+  </url>
+  <url>
+    <loc>https://portal.heslab-uper.com/historis/citanduy/</loc>
+    <lastmod>2026-11-08</lastmod>
+  </url>
+  <url>
+    <loc>https://portal.heslab-uper.com/historis/citarum/</loc>
     <lastmod>2026-11-08</lastmod>
   </url>
 </urlset>
