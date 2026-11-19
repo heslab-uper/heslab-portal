@@ -238,6 +238,32 @@ a:hover { color: var(--current); }
   color: #E6F1F8;
 }
 
+/* Menu lipat di ponsel (pemilik 2026-11-19). Tombol dan tautan lab di akhir
+   menu hanya untuk layar sempit; di layar lebar header tetap seperti semula. */
+.nav-tombol {
+  font: inherit; font-size: 1.25rem; line-height: 1;
+  color: #E6F1F8; background: transparent; cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, .35); border-radius: var(--radius);
+  width: 42px; height: 40px; flex: none;
+}
+.nav-tombol:hover, .nav-tombol:focus-visible { border-color: var(--current); color: #fff; }
+.mainnav a.mainnav__out { display: none; }
+@media (min-width: 761px) {
+  .nav-tombol { display: none; }
+}
+@media (max-width: 760px) {
+  .masthead__top { padding: var(--sp-3) 0; flex-wrap: nowrap; }
+  .brand { min-width: 0; }
+  .brand__logo { height: 34px; }
+  .brand__sub { font-size: 0.66rem; }
+  .nav-lipat .masthead__top a.outlink { display: none; }
+  .nav-lipat .mainnav { display: none; flex-direction: column; gap: 0; }
+  .nav-lipat.terbuka .mainnav { display: flex; }
+  .nav-lipat .mainnav a { padding: var(--sp-3) 0; border-bottom: 1px solid rgba(255, 255, 255, .12); }
+  .nav-lipat .mainnav a[aria-current="true"] { border-bottom-color: var(--current); }
+  .nav-lipat .mainnav a.mainnav__out { display: block; font-family: var(--font-mono); font-size: var(--step--1); }
+}
+
 /* Pita intensitas: motif tanda tangan portal, sekaligus kunci warna modul. */
 .ramp-rule {
   display: flex;
@@ -797,8 +823,10 @@ gtag('config', 'G-Z0TXGDFW5L');
       <a class="outlink" href="https://www.heslab-uper.com" target="_blank" rel="noopener">
         Website Laboratorium ↗
       </a>
+      <button class="nav-tombol" type="button" aria-expanded="false" aria-controls="menu-utama"
+              aria-label="Buka menu" hidden>☰</button>
     </div>
-    <nav class="mainnav" aria-label="Navigasi utama">
+    <nav class="mainnav" id="menu-utama" aria-label="Navigasi utama">
       <a href="../../rainfall/index.html"
          data-status="live"
 aria-current="true">Rainfall Monitoring</a>
@@ -817,6 +845,7 @@ aria-current="true">Rainfall Monitoring</a>
       <a href="../../historis/index.html"
          data-status="live"
 >Historis Debit dan Banjir</a>
+      <a class="mainnav__out" href="https://www.heslab-uper.com" target="_blank" rel="noopener">Website Laboratorium ↗</a>
     </nav>
   </div>
   <div class="ramp-rule" aria-hidden="true">
@@ -1017,11 +1046,27 @@ aria-current="true">Rainfall Monitoring</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 12-11-2026 11:45 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 19-11-2026 19:32 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
 
+<script>
+/* Menu lipat di ponsel (pemilik 2026-11-19). */
+(function () {
+  var head = document.querySelector('.masthead');
+  var tombol = document.querySelector('.nav-tombol');
+  if (!head || !tombol) return;
+  head.classList.add('nav-lipat');
+  tombol.hidden = false;
+  tombol.addEventListener('click', function () {
+    var buka = head.classList.toggle('terbuka');
+    tombol.setAttribute('aria-expanded', buka ? 'true' : 'false');
+    tombol.setAttribute('aria-label', buka ? 'Tutup menu' : 'Buka menu');
+    tombol.textContent = buka ? '✕' : '☰';
+  });
+})();
+</script>
 </body>
 </html>
-<!-- heslab-content: 56017fed0714e5f3 -->
+<!-- heslab-content: d37ceb876ade74bf -->

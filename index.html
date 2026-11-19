@@ -238,6 +238,32 @@ a:hover { color: var(--current); }
   color: #E6F1F8;
 }
 
+/* Menu lipat di ponsel (pemilik 2026-11-19). Tombol dan tautan lab di akhir
+   menu hanya untuk layar sempit; di layar lebar header tetap seperti semula. */
+.nav-tombol {
+  font: inherit; font-size: 1.25rem; line-height: 1;
+  color: #E6F1F8; background: transparent; cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, .35); border-radius: var(--radius);
+  width: 42px; height: 40px; flex: none;
+}
+.nav-tombol:hover, .nav-tombol:focus-visible { border-color: var(--current); color: #fff; }
+.mainnav a.mainnav__out { display: none; }
+@media (min-width: 761px) {
+  .nav-tombol { display: none; }
+}
+@media (max-width: 760px) {
+  .masthead__top { padding: var(--sp-3) 0; flex-wrap: nowrap; }
+  .brand { min-width: 0; }
+  .brand__logo { height: 34px; }
+  .brand__sub { font-size: 0.66rem; }
+  .nav-lipat .masthead__top a.outlink { display: none; }
+  .nav-lipat .mainnav { display: none; flex-direction: column; gap: 0; }
+  .nav-lipat.terbuka .mainnav { display: flex; }
+  .nav-lipat .mainnav a { padding: var(--sp-3) 0; border-bottom: 1px solid rgba(255, 255, 255, .12); }
+  .nav-lipat .mainnav a[aria-current="true"] { border-bottom-color: var(--current); }
+  .nav-lipat .mainnav a.mainnav__out { display: block; font-family: var(--font-mono); font-size: var(--step--1); }
+}
+
 /* Pita intensitas: motif tanda tangan portal, sekaligus kunci warna modul. */
 .ramp-rule {
   display: flex;
@@ -797,8 +823,10 @@ gtag('config', 'G-Z0TXGDFW5L');
       <a class="outlink" href="https://www.heslab-uper.com" target="_blank" rel="noopener">
         Website Laboratorium ↗
       </a>
+      <button class="nav-tombol" type="button" aria-expanded="false" aria-controls="menu-utama"
+              aria-label="Buka menu" hidden>☰</button>
     </div>
-    <nav class="mainnav" aria-label="Navigasi utama">
+    <nav class="mainnav" id="menu-utama" aria-label="Navigasi utama">
       <a href="rainfall/index.html"
          data-status="live"
 >Rainfall Monitoring</a>
@@ -817,6 +845,7 @@ gtag('config', 'G-Z0TXGDFW5L');
       <a href="historis/index.html"
          data-status="live"
 >Historis Debit dan Banjir</a>
+      <a class="mainnav__out" href="https://www.heslab-uper.com" target="_blank" rel="noopener">Website Laboratorium ↗</a>
     </nav>
   </div>
   <div class="ramp-rule" aria-hidden="true">
@@ -864,7 +893,6 @@ gtag('config', 'G-Z0TXGDFW5L');
             </svg>
           </span>
           <span class="dashcard__titles">
-            <span class="dashcard__no">01</span>
             <h3>Rainfall Monitoring</h3>
           </span>
         </div>
@@ -887,7 +915,6 @@ gtag('config', 'G-Z0TXGDFW5L');
             </svg>
           </span>
           <span class="dashcard__titles">
-            <span class="dashcard__no">02</span>
             <h3>Climate Outlook</h3>
           </span>
         </div>
@@ -901,6 +928,8 @@ gtag('config', 'G-Z0TXGDFW5L');
       </a>
       <a class="dashcard" href="fews/index.html"
          style="--dash-accent: var(--river-700)">
+        <img class="dashcard__media" src="assets/img/modul-fews.webp" alt="Peta jaringan sungai satu wilayah sungai; tiap ruas diwarnai tingkat tertinggi model FEWS pada salah satu hari banjir besar: normal, waspada, siaga, awas"
+             width="1200" height="675" loading="lazy" decoding="async">
         <div class="dashcard__head">
           <span class="dashcard__icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -908,7 +937,6 @@ gtag('config', 'G-Z0TXGDFW5L');
             </svg>
           </span>
           <span class="dashcard__titles">
-            <span class="dashcard__no">03</span>
             <h3>FEWS</h3>
           </span>
         </div>
@@ -922,6 +950,8 @@ gtag('config', 'G-Z0TXGDFW5L');
       </a>
       <a class="dashcard" href="streamflow/index.html"
          style="--dash-accent: var(--river-700)">
+        <img class="dashcard__media" src="assets/img/modul-streamflow.webp" alt="Grafik prakiraan debit musiman per dasarian di ruas hilir satu wilayah sungai: rentang P10 sampai P90 ensemble, median, dan debit normal"
+             width="1200" height="675" loading="lazy" decoding="async">
         <div class="dashcard__head">
           <span class="dashcard__icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -929,7 +959,6 @@ gtag('config', 'G-Z0TXGDFW5L');
             </svg>
           </span>
           <span class="dashcard__titles">
-            <span class="dashcard__no">04</span>
             <h3>Streamflow Forecast</h3>
           </span>
         </div>
@@ -943,6 +972,8 @@ gtag('config', 'G-Z0TXGDFW5L');
       </a>
       <a class="dashcard" href="historis/index.html"
          style="--dash-accent: var(--river-700)">
+        <img class="dashcard__media" src="assets/img/modul-historis.webp" alt="Hidrograf debit rerata harian sejak 2015 di ruas hilir satu wilayah sungai, hasil model"
+             width="1200" height="675" loading="lazy" decoding="async">
         <div class="dashcard__head">
           <span class="dashcard__icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -950,7 +981,6 @@ gtag('config', 'G-Z0TXGDFW5L');
             </svg>
           </span>
           <span class="dashcard__titles">
-            <span class="dashcard__no">06</span>
             <h3>Historis Debit dan Banjir</h3>
           </span>
         </div>
@@ -977,7 +1007,6 @@ gtag('config', 'G-Z0TXGDFW5L');
             </svg>
           </span>
           <span class="dashcard__titles">
-            <span class="dashcard__no">05</span>
             <h3>Drought Risk</h3>
           </span>
         </div>
@@ -1093,11 +1122,27 @@ gtag('config', 'G-Z0TXGDFW5L');
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 09-11-2026 05:45 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 19-11-2026 19:32 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
 
+<script>
+/* Menu lipat di ponsel (pemilik 2026-11-19). */
+(function () {
+  var head = document.querySelector('.masthead');
+  var tombol = document.querySelector('.nav-tombol');
+  if (!head || !tombol) return;
+  head.classList.add('nav-lipat');
+  tombol.hidden = false;
+  tombol.addEventListener('click', function () {
+    var buka = head.classList.toggle('terbuka');
+    tombol.setAttribute('aria-expanded', buka ? 'true' : 'false');
+    tombol.setAttribute('aria-label', buka ? 'Tutup menu' : 'Buka menu');
+    tombol.textContent = buka ? '✕' : '☰';
+  });
+})();
+</script>
 </body>
 </html>
-<!-- heslab-content: 45e65c4f3e70b3f2 -->
+<!-- heslab-content: 0f75f0d87d6ece26 -->
