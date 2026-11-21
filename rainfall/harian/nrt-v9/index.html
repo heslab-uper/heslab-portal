@@ -428,6 +428,32 @@ a:hover { color: var(--current); }
 }
 .dashcard:hover .dashcard__go { transform: translateX(3px); }
 
+/* Ponsel (pemilik 2026-11-21): beranda semula ~6 layar. Paragraf pembuka
+   lebih kecil (teks utuh, tidak disembunyikan); kartu bergambar menjadi
+   gambar persegi kecil di samping judul, teks penjelas maksimal 3 baris. */
+@media (max-width: 560px) {
+  .pagehead p.lede { font-size: var(--step-0); }
+  .dashcard:has(> .dashcard__media) {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    column-gap: var(--sp-3);
+    row-gap: var(--sp-3);
+    align-items: center;
+    padding: var(--sp-4);
+  }
+  .dashcard:has(> .dashcard__media) > .dashcard__media {
+    width: 96px; height: 96px; aspect-ratio: 1; margin: 0;
+    border: 1px solid var(--line-soft); border-radius: 4px;
+  }
+  .dashcard:has(> .dashcard__media) .dashcard__icon { display: none; }
+  .dashcard:has(> .dashcard__media) > p,
+  .dashcard:has(> .dashcard__media) > .dashcard__foot { grid-column: 1 / -1; }
+  .dashcard:has(> .dashcard__media) > p {
+    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3;
+    line-clamp: 3; overflow: hidden;
+  }
+}
+
 /* Gambar modul aktif (16:9), rata ke tepi atas kartu. Dibuat
    buat_gambar_modul.py; width/height di <img> mencegah loncatan tata letak. */
 .dashcard__media {
@@ -675,6 +701,8 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
   margin-bottom: var(--sp-5);
 }
 .note--warn { border-left-color: var(--alert); background: var(--alert-soft); }
+/* Catatan gangguan sumber di pita data lama (config.DATA_SOURCE_NOTICE) */
+.note__sumber { display: block; margin-top: var(--sp-2); font-weight: 600; }
 .note--wait { border-left-color: var(--muted); background: var(--surface); border: 1px dashed var(--line); border-left: 3px solid var(--muted); }
 .note strong { color: var(--ink-900); }
 
@@ -1063,7 +1091,7 @@ aria-current="true">Rainfall Monitoring</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 19-11-2026 19:32 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 21-11-2026 16:21 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
@@ -1843,4 +1871,4 @@ aria-current="true">Rainfall Monitoring</a>
 </script>
 </body>
 </html>
-<!-- heslab-content: 7e9674e3dd73bfc8 -->
+<!-- heslab-content: 4853c8ebd6ae8277 -->
