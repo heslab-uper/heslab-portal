@@ -428,6 +428,41 @@ a:hover { color: var(--current); }
 }
 .dashcard:hover .dashcard__go { transform: translateX(3px); }
 
+/* Kondisi terkini di beranda (pemilik 2026-11-22, C1; home.html.j2, home_kondisi.js).
+   Tiga kotak sejajar; bertumpuk di layar sempit. Kotak data lama: garis kiri amber
+   seperti pita data lama (.note--warn). */
+.kondisi { margin: 0 0 var(--sp-5); }
+.kondisi > .eyebrow { margin: 0 0 var(--sp-3); }
+.kondisi__grid { display: grid; gap: var(--sp-3); grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+a.kondisi__item {
+  display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: var(--ink-900);
+  background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--current);
+  border-radius: var(--radius); padding: var(--sp-3) var(--sp-4);
+}
+a.kondisi__item:hover { border-color: var(--current); }
+a.kondisi__item:focus-visible { outline: 2px solid var(--current); outline-offset: 2px; }
+.kondisi__label {
+  font-family: var(--font-mono); font-size: 0.6875rem; text-transform: uppercase;
+  letter-spacing: 0.07em; color: var(--muted);
+}
+.kondisi__value { font-family: var(--font-display); font-size: var(--step-2); font-weight: 600; line-height: 1.15; }
+.kondisi__value small { font-size: var(--step-0); font-weight: 500; color: var(--ink-500); }
+.kondisi__text { font-size: var(--step--1); color: var(--ink-700); }
+.kondisi__time, .kondisi__fine { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
+.kondisi__stale { font-size: var(--step--1); font-weight: 600; color: var(--alert); }
+.kondisi__stale[hidden], .kondisi__notice[hidden] { display: none; }
+a.kondisi__item.is-stale { border-left-color: var(--alert); }
+a.kondisi__item.is-stale .kondisi__value { color: var(--muted) !important; }
+.kondisi__notice {
+  margin: var(--sp-3) 0 0; padding: var(--sp-2) var(--sp-3); font-size: var(--step--1);
+  border-left: 3px solid var(--alert); background: var(--alert-soft);
+}
+@media (max-width: 560px) {               /* ponsel: isi sama, jarak lebih rapat */
+  .kondisi__grid { gap: var(--sp-2); }
+  a.kondisi__item { gap: 2px; padding: var(--sp-2) var(--sp-3); }
+  .kondisi__value { font-size: var(--step-1); }
+}
+
 /* Ponsel (pemilik 2026-11-21): beranda semula ~6 layar. Paragraf pembuka
    lebih kecil (teks utuh, tidak disembunyikan); kartu bergambar menjadi
    gambar persegi kecil di samping judul, teks penjelas maksimal 3 baris. */
@@ -579,6 +614,29 @@ select, button.btn, a.btn {
   min-height: 38px;
 }
 select:disabled { color: var(--muted); background: var(--paper); }
+/* Cari kabupaten/kota di laporan harian (pemilik 2026-11-22, B1; map_daily.js) */
+input[type="search"] {
+  font-family: var(--font-body); font-size: var(--step-0);
+  padding: var(--sp-2) var(--sp-3); min-height: 38px;
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--surface); color: var(--ink-900);
+}
+input[type="search"]:disabled { color: var(--muted); background: var(--paper); }
+input[type="search"]:focus-visible { outline: 2px solid var(--current); outline-offset: 1px; }
+.field--cari { flex: 1 1 16rem; min-width: 0; }
+.field--cari input { width: 100%; }
+.cari-info {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2);
+  font-size: var(--step--1); color: var(--ink-700); margin: 0 0 var(--sp-4);
+}
+.cari-info[hidden] { display: none; }
+button.cari-pilih {
+  font-family: var(--font-body); font-size: var(--step--1); cursor: pointer;
+  padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px;
+  background: var(--surface); color: var(--ink-900);
+}
+button.cari-pilih:hover, button.cari-pilih:focus-visible { border-color: var(--current); color: var(--current-dark); }
+.detail__rank { font-size: var(--step--1); color: var(--ink-700); margin: .25rem 0 0; }
 button.btn { cursor: pointer; }
 a.btn { display: inline-flex; align-items: center; text-decoration: none; }
 button.btn:hover, a.btn:hover { border-color: var(--current); color: var(--current-dark); }
@@ -650,6 +708,22 @@ button.linkbtn {
   background: none; border: 0; padding: 0; cursor: pointer;
 }
 button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
+/* Ponsel (pemilik 2026-11-22, A4): tabel peringkat (# | Kabupaten/Kota | ...)
+   lebih lebar dari layar; kolom # dan nama tetap terlihat saat tabel digeser.
+   Latar sel tetap = latar panel agar kolom lain tidak tembus di bawahnya. */
+@media (max-width: 560px) {
+  table.peringkat th:nth-child(-n+2),
+  table.peringkat td:nth-child(-n+2) { position: sticky; background: var(--surface); z-index: 1; }
+  table.peringkat th:nth-child(1), table.peringkat td:nth-child(1) {
+    left: 0; width: 2.25rem; min-width: 2.25rem;
+    padding-left: var(--sp-2); padding-right: var(--sp-2);
+  }
+  table.peringkat th:nth-child(2), table.peringkat td:nth-child(2) {
+    left: 2.25rem; max-width: 9.5rem; white-space: normal;
+    box-shadow: 1px 0 0 var(--line);      /* garis pemisah kolom tetap */
+  }
+  table.peringkat tbody tr:hover td:nth-child(-n+2) { background: var(--current-soft); }
+}
 
 /* --------------------------------------------------------- panel detail -- */
 
@@ -958,8 +1032,15 @@ aria-current="true">Rainfall Monitoring</a>
           <label for="daily-date">Tanggal</label>
           <select id="daily-date" disabled></select>
         </div>
+        <div class="field field--cari">
+          <label for="daily-cari">Cari kabupaten/kota</label>
+          <input id="daily-cari" type="search" list="daily-cari-list" placeholder="mis. Bekasi"
+                 autocomplete="off" enterkeyhint="search" disabled>
+          <datalist id="daily-cari-list"></datalist>
+        </div>
       </div>
     </div>
+    <div class="cari-info" id="daily-cari-info" aria-live="polite" hidden></div>
 
     <div class="split">
       <div>
@@ -986,7 +1067,7 @@ aria-current="true">Rainfall Monitoring</a>
   <section class="panel" aria-labelledby="tab-h">
     <h2 id="tab-h">Peringkat hujan tertinggi</h2>
     <div class="tablewrap">
-      <table class="data">
+      <table class="data peringkat">
         <caption id="daily-caption"></caption>
         <thead>
           <tr>
@@ -1001,7 +1082,8 @@ aria-current="true">Rainfall Monitoring</a>
       </table>
     </div>
     <p style="font-size:.8125rem;color:var(--muted);margin-top:1rem;margin-bottom:0">
-      Klik salah satu baris untuk menyorot rinciannya pada panel di atas.
+      Klik salah satu baris untuk menyorot rinciannya pada panel di atas. Wilayah
+      di luar daftar ini dapat dicari lewat kotak <em>Cari kabupaten/kota</em>.
       Peringkat disusun dari rata-rata areal; wilayah kecil cenderung menempati
       posisi atas karena rata-ratanya kurang teredam.
     </p>
@@ -1100,7 +1182,7 @@ aria-current="true">Rainfall Monitoring</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 21-11-2026 16:29 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 22-11-2026 11:27 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
@@ -1622,6 +1704,7 @@ aria-current="true">Rainfall Monitoring</a>
     if (!P.meta[id]) return;
     var d = P.dates[current];
     shownId = id;
+    highlight(id);
     renderDetail(id, maxesLoaded[d] || null);
     if (maxesLoaded[d]) return;
     ensureMaxes(d).then(function (mx) {
@@ -1677,13 +1760,23 @@ aria-current="true">Rainfall Monitoring</a>
              "<td>" + (adaM && mt ? mt + " WIB" : "\u2013") + "</td></tr>";
     }).join("");
 
+    // Peringkat hujan harian wilayah ini di antara wilayah ber-data pada tanggal
+    // terpilih (pemilik 2026-11-22, B1): wilayah yang dicari biasanya di luar
+    // tabel N teratas. Nilai sama = peringkat sama.
+    var semua = r24(current).filter(function (x) {
+      return x !== null && x !== undefined && !isNaN(x);
+    });
+    var peringkat = ada ? 1 + semua.filter(function (x) { return x > v; }).length : 0;
+
     detail.innerHTML =
       '<p class="detail__title">' + HES.esc(m.n) + "</p>" +
       '<p class="detail__prov">' + HES.esc(m.p) + " · " + HES.esc(id) + "</p>" +
       (ada
         ? '<div><span class="detail__big" style="color:' + cls.color + '">' +
             HES.num(v) + '</span><span class="detail__unit">' + P.unit + "</span></div>" +
-          '<p class="detail__prov" style="margin-top:.25rem">' + cls.label + "</p>"
+          '<p class="detail__prov" style="margin-top:.25rem">' + cls.label + "</p>" +
+          '<p class="detail__rank">Peringkat ke-' + peringkat + " dari " + semua.length +
+            " wilayah ber-data pada " + HES.esc(P.date_labels[current]) + "</p>"
         : '<div><span class="detail__big" style="color:' + P.nodata.color + '">–</span></div>' +
           '<p class="detail__prov" style="margin-top:.25rem"><b>' + P.nodata.label +
           "</b><br>" + P.nodata.note + "</p>") +
@@ -1699,8 +1792,154 @@ aria-current="true">Rainfall Monitoring</a>
 
   function clearDetail() {
     shownId = null;
+    highlight(null);
     detail.innerHTML = '<p class="detail__empty">Klik salah satu kabupaten/kota ' +
-      'pada peta untuk melihat rincian curah hujannya.</p>';
+      'pada peta, atau cari namanya di kotak <b>Cari kabupaten/kota</b>, untuk ' +
+      'melihat rincian curah hujannya.</p>';
+  }
+
+  /* --- sorot wilayah di peta (B1) ----------------------------------------- */
+
+  // Trace ke-3 (indeks 2) berisi satu poligon tanpa isian dengan garis tepi
+  // tebal; dibuat di newPlot. bboxes: id -> [barat, selatan, timur, utara].
+  var HIGHLIGHT_TRACE = 2;
+  var bboxes = {};
+
+  function highlight(id) {
+    if (!ready) return;
+    Plotly.restyle(plotEl, { locations: [id ? [id] : []], z: [id ? [0] : []] }, [HIGHLIGHT_TRACE]);
+  }
+
+  /* Perbesar peta ke wilayah id: zoom agar kotak batasnya pas di peta,
+     dengan ruang di sekeliling dan batas atas agar kota kecil tidak tampil
+     terlalu dekat (dinilai di pratinjau 2026-11-22). */
+  function zoomTo(id) {
+    var b = bboxes[id];
+    if (!ready || !b) return;
+    var z = HES.zoomMinimum(plotEl, { west: b[0], south: b[1], east: b[2], north: b[3] });
+    // Zoom DULU, baru pusat. Peta dikunci ke batas Indonesia (mapbox.bounds):
+    // bila pusat dipindah saat zoom masih rendah, seluruh Indonesia memenuhi
+    // layar dan pusat dikembalikan ke tengah (terlihat di pratinjau 2026-11-22:
+    // cari pertama setelah halaman dimuat jatuh di Selat Makassar).
+    Plotly.relayout(plotEl, {
+      "mapbox.zoom": Math.min(8.5, z - 0.8)    // -0.8: wilayah tetangga ikut terlihat
+    }).then(function () {
+      return Plotly.relayout(plotEl, {
+        "mapbox.center": { lon: (b[0] + b[2]) / 2, lat: (b[1] + b[3]) / 2 }
+      });
+    });
+  }
+
+  function featureBBox(geom) {
+    var b = [Infinity, Infinity, -Infinity, -Infinity];
+    (function walk(c) {
+      if (typeof c[0] === "number") {
+        if (c[0] < b[0]) b[0] = c[0];
+        if (c[1] < b[1]) b[1] = c[1];
+        if (c[0] > b[2]) b[2] = c[0];
+        if (c[1] > b[3]) b[3] = c[1];
+        return;
+      }
+      c.forEach(walk);
+    })(geom.coordinates);
+    return b;
+  }
+
+  /* --- cari kabupaten/kota (B1) ------------------------------------------ */
+
+  var cariEl = document.getElementById("daily-cari");
+  var cariList = document.getElementById("daily-cari-list");
+  var cariInfo = document.getElementById("daily-cari-info");
+
+  // "Kabupaten Bekasi", "Kab. Bekasi", "Kota Adm. Jakarta Barat" -> kata intinya
+  function normal(s) {
+    return String(s || "").toLowerCase()
+      .replace(/^(kabupaten|kab\.?|kota adm\.?|kota administrasi)\s+/, "")
+      .replace(/\s+/g, " ").trim();
+  }
+
+  // Label saran "Nama — Provinsi"; nama + provinsi yang kembar diberi kodenya.
+  var labelOf = {}, idOfLabel = {};
+  P.ids.forEach(function (id) {
+    var m = P.meta[id] || {};
+    var lbl = (m.n || id) + " — " + (m.p || "");
+    if (idOfLabel[lbl]) lbl += " (" + id + ")";
+    labelOf[id] = lbl;
+    idOfLabel[lbl] = id;
+  });
+
+  function cocok(q) {
+    var n = normal(q);
+    if (!n) return [];
+    return P.ids.filter(function (id) {
+      var m = P.meta[id] || {};
+      return normal(m.n).indexOf(n) >= 0 || String(m.n || "").toLowerCase().indexOf(n) >= 0;
+    });
+  }
+
+  function tampilInfo(html) {
+    cariInfo.innerHTML = html;
+    cariInfo.hidden = !html;
+  }
+
+  function pilih(id) {
+    tampilInfo("");
+    cariEl.value = labelOf[id];
+    showDetail(id);
+    zoomTo(id);
+    // Di ponsel panel rincian ada di bawah peta: gulir agar terlihat, mulai
+    // dari label "Rincian wilayah" di atasnya.
+    if (detail.getBoundingClientRect().top > window.innerHeight) {
+      (detail.previousElementSibling || detail).scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
+  /* Dipanggil saat saran dipilih (change) atau Enter. Label persis -> langsung;
+     satu yang cocok -> langsung; nama inti sama persis -> itu; selebihnya
+     daftar tombol pilihan (paling banyak 8). */
+  function cari() {
+    var q = cariEl.value.trim();
+    if (!q) { tampilInfo(""); return; }
+    if (idOfLabel[q]) { pilih(idOfLabel[q]); return; }
+    var ids = cocok(q);
+    if (ids.length === 1) { pilih(ids[0]); return; }
+    var persis = ids.filter(function (id) { return normal(P.meta[id].n) === normal(q); });
+    if (persis.length === 1 && ids.length <= 3) {
+      pilih(persis[0]);
+      if (ids.length > 1) {
+        tampilInfo("Juga cocok: " + ids.filter(function (id) { return id !== persis[0]; })
+          .map(tombolPilih).join(" "));
+      }
+      return;
+    }
+    if (!ids.length) {
+      tampilInfo("Tidak ada kabupaten/kota bernama “" + HES.esc(q) + "”.");
+      return;
+    }
+    tampilInfo(ids.length + " wilayah cocok" + (ids.length > 8 ? " (8 pertama)" : "") + ": " +
+               ids.slice(0, 8).map(tombolPilih).join(" "));
+  }
+
+  function tombolPilih(id) {
+    return '<button type="button" class="cari-pilih" data-id="' + HES.esc(id) + '">' +
+           HES.esc(labelOf[id]) + "</button>";
+  }
+
+  if (cariEl) {
+    cariList.innerHTML = P.ids.slice().sort(function (a, b) {
+      return labelOf[a].localeCompare(labelOf[b], "id");
+    }).map(function (id) {
+      return '<option value="' + HES.esc(labelOf[id]) + '"></option>';
+    }).join("");
+    cariEl.disabled = false;
+    cariEl.addEventListener("change", cari);
+    cariEl.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") { e.preventDefault(); cari(); }
+    });
+    cariInfo.addEventListener("click", function (e) {
+      var b = e.target.closest("button[data-id]");
+      if (b) pilih(b.getAttribute("data-id"));
+    });
   }
 
   /* --- tabel peringkat --------------------------------------------------- */
@@ -1779,7 +2018,9 @@ aria-current="true">Rainfall Monitoring</a>
 
   function setDate(i) {
     current = i;
-    clearDetail();
+    // Wilayah terpilih (mis. hasil cari) tetap ditampilkan untuk tanggal baru
+    // (pemilik 2026-11-22, B1); sebelumnya panel dikosongkan.
+    if (shownId) showDetail(shownId); else clearDetail();
     refresh();
   }
 
@@ -1836,12 +2077,26 @@ aria-current="true">Rainfall Monitoring</a>
     var nd = HES.nodataTrace(geo, P.featureidkey,
                              HES.missingIds(P.ids, vals), P.nodata);
 
+    // Sorotan wilayah terpilih (B1): isian transparan, garis tepi tebal.
+    var key = P.featureidkey.replace(/^properties\./, "");
+    geo.features.forEach(function (f) {
+      var fid = f.properties && f.properties[key];
+      if (fid !== undefined && f.geometry) bboxes[fid] = featureBBox(f.geometry);
+    });
+    var sorot = {
+      type: "choroplethmapbox", geojson: geo, featureidkey: P.featureidkey,
+      locations: [], z: [], zmin: 0, zmax: 1, showscale: false, hoverinfo: "skip",
+      colorscale: [[0, "rgba(0,0,0,0)"], [1, "rgba(0,0,0,0)"]],
+      marker: { line: { width: 3, color: "#231F20" } }
+    };
+
     // Tampilan awal memuat seluruh Indonesia pada lebar layar berapa pun, dan
     // zoom-out dikunci pada batas itu (lihat HES.fitBounds).
     var B = HES.fitBounds(plotEl, P.bounds);
-    Plotly.newPlot(plotEl, [trace, nd], HES.mapLayout(P.map, B),
+    Plotly.newPlot(plotEl, [trace, nd, sorot], HES.mapLayout(P.map, B),
                    HES.plotConfig("heslab_hujan_harian")).then(function () {
       ready = true;
+      if (shownId) highlight(shownId);     // dipilih (tabel/cari) sebelum peta siap
       var kunci = HES.kunciZoomKeBatas(plotEl, B);
       Plotly.relayout(plotEl, {
         "mapbox.zoom": kunci.awal,
@@ -1880,4 +2135,4 @@ aria-current="true">Rainfall Monitoring</a>
 </script>
 </body>
 </html>
-<!-- heslab-content: cff8aafc83bb8143 -->
+<!-- heslab-content: 5a551ca3a63150d8 -->
