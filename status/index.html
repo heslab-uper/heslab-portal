@@ -973,10 +973,10 @@ gtag('config', 'G-Z0TXGDFW5L');
          data-status="live"
 >Climate Outlook</a>
       <a href="../fews/index.html"
-         data-status="live"
+         data-status="planned"
 >FEWS</a>
       <a href="../streamflow/index.html"
-         data-status="live"
+         data-status="planned"
 >Streamflow Forecast</a>
       <a href="../drought/index.html"
          data-status="planned"
@@ -1017,7 +1017,6 @@ gtag('config', 'G-Z0TXGDFW5L');
       Data dianggap terlambat bila umurnya melewati batas yang wajar untuk produknya.</p>
   </section>
 
-  <div class="note note--warn" role="status"><p><strong>Gangguan sumber data.</strong> Data terbaru belum tersedia karena sumber aslinya, GSMaP dari JAXA, tidak dapat diakses sejak 20 November 2026 pagi. Halaman ini akan diperbarui otomatis setelah sumber data kembali tersedia.</p></div>
 
   <section class="panel" aria-labelledby="status-h">
     <h2 id="status-h">Hujan dan iklim</h2>
@@ -1118,18 +1117,8 @@ gtag('config', 'G-Z0TXGDFW5L');
       itu kajian satu run.</p>
   </section>
 
-  <section class="panel" aria-labelledby="fews-h">
-    <h2 id="fews-h"><a href="../fews/index.html">FEWS</a> per wilayah sungai</h2>
-    <div class="tablewrap">
-      <table class="data status-tabel" id="status-fews">
-        <thead><tr><th>Wilayah sungai</th><th>Awal prediksi</th><th class="num">Umur</th>
-          <th class="num">Batas</th><th>Status</th></tr></thead>
-        <tbody><tr><td colspan="5">Memuat…</td></tr></tbody>
-      </table>
-    </div>
-  </section>
 
-  <script type="application/json" id="status-payload">{"rows":[{"key":"rainfall","src":"https://data.heslab-uper.com/portal/assets/data/status/rainfall.json"},{"key":"rainfall-daily-now","src":"https://data.heslab-uper.com/portal/assets/data/status/rainfall-daily-now.json"},{"key":"rainfall-daily-nrt","src":"https://data.heslab-uper.com/portal/assets/data/status/rainfall-daily-nrt.json"},{"key":"rainfall-daily-nrt-v9","src":"https://data.heslab-uper.com/portal/assets/data/status/rainfall-daily-nrt-v9.json"},{"key":"rainfall-daily-standard","src":"https://data.heslab-uper.com/portal/assets/data/status/rainfall-daily-standard.json"},{"key":"rainfall-daily-standard-v9","src":"https://data.heslab-uper.com/portal/assets/data/status/rainfall-daily-standard-v9.json"},{"key":"rainfall-dasarian-nrt","src":"https://data.heslab-uper.com/portal/assets/data/status/rainfall-dasarian-nrt.json"},{"key":"rainfall-dasarian-nrt-v9","src":"https://data.heslab-uper.com/portal/assets/data/status/rainfall-dasarian-nrt-v9.json"},{"key":"rainfall-dasarian-standard","src":"https://data.heslab-uper.com/portal/assets/data/status/rainfall-dasarian-standard.json"},{"key":"rainfall-dasarian-standard-v9","src":"https://data.heslab-uper.com/portal/assets/data/status/rainfall-dasarian-standard-v9.json"},{"key":"rainfall-forecast","src":"https://data.heslab-uper.com/portal/assets/data/status/rainfall-forecast.json"},{"key":"climate","src":"https://data.heslab-uper.com/portal/assets/data/status/climate.json"}],"fews":{"url":"fews/","max_age_hours":3,"index_url":"https://data.heslab-uper.com/portal/assets/fews/index.json"}}</script>
+  <script type="application/json" id="status-payload">{"rows":[{"key":"rainfall","src":"../assets/data/status/rainfall.json"},{"key":"rainfall-daily-now","src":"../assets/data/status/rainfall-daily-now.json"},{"key":"rainfall-daily-nrt","src":"../assets/data/status/rainfall-daily-nrt.json"},{"key":"rainfall-daily-nrt-v9","src":"../assets/data/status/rainfall-daily-nrt-v9.json"},{"key":"rainfall-daily-standard","src":"../assets/data/status/rainfall-daily-standard.json"},{"key":"rainfall-daily-standard-v9","src":"../assets/data/status/rainfall-daily-standard-v9.json"},{"key":"rainfall-dasarian-nrt","src":"../assets/data/status/rainfall-dasarian-nrt.json"},{"key":"rainfall-dasarian-nrt-v9","src":"../assets/data/status/rainfall-dasarian-nrt-v9.json"},{"key":"rainfall-dasarian-standard","src":"../assets/data/status/rainfall-dasarian-standard.json"},{"key":"rainfall-dasarian-standard-v9","src":"../assets/data/status/rainfall-dasarian-standard-v9.json"},{"key":"rainfall-forecast","src":"../assets/data/status/rainfall-forecast.json"},{"key":"climate","src":"../assets/data/status/climate.json"}],"fews":null}</script>
 </div>
 <script>/* Halaman Status data (pemilik 2026-11-22, E3).
    Markup: templates/status.html.j2; daftar: heslab/builders/shell.build_status.
@@ -1264,7 +1253,7 @@ gtag('config', 'G-Z0TXGDFW5L');
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 22-11-2026 17:40 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 22-11-2026 17:45 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
@@ -1287,4 +1276,4 @@ gtag('config', 'G-Z0TXGDFW5L');
 </script>
 </body>
 </html>
-<!-- heslab-content: 2b63c5a3377f1a69 -->
+<!-- heslab-content: c1c7faf35f93f5cd -->
