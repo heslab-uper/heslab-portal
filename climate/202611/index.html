@@ -238,6 +238,32 @@ a:hover { color: var(--current); }
   color: #E6F1F8;
 }
 
+/* Menu lipat di ponsel (pemilik 2026-11-19). Tombol dan tautan lab di akhir
+   menu hanya untuk layar sempit; di layar lebar header tetap seperti semula. */
+.nav-tombol {
+  font: inherit; font-size: 1.25rem; line-height: 1;
+  color: #E6F1F8; background: transparent; cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, .35); border-radius: var(--radius);
+  width: 42px; height: 40px; flex: none;
+}
+.nav-tombol:hover, .nav-tombol:focus-visible { border-color: var(--current); color: #fff; }
+.mainnav a.mainnav__out { display: none; }
+@media (min-width: 761px) {
+  .nav-tombol { display: none; }
+}
+@media (max-width: 760px) {
+  .masthead__top { padding: var(--sp-3) 0; flex-wrap: nowrap; }
+  .brand { min-width: 0; }
+  .brand__logo { height: 34px; }
+  .brand__sub { font-size: 0.66rem; }
+  .nav-lipat .masthead__top a.outlink { display: none; }
+  .nav-lipat .mainnav { display: none; flex-direction: column; gap: 0; }
+  .nav-lipat.terbuka .mainnav { display: flex; }
+  .nav-lipat .mainnav a { padding: var(--sp-3) 0; border-bottom: 1px solid rgba(255, 255, 255, .12); }
+  .nav-lipat .mainnav a[aria-current="true"] { border-bottom-color: var(--current); }
+  .nav-lipat .mainnav a.mainnav__out { display: block; font-family: var(--font-mono); font-size: var(--step--1); }
+}
+
 /* Pita intensitas: motif tanda tangan portal, sekaligus kunci warna modul. */
 .ramp-rule {
   display: flex;
@@ -402,6 +428,67 @@ a:hover { color: var(--current); }
 }
 .dashcard:hover .dashcard__go { transform: translateX(3px); }
 
+/* Kondisi terkini di beranda (pemilik 2026-11-22, C1; home.html.j2, home_kondisi.js).
+   Tiga kotak sejajar; bertumpuk di layar sempit. Kotak data lama: garis kiri amber
+   seperti pita data lama (.note--warn). */
+.kondisi { margin: 0 0 var(--sp-5); }
+.kondisi > .eyebrow { margin: 0 0 var(--sp-3); }
+.kondisi__grid { display: grid; gap: var(--sp-3); grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+a.kondisi__item {
+  display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: var(--ink-900);
+  background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--current);
+  border-radius: var(--radius); padding: var(--sp-3) var(--sp-4);
+}
+a.kondisi__item:hover { border-color: var(--current); }
+a.kondisi__item:focus-visible { outline: 2px solid var(--current); outline-offset: 2px; }
+.kondisi__label {
+  font-family: var(--font-mono); font-size: 0.6875rem; text-transform: uppercase;
+  letter-spacing: 0.07em; color: var(--muted);
+}
+.kondisi__value { font-family: var(--font-display); font-size: var(--step-2); font-weight: 600; line-height: 1.15; }
+.kondisi__value small { font-size: var(--step-0); font-weight: 500; color: var(--ink-500); }
+.kondisi__text { font-size: var(--step--1); color: var(--ink-700); }
+.kondisi__time, .kondisi__fine { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
+.kondisi__stale { font-size: var(--step--1); font-weight: 600; color: var(--alert); }
+.kondisi__stale[hidden], .kondisi__notice[hidden] { display: none; }
+a.kondisi__item.is-stale { border-left-color: var(--alert); }
+a.kondisi__item.is-stale .kondisi__value { color: var(--muted) !important; }
+.kondisi__notice {
+  margin: var(--sp-3) 0 0; padding: var(--sp-2) var(--sp-3); font-size: var(--step--1);
+  border-left: 3px solid var(--alert); background: var(--alert-soft);
+}
+@media (max-width: 560px) {               /* ponsel: isi sama, jarak lebih rapat */
+  .kondisi__grid { gap: var(--sp-2); }
+  a.kondisi__item { gap: 2px; padding: var(--sp-2) var(--sp-3); }
+  .kondisi__value { font-size: var(--step-1); }
+}
+
+/* Ponsel (pemilik 2026-11-21): beranda semula ~6 layar. Paragraf pembuka
+   lebih kecil (teks utuh, tidak disembunyikan); kartu bergambar menjadi
+   gambar persegi kecil di samping judul, teks penjelas maksimal 3 baris. */
+@media (max-width: 560px) {
+  .pagehead p.lede { font-size: var(--step-0); }
+  .dashcard:has(> .dashcard__media) {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    column-gap: var(--sp-3);
+    row-gap: var(--sp-3);
+    align-items: center;
+    padding: var(--sp-4);
+  }
+  .dashcard:has(> .dashcard__media) > .dashcard__media {
+    width: 96px; height: 96px; aspect-ratio: 1; margin: 0;
+    border: 1px solid var(--line-soft); border-radius: 4px;
+  }
+  .dashcard:has(> .dashcard__media) .dashcard__icon { display: none; }
+  .dashcard:has(> .dashcard__media) > p,
+  .dashcard:has(> .dashcard__media) > .dashcard__foot { grid-column: 1 / -1; }
+  .dashcard:has(> .dashcard__media) > p {
+    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3;
+    line-clamp: 3; overflow: hidden;
+  }
+}
+
 /* Gambar modul aktif (16:9), rata ke tepi atas kartu. Dibuat
    buat_gambar_modul.py; width/height di <img> mencegah loncatan tata letak. */
 .dashcard__media {
@@ -527,6 +614,64 @@ select, button.btn, a.btn {
   min-height: 38px;
 }
 select:disabled { color: var(--muted); background: var(--paper); }
+/* Cari kabupaten/kota di laporan harian (pemilik 2026-11-22, B1; map_daily.js) */
+input[type="search"] {
+  font-family: var(--font-body); font-size: var(--step-0);
+  padding: var(--sp-2) var(--sp-3); min-height: 38px;
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--surface); color: var(--ink-900);
+}
+input[type="search"]:disabled { color: var(--muted); background: var(--paper); }
+input[type="search"]:focus-visible { outline: 2px solid var(--current); outline-offset: 1px; }
+.field--cari { flex: 1 1 16rem; min-width: 0; }
+.field--cari input { width: 100%; }
+.cari-info {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2);
+  font-size: var(--step--1); color: var(--ink-700); margin: 0 0 var(--sp-4);
+}
+.cari-info[hidden] { display: none; }
+button.cari-pilih {
+  font-family: var(--font-body); font-size: var(--step--1); cursor: pointer;
+  padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px;
+  background: var(--surface); color: var(--ink-900);
+}
+button.cari-pilih:hover, button.cari-pilih:focus-visible { border-color: var(--current); color: var(--current-dark); }
+.detail__rank { font-size: var(--step--1); color: var(--ink-700); margin: .25rem 0 0; }
+/* E3 Status data (pemilik 2026-11-22; templates/status.html.j2, js/status.js) */
+.status-tanda { display: inline-block; padding: .05rem .5rem; border-radius: 999px; font-size: var(--step--1);
+  background: var(--line-soft); color: var(--ink-700); white-space: nowrap; }
+.status-tanda--ok { background: var(--river-100); color: var(--river-800); }
+.status-tanda--lama { background: var(--alert-soft); color: var(--alert); font-weight: 600; }
+table.status-tabel tr.is-stale td { background: var(--alert-soft); }
+.status-catatan { font-size: var(--step--1); color: var(--ink-500); margin: var(--sp-2) 0 0; }
+/* Ponsel: satu kartu per baris (nama; data sampai + umur; tanda di kanan), tanpa kolom Batas,
+   agar kolom Status tidak terdorong ke luar layar. */
+@media (max-width: 600px) {
+  table.status-tabel thead { display: none; }
+  table.status-tabel, table.status-tabel tbody { display: block; }
+  table.status-tabel tr { display: grid; grid-template-columns: 1fr auto; column-gap: var(--sp-3);
+    padding: var(--sp-2) var(--sp-2); border-bottom: 1px solid var(--line-soft); }
+  table.status-tabel tr.is-stale { background: var(--alert-soft); }
+  .panel table.status-tabel td { display: block; border: 0; padding: 0; background: none; text-align: left; }
+  .panel table.status-tabel td:first-child { grid-column: 1 / -1; font-weight: 600; margin-bottom: .15rem; }
+  .panel table.status-tabel td[data-k="label"] { grid-column: 1; font-size: var(--step--1); }
+  .panel table.status-tabel td.num[data-k="age"] { grid-column: 1; font-size: var(--step--1); color: var(--ink-500);
+    text-align: left; font-family: inherit; }
+  .panel table.status-tabel td[data-k="age"]::before { content: "umur "; }
+  .panel table.status-tabel td:nth-child(4) { display: none; }
+  .panel table.status-tabel td[data-k="state"] { grid-column: 2; grid-row: 2 / span 2; align-self: center; }
+}
+/* E2 Produk lain pada tanggal ini (pemilik 2026-11-22; map_daily.js compareHtml) */
+table.banding tr.is-current td { background: var(--river-100); }
+.banding__ini, .banding__belum { font-size: var(--step--1); color: var(--ink-500); }
+.banding__catatan { font-size: var(--step--1); color: var(--ink-500); margin: var(--sp-2) 0 0; }
+/* F1 tautan artikel penjelasan di situs utama (config.GUIDE_ARTICLES, pemilik 2026-11-22) */
+.cara-membaca { font-size: var(--step--1); color: var(--ink-500); margin: 0 0 var(--sp-3); }
+/* D1 salin tautan wilayah, D2 unduh CSV (pemilik 2026-11-22; map_daily.js) */
+.detail__tautan { margin: var(--sp-3) 0 0; }
+.unduh { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2) var(--sp-3); margin: var(--sp-4) 0 0; }
+.unduh[hidden] { display: none; }
+.unduh__ket { font-size: .8125rem; color: var(--muted); flex: 1 1 16rem; }
 button.btn { cursor: pointer; }
 a.btn { display: inline-flex; align-items: center; text-decoration: none; }
 button.btn:hover, a.btn:hover { border-color: var(--current); color: var(--current-dark); }
@@ -598,6 +743,22 @@ button.linkbtn {
   background: none; border: 0; padding: 0; cursor: pointer;
 }
 button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
+/* Ponsel (pemilik 2026-11-22, A4): tabel peringkat (# | Kabupaten/Kota | ...)
+   lebih lebar dari layar; kolom # dan nama tetap terlihat saat tabel digeser.
+   Latar sel tetap = latar panel agar kolom lain tidak tembus di bawahnya. */
+@media (max-width: 560px) {
+  table.peringkat th:nth-child(-n+2),
+  table.peringkat td:nth-child(-n+2) { position: sticky; background: var(--surface); z-index: 1; }
+  table.peringkat th:nth-child(1), table.peringkat td:nth-child(1) {
+    left: 0; width: 2.25rem; min-width: 2.25rem;
+    padding-left: var(--sp-2); padding-right: var(--sp-2);
+  }
+  table.peringkat th:nth-child(2), table.peringkat td:nth-child(2) {
+    left: 2.25rem; max-width: 9.5rem; white-space: normal;
+    box-shadow: 1px 0 0 var(--line);      /* garis pemisah kolom tetap */
+  }
+  table.peringkat tbody tr:hover td:nth-child(-n+2) { background: var(--current-soft); }
+}
 
 /* --------------------------------------------------------- panel detail -- */
 
@@ -649,6 +810,8 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
   margin-bottom: var(--sp-5);
 }
 .note--warn { border-left-color: var(--alert); background: var(--alert-soft); }
+/* Catatan gangguan sumber di pita data lama (config.DATA_SOURCE_NOTICE) */
+.note__sumber { display: block; margin-top: var(--sp-2); font-weight: 600; }
 .note--wait { border-left-color: var(--muted); background: var(--surface); border: 1px dashed var(--line); border-left: 3px solid var(--muted); }
 .note strong { color: var(--ink-900); }
 
@@ -772,7 +935,9 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
   body { background: #fff; }
 }
 
-</style><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8857637749916805" crossorigin="anonymous"></script><link rel="icon" type="image/png" href="../../assets/img/uper-lambang.png"><script async src="https://www.googletagmanager.com/gtag/js?id=G-Z0TXGDFW5L"></script>
+</style><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8857637749916805" crossorigin="anonymous"></script><link rel="icon" href="../../favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="../../assets/img/icon-192.png">
+<link rel="apple-touch-icon" href="../../assets/img/apple-touch-icon.png"><script async src="https://www.googletagmanager.com/gtag/js?id=G-Z0TXGDFW5L"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
@@ -797,8 +962,10 @@ gtag('config', 'G-Z0TXGDFW5L');
       <a class="outlink" href="https://www.heslab-uper.com" target="_blank" rel="noopener">
         Website Laboratorium ↗
       </a>
+      <button class="nav-tombol" type="button" aria-expanded="false" aria-controls="menu-utama"
+              aria-label="Buka menu" hidden>☰</button>
     </div>
-    <nav class="mainnav" aria-label="Navigasi utama">
+    <nav class="mainnav" id="menu-utama" aria-label="Navigasi utama">
       <a href="../../rainfall/index.html"
          data-status="live"
 >Rainfall Monitoring</a>
@@ -814,6 +981,10 @@ aria-current="true">Climate Outlook</a>
       <a href="../../drought/index.html"
          data-status="planned"
 >Drought Risk</a>
+      <a href="../../historis/index.html"
+         data-status="live"
+>Historis Debit dan Banjir</a>
+      <a class="mainnav__out" href="https://www.heslab-uper.com" target="_blank" rel="noopener">Website Laboratorium ↗</a>
     </nav>
   </div>
   <div class="ramp-rule" aria-hidden="true">
@@ -921,6 +1092,8 @@ aria-current="true">Climate Outlook</a>
 
   <section class="panel" aria-labelledby="cr-map-h">
     <div class="panel__head"><h2 id="cr-map-h">Peluang hujan bulanan per kabupaten/kota</h2></div>
+    <p class="cara-membaca">Apa arti peluang 70% atau 100%?
+      <a href="https://www.heslab-uper.com/artikel/membaca-prakiraan-musiman-peluang-hujan/" target="_blank" rel="noopener">Cara membaca prakiraan musiman ↗</a></p>
 
     <div class="playbar">
       <button class="btn" id="cr-prev" type="button" aria-label="Bulan sebelumnya">◀</button>
@@ -1042,11 +1215,13 @@ aria-current="true">Climate Outlook</a>
           <li><a href="../../fews/index.html">FEWS</a></li>
           <li><a href="../../streamflow/index.html">Streamflow Forecast</a></li>
           <li><a href="../../drought/index.html">Drought Risk</a></li>
+          <li><a href="../../historis/index.html">Historis Debit dan Banjir</a></li>
         </ul>
       </div>
       <div>
         <h4>Sumber data</h4>
         <ul>
+          <li><a href="../../status/index.html">Status data</a></li>
           <li><a href="https://sharaku.eorc.jaxa.jp/GSMaP/" target="_blank" rel="noopener">JAXA Global Rainfall Watch (GSMaP) ↗</a></li>
           <li>Badan Informasi Geospasial —
             <a href="https://tanahair.indonesia.go.id/portal-web/" target="_blank" rel="noopener">Ina-Geoportal ↗</a>, DEMNAS</li>
@@ -1074,11 +1249,27 @@ aria-current="true">Climate Outlook</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 07-11-2026 09:43 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 22-11-2026 17:51 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
 
+<script>
+/* Menu lipat di ponsel (pemilik 2026-11-19). */
+(function () {
+  var head = document.querySelector('.masthead');
+  var tombol = document.querySelector('.nav-tombol');
+  if (!head || !tombol) return;
+  head.classList.add('nav-lipat');
+  tombol.hidden = false;
+  tombol.addEventListener('click', function () {
+    var buka = head.classList.toggle('terbuka');
+    tombol.setAttribute('aria-expanded', buka ? 'true' : 'false');
+    tombol.setAttribute('aria-label', buka ? 'Tutup menu' : 'Buka menu');
+    tombol.textContent = buka ? '✕' : '☰';
+  });
+})();
+</script>
 <script id="payload" type="application/json">{"kind":"climate-outlook","init_label":"Nov 2026","leads":[{"lead":1,"valid":"2026-11","label":"Nov 2026"},{"lead":2,"valid":"2026-12","label":"Des 2026"},{"lead":3,"valid":"2027-01","label":"Jan 2027"},{"lead":4,"valid":"2027-02","label":"Feb 2027"},{"lead":5,"valid":"2027-03","label":"Mar 2027"},{"lead":6,"valid":"2027-04","label":"Apr 2027"}],"thresholds":{"el_nino":0.5,"la_nina":-0.5,"iod_positive":0.4,"iod_negative":-0.4},"nino34":{"mean":[3.177,3.417,3.433,3.138,2.511,1.972],"p10":[3.108,3.316,3.308,2.935,2.333,1.749],"p90":[3.269,3.503,3.572,3.337,2.717,2.212],"raw":[3.74,4.073,4.082,3.801,3.312,3.078],"members":[[3.189,3.432,3.464,3.171,2.619,2.191],[3.128,3.459,3.48,3.135,2.376,2.026],[3.148,3.366,3.371,3.011,2.428,1.711],[3.197,3.441,3.453,3.096,2.581,2.151],[3.12,3.391,3.333,3.081,2.537,1.95],[3.134,3.483,3.587,3.387,2.843,2.29],[3.235,3.47,3.464,3.267,2.572,2.196],[3.164,3.389,3.396,3.09,2.495,1.773],[3.153,3.417,3.446,3.164,2.554,1.906],[3.118,3.341,3.328,3.098,2.303,1.89],[3.227,3.483,3.423,3.129,2.632,1.908],[3.164,3.352,3.158,2.827,2.354,2.072],[3.161,3.319,3.577,3.243,2.518,1.969],[3.15,3.304,3.408,3.094,2.675,2.217],[3.269,3.495,3.624,3.249,2.563,2.044],[3.185,3.518,3.55,3.14,2.517,1.94],[3.214,3.454,3.2,2.754,2.48,2.105],[3.118,3.434,3.564,3.336,2.717,1.718],[3.22,3.487,3.591,3.39,2.54,1.862],[3.236,3.517,3.636,3.373,2.868,2.251],[3.17,3.372,3.35,3.066,2.491,2.075],[3.126,3.374,3.424,3.119,2.482,1.87],[3.108,3.42,3.443,3.32,2.632,2.101],[3.136,3.438,3.478,3.335,2.753,2.251],[3.289,3.435,3.366,3.152,2.482,1.749],[3.148,3.436,3.395,3.139,2.617,2.212],[3.183,3.487,3.308,2.903,2.303,1.986],[3.089,3.348,3.36,3.182,2.392,2.024],[3.209,3.417,3.449,3.033,2.349,1.891],[3.213,3.369,3.255,2.948,2.376,1.753],[3.243,3.389,3.241,2.892,2.257,2.018],[3.278,3.316,3.375,3.085,2.333,1.991],[3.107,3.309,3.307,2.958,2.134,1.8],[3.107,3.267,3.308,3.035,2.446,1.927],[3.199,3.519,3.572,3.337,2.57,1.84],[3.149,3.329,3.392,3.147,2.542,2.177],[3.289,3.532,3.55,3.26,2.691,2.326],[3.113,3.429,3.461,3.383,2.488,1.985],[3.207,3.449,3.404,3.053,2.412,1.747],[3.27,3.486,3.458,2.893,2.377,1.839],[3.094,3.426,3.545,3.305,2.461,1.89],[3.198,3.389,3.531,3.088,2.411,1.83],[3.147,3.362,3.359,3.012,2.404,2.028],[3.069,3.313,3.471,3.247,2.801,2.051],[3.273,3.484,3.507,3.247,2.584,1.953],[3.141,3.419,3.494,3.158,2.396,1.724],[3.245,3.574,3.572,3.369,2.786,1.97],[3.164,3.313,3.399,2.958,2.325,1.804],[3.218,3.453,3.407,3.239,2.624,2.056],[3.214,3.503,3.548,3.213,2.408,1.575],[3.109,3.35,3.31,2.935,2.553,1.968]]},"dmi":{"mean":[0.357,0.172,0.026,-0.074,-0.172,-0.019],"p10":[0.226,0.022,-0.109,-0.195,-0.312,-0.054],"p90":[0.442,0.306,0.147,0.041,-0.027,0.011],"raw":[0.588,0.329,0.071,-0.24,-0.334,-0.201],"members":[[0.291,0.088,0.013,-0.111,-0.215,-0.036],[0.357,-0.08,-0.064,-0.13,-0.162,-0.025],[0.356,0.168,0.048,-0.036,-0.312,-0.025],[0.562,0.278,-0.04,0.013,-0.221,-0.033],[0.385,0.112,-0.148,-0.154,-0.264,-0.027],[0.408,0.136,0.018,-0.019,-0.278,-0.041],[0.319,0.202,0.009,-0.039,-0.239,-0.041],[0.351,0.122,0.059,-0.105,-0.314,-0.062],[0.33,0.074,-0.123,-0.182,-0.329,-0.051],[0.266,0.13,0.009,-0.134,-0.16,-0.01],[0.4,0.198,-0.057,-0.1,-0.098,-0.022],[0.226,0.256,0.094,-0.059,-0.048,0.002],[0.262,0.111,0.037,-0.114,-0.225,-0.018],[0.436,0.247,0.117,0.148,0.095,-0.031],[0.438,0.251,0.018,-0.113,-0.17,0.002],[0.442,0.261,0.125,-0.031,-0.105,-0.024],[0.297,0.168,0.049,-0.098,-0.117,-0.054],[0.468,0.049,-0.212,-0.195,-0.211,-0.028],[0.384,0.132,0.035,-0.143,-0.147,-0.021],[0.438,0.271,0.022,-0.086,-0.175,-0.006],[0.312,0.19,0.018,-0.189,-0.234,0.031],[0.414,0.19,0.01,-0.056,-0.214,-0.039],[0.403,0.143,0.172,0.041,-0.06,-0.008],[0.391,0.255,0.08,-0.198,-0.103,-0.01],[0.302,0.17,0.097,-0.181,-0.105,0.011],[0.343,0.022,-0.214,-0.034,-0.204,-0.018],[0.075,-0.153,0.004,-0.072,-0.218,-0.064],[0.608,0.419,0.251,0.02,0.152,0.047],[0.142,-0.046,-0.022,-0.14,-0.408,-0.047],[0.402,0.271,0.142,-0.014,-0.027,-0.002],[0.398,0.306,0.05,0.005,0.008,-0.012],[0.188,0.092,-0.046,-0.025,0.036,-0.025],[0.427,0.328,0.031,-0.22,-0.152,-0.024],[0.208,0.188,0.046,-0.101,-0.069,-0.017],[0.372,0.087,-0.068,-0.197,-0.278,-0.07],[0.396,0.04,-0.045,-0.212,-0.384,-0.055],[0.354,0.078,-0.088,0.038,-0.156,-0.02],[0.505,0.299,0.08,-0.048,-0.211,-0.005],[0.344,0.328,0.165,-0.084,-0.143,0.014],[0.417,0.346,0.136,0.048,-0.202,-0.026],[0.247,0.212,0.118,-0.071,-0.101,-0.008],[0.141,0.185,0.031,-0.047,-0.253,-0.041],[0.436,0.217,0.071,0.039,-0.184,0.007],[0.373,0.219,0.054,-0.054,-0.228,-0.012],[0.32,-0.046,-0.159,-0.256,-0.43,-0.0],[0.462,0.235,0.056,-0.044,-0.249,-0.004],[0.309,0.285,0.147,0.055,-0.135,-0.011],[0.39,0.406,0.178,0.064,-0.13,-0.007],[0.434,0.122,-0.026,-0.157,-0.306,-0.058],[0.392,0.29,0.156,0.088,-0.004,0.013],[0.285,-0.096,-0.109,-0.084,-0.08,0.029]]},"enso":{"la_nina":[0.0,0.0,0.0,0.0,0.0,0.0],"neutral":[0.0,0.0,0.0,0.0,0.0,0.0],"el_nino":[1.0,1.0,1.0,1.0,1.0,1.0]},"iod":{"negative":[0.0,0.0,0.0,0.0,0.039,0.0],"neutral":[0.667,0.961,1.0,1.0,0.961,1.0],"positive":[0.333,0.039,0.0,0.0,0.0,0.0]},"observed":{"valid":["2026-05","2026-06","2026-07","2026-08","2026-09","2026-10"],"label":["Mei 2026","Jun 2026","Jul 2026","Agu 2026","Sep 2026","Okt 2026"],"oni":[0.95,1.39,1.8,2.16,2.46,null],"dmi":[0.146,null,null,null,null,null]},"map":{"lat":[9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,9.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,8.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,5.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-3.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-4.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-5.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-6.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-7.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-8.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-9.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-10.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-11.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-12.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-13.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5,-14.5],"lon":[90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5,90.5,91.5,92.5,93.5,94.5,95.5,96.5,97.5,98.5,99.5,100.5,101.5,102.5,103.5,104.5,105.5,106.5,107.5,108.5,109.5,110.5,111.5,112.5,113.5,114.5,115.5,116.5,117.5,118.5,119.5,120.5,121.5,122.5,123.5,124.5,125.5,126.5,127.5,128.5,129.5,130.5,131.5,132.5,133.5,134.5,135.5,136.5,137.5,138.5,139.5,140.5,141.5,142.5,143.5,144.5],"bounds":{"north":10,"west":90,"south":-15,"east":145},"urls":["https://data.heslab-uper.com/portal/assets/data/climate/202611/map_2026-11.json","https://data.heslab-uper.com/portal/assets/data/climate/202611/map_2026-12.json","https://data.heslab-uper.com/portal/assets/data/climate/202611/map_2027-01.json","https://data.heslab-uper.com/portal/assets/data/climate/202611/map_2027-02.json","https://data.heslab-uper.com/portal/assets/data/climate/202611/map_2027-03.json","https://data.heslab-uper.com/portal/assets/data/climate/202611/map_2027-04.json"],"layers":[{"k":"sst_anom","label":"Anomali SST","unit":"°C","classes":[{"min":null,"max":-2,"color":"#053061","legend":"< −2 °C"},{"min":-2,"max":-1.5,"color":"#2166AC","legend":"−2 s.d. −1,5 °C"},{"min":-1.5,"max":-1,"color":"#4393C3","legend":"−1,5 s.d. −1 °C"},{"min":-1,"max":-0.5,"color":"#92C5DE","legend":"−1 s.d. −0,5 °C"},{"min":-0.5,"max":-0.25,"color":"#D1E5F0","legend":"−0,5 s.d. −0,25 °C"},{"min":-0.25,"max":0.25,"color":"#F7F7F7","legend":"−0,25 s.d. 0,25 °C"},{"min":0.25,"max":0.5,"color":"#FDDBC7","legend":"0,25 s.d. 0,5 °C"},{"min":0.5,"max":1,"color":"#F4A582","legend":"0,5 s.d. 1 °C"},{"min":1,"max":1.5,"color":"#D6604D","legend":"1 s.d. 1,5 °C"},{"min":1.5,"max":2,"color":"#B2182B","legend":"1,5 s.d. 2 °C"},{"min":2,"max":null,"color":"#67001F","legend":"≥ 2 °C"}]}],"map":{"center":{"lat":-2.5,"lon":118.0},"zoom":3.5,"style":"white-bg","layers":[{"below":"traces","sourcetype":"raster","sourceattribution":"Esri, HERE, Garmin, © OpenStreetMap contributors","source":["https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"]},{"below":"traces","sourcetype":"raster","source":["https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}"]}]},"height":{"min":280,"max":720},"opacity":0.82},"rain":{"url":"https://data.heslab-uper.com/portal/assets/data/climate/202611/rain_regions.json","geojson_url":"../../assets/geo/kabupaten.geojson","featureidkey":"properties.kab_id","classes":[{"min":null,"max":-0.7,"color":"#8C4A12","legend":"Bawah normal ≥ 70%"},{"min":-0.7,"max":-0.6,"color":"#B8661D","legend":"Bawah normal 60–70%"},{"min":-0.6,"max":-0.5,"color":"#D9822B","legend":"Bawah normal 50–60%"},{"min":-0.5,"max":-0.4,"color":"#EFC08F","legend":"Bawah normal 40–50%"},{"min":-0.4,"max":0.4,"color":"#E3E7E9","legend":"Normal, atau peluang terbesar < 40%"},{"min":0.4,"max":0.5,"color":"#9CC3E3","legend":"Atas normal 40–50%"},{"min":0.5,"max":0.6,"color":"#2B7BB9","legend":"Atas normal 50–60%"},{"min":0.6,"max":0.7,"color":"#1D5F91","legend":"Atas normal 60–70%"},{"min":0.7,"max":null,"color":"#103E62","legend":"Atas normal ≥ 70%"}],"map":{"center":{"lat":-2.5,"lon":118.0},"zoom":3.5,"style":"white-bg","layers":[{"below":"traces","sourcetype":"raster","sourceattribution":"Esri, HERE, Garmin, © OpenStreetMap contributors","source":["https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"]},{"below":"traces","sourcetype":"raster","source":["https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}"]}]},"bounds":{"west":93.5,"east":142.5,"south":-12.5,"north":7.5},"height":{"min":280,"max":720}},"history":{"url":"https://data.heslab-uper.com/portal/assets/data/climate/202611/observed_history.json","months":["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"]}}</script>
 <script src="https://cdn.plot.ly/plotly-2.32.0.min.js" integrity="sha384-7TVmlZWH60iKX5Uk7lSvQhjtcgw2tkFjuwLcXoRSR4zXTyWFJRm9aPAguMh7CIra" crossorigin="anonymous" charset="utf-8"></script>
 <script>/* ==========================================================================
@@ -2047,4 +2238,4 @@ aria-current="true">Climate Outlook</a>
 </script>
 </body>
 </html>
-<!-- heslab-content: 09fad80444c11583 -->
+<!-- heslab-content: eaf6c7fba292b511 -->
