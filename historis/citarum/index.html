@@ -579,6 +579,29 @@ select, button.btn, a.btn {
   min-height: 38px;
 }
 select:disabled { color: var(--muted); background: var(--paper); }
+/* Cari kabupaten/kota di laporan harian (pemilik 2026-11-22, B1; map_daily.js) */
+input[type="search"] {
+  font-family: var(--font-body); font-size: var(--step-0);
+  padding: var(--sp-2) var(--sp-3); min-height: 38px;
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--surface); color: var(--ink-900);
+}
+input[type="search"]:disabled { color: var(--muted); background: var(--paper); }
+input[type="search"]:focus-visible { outline: 2px solid var(--current); outline-offset: 1px; }
+.field--cari { flex: 1 1 16rem; min-width: 0; }
+.field--cari input { width: 100%; }
+.cari-info {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2);
+  font-size: var(--step--1); color: var(--ink-700); margin: 0 0 var(--sp-4);
+}
+.cari-info[hidden] { display: none; }
+button.cari-pilih {
+  font-family: var(--font-body); font-size: var(--step--1); cursor: pointer;
+  padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px;
+  background: var(--surface); color: var(--ink-900);
+}
+button.cari-pilih:hover, button.cari-pilih:focus-visible { border-color: var(--current); color: var(--current-dark); }
+.detail__rank { font-size: var(--step--1); color: var(--ink-700); margin: .25rem 0 0; }
 button.btn { cursor: pointer; }
 a.btn { display: inline-flex; align-items: center; text-decoration: none; }
 button.btn:hover, a.btn:hover { border-color: var(--current); color: var(--current-dark); }
@@ -650,6 +673,22 @@ button.linkbtn {
   background: none; border: 0; padding: 0; cursor: pointer;
 }
 button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
+/* Ponsel (pemilik 2026-11-22, A4): tabel peringkat (# | Kabupaten/Kota | ...)
+   lebih lebar dari layar; kolom # dan nama tetap terlihat saat tabel digeser.
+   Latar sel tetap = latar panel agar kolom lain tidak tembus di bawahnya. */
+@media (max-width: 560px) {
+  table.peringkat th:nth-child(-n+2),
+  table.peringkat td:nth-child(-n+2) { position: sticky; background: var(--surface); z-index: 1; }
+  table.peringkat th:nth-child(1), table.peringkat td:nth-child(1) {
+    left: 0; width: 2.25rem; min-width: 2.25rem;
+    padding-left: var(--sp-2); padding-right: var(--sp-2);
+  }
+  table.peringkat th:nth-child(2), table.peringkat td:nth-child(2) {
+    left: 2.25rem; max-width: 9.5rem; white-space: normal;
+    box-shadow: 1px 0 0 var(--line);      /* garis pemisah kolom tetap */
+  }
+  table.peringkat tbody tr:hover td:nth-child(-n+2) { background: var(--current-soft); }
+}
 
 /* --------------------------------------------------------- panel detail -- */
 
@@ -1051,7 +1090,7 @@ Waduk Jatiluhur, Waduk Cirata, Waduk Saguling, Bendungan Sadawarna, dari 1 Janua
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 21-11-2026 17:07 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 22-11-2026 11:07 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
@@ -1074,4 +1113,4 @@ Waduk Jatiluhur, Waduk Cirata, Waduk Saguling, Bendungan Sadawarna, dari 1 Janua
 </script>
 </body>
 </html>
-<!-- heslab-content: 4beda9fd2495f591 -->
+<!-- heslab-content: bf2ddc87de49c759 -->
