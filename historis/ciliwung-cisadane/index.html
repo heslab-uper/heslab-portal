@@ -428,6 +428,41 @@ a:hover { color: var(--current); }
 }
 .dashcard:hover .dashcard__go { transform: translateX(3px); }
 
+/* Kondisi terkini di beranda (pemilik 2026-11-22, C1; home.html.j2, home_kondisi.js).
+   Tiga kotak sejajar; bertumpuk di layar sempit. Kotak data lama: garis kiri amber
+   seperti pita data lama (.note--warn). */
+.kondisi { margin: 0 0 var(--sp-5); }
+.kondisi > .eyebrow { margin: 0 0 var(--sp-3); }
+.kondisi__grid { display: grid; gap: var(--sp-3); grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+a.kondisi__item {
+  display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: var(--ink-900);
+  background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--current);
+  border-radius: var(--radius); padding: var(--sp-3) var(--sp-4);
+}
+a.kondisi__item:hover { border-color: var(--current); }
+a.kondisi__item:focus-visible { outline: 2px solid var(--current); outline-offset: 2px; }
+.kondisi__label {
+  font-family: var(--font-mono); font-size: 0.6875rem; text-transform: uppercase;
+  letter-spacing: 0.07em; color: var(--muted);
+}
+.kondisi__value { font-family: var(--font-display); font-size: var(--step-2); font-weight: 600; line-height: 1.15; }
+.kondisi__value small { font-size: var(--step-0); font-weight: 500; color: var(--ink-500); }
+.kondisi__text { font-size: var(--step--1); color: var(--ink-700); }
+.kondisi__time, .kondisi__fine { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
+.kondisi__stale { font-size: var(--step--1); font-weight: 600; color: var(--alert); }
+.kondisi__stale[hidden], .kondisi__notice[hidden] { display: none; }
+a.kondisi__item.is-stale { border-left-color: var(--alert); }
+a.kondisi__item.is-stale .kondisi__value { color: var(--muted) !important; }
+.kondisi__notice {
+  margin: var(--sp-3) 0 0; padding: var(--sp-2) var(--sp-3); font-size: var(--step--1);
+  border-left: 3px solid var(--alert); background: var(--alert-soft);
+}
+@media (max-width: 560px) {               /* ponsel: isi sama, jarak lebih rapat */
+  .kondisi__grid { gap: var(--sp-2); }
+  a.kondisi__item { gap: 2px; padding: var(--sp-2) var(--sp-3); }
+  .kondisi__value { font-size: var(--step-1); }
+}
+
 /* Ponsel (pemilik 2026-11-21): beranda semula ~6 layar. Paragraf pembuka
    lebih kecil (teks utuh, tidak disembunyikan); kartu bergambar menjadi
    gambar persegi kecil di samping judul, teks penjelas maksimal 3 baris. */
@@ -602,6 +637,11 @@ button.cari-pilih {
 }
 button.cari-pilih:hover, button.cari-pilih:focus-visible { border-color: var(--current); color: var(--current-dark); }
 .detail__rank { font-size: var(--step--1); color: var(--ink-700); margin: .25rem 0 0; }
+/* D1 salin tautan wilayah, D2 unduh CSV (pemilik 2026-11-22; map_daily.js) */
+.detail__tautan { margin: var(--sp-3) 0 0; }
+.unduh { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2) var(--sp-3); margin: var(--sp-4) 0 0; }
+.unduh[hidden] { display: none; }
+.unduh__ket { font-size: .8125rem; color: var(--muted); flex: 1 1 16rem; }
 button.btn { cursor: pointer; }
 a.btn { display: inline-flex; align-items: center; text-decoration: none; }
 button.btn:hover, a.btn:hover { border-color: var(--current); color: var(--current-dark); }
@@ -1090,7 +1130,7 @@ Cisadane, Cikarang Bekasi Laut (CBL), Bekasi Lama, Cengkareng Drain, Cimanceuri,
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 22-11-2026 11:07 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 22-11-2026 12:07 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
@@ -1113,4 +1153,4 @@ Cisadane, Cikarang Bekasi Laut (CBL), Bekasi Lama, Cengkareng Drain, Cimanceuri,
 </script>
 </body>
 </html>
-<!-- heslab-content: 0f45096a233b8ea3 -->
+<!-- heslab-content: 5fea1c30589880d4 -->
