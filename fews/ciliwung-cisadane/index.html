@@ -801,6 +801,8 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
 
 /* -------------------------------------------------------------- catatan -- */
 
+/* hidden harus menang atas display kelas (catatan gangguan FEWS, 2026-11-23) */
+.note[hidden] { display: none; }
 .note {
   border-left: 3px solid var(--current);
   background: var(--current-soft);
@@ -1020,6 +1022,10 @@ Cisadane, Cikarang Bekasi Laut (CBL), Bekasi Lama, Cengkareng Drain, Cimanceuri,
     </p>
   </section>
 
+  <div class="note note--warn" id="source-notice" role="status" hidden>
+    <p><strong>Gangguan sumber data.</strong> Data terbaru belum tersedia karena sumber aslinya, GSMaP dari JAXA, tidak dapat diakses sejak 20 November 2026 pagi. JAXA belum dapat memastikan kapan layanannya pulih. Halaman ini akan diperbarui otomatis setelah data kembali tersedia.</p>
+  </div>
+
   <div class="readout" id="fews-readout">
     <div class="readout__cell"><span class="readout__k">Awal prediksi</span>
       <span class="readout__v" data-k="t0">memuat…</span></div>
@@ -1131,7 +1137,7 @@ Waduk 22, Pintu Air 4, Weir 2.</p>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 22-11-2026 18:06 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 24-11-2026 20:06 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
@@ -1631,6 +1637,9 @@ Waduk 22, Pintu Air 4, Weir 2.</p>
     var t = t0Date(st.t0_wib);
     var stale = isNaN(t) || (Date.now() - t.getTime()) > P.max_age_hours * 3600 * 1000;
     var lv = st.levels || {};
+    // Catatan gangguan sumber GSMaP (pemilik 2026-11-23): tampil hanya bila data WS ini lama.
+    var notice = document.getElementById("source-notice");
+    if (notice && stale) notice.hidden = false;
     set("t0", label(st.t0_wib) + " WIB" + (stale ? " (data lama)" : ""));
     set("highest", stale ? "data lama" : st.highest);
     set("counts", (lv.waspada || 0) + " · " + (lv.siaga || 0) + " · " + (lv.awas || 0));
@@ -1659,4 +1668,4 @@ Waduk 22, Pintu Air 4, Weir 2.</p>
 </script>
 </body>
 </html>
-<!-- heslab-content: fbf0978930a7ea14 -->
+<!-- heslab-content: ff28942776394ad7 -->

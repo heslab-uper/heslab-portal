@@ -801,6 +801,8 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
 
 /* -------------------------------------------------------------- catatan -- */
 
+/* hidden harus menang atas display kelas (catatan gangguan FEWS, 2026-11-23) */
+.note[hidden] { display: none; }
 .note {
   border-left: 3px solid var(--current);
   background: var(--current-soft);
@@ -1021,6 +1023,10 @@ Cisadane, Cikarang Bekasi Laut (CBL), Bekasi Lama, Cengkareng Drain, Cimanceuri,
     </p>
   </section>
 
+  <div class="note note--warn" role="status">
+    <p><strong>Gangguan sumber data.</strong> Data terbaru belum tersedia karena sumber aslinya, GSMaP dari JAXA, tidak dapat diakses sejak 20 November 2026 pagi. JAXA belum dapat memastikan kapan layanannya pulih. Halaman ini akan diperbarui otomatis setelah data kembali tersedia. Hari-hari terakhir belum masuk ke run historis.</p>
+  </div>
+
   <div class="readout">
     <div class="readout__cell"><span class="readout__k">Periode</span><span class="readout__v">1 Januari 2015 – 16 November 2026</span></div>
     <div class="readout__cell"><span class="readout__k">Ruas dimodelkan</span><span class="readout__v">1.641</span></div>
@@ -1163,7 +1169,7 @@ Cisadane, Cikarang Bekasi Laut (CBL), Bekasi Lama, Cengkareng Drain, Cimanceuri,
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 22-11-2026 18:07 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 24-11-2026 20:07 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
@@ -1186,4 +1192,4 @@ Cisadane, Cikarang Bekasi Laut (CBL), Bekasi Lama, Cengkareng Drain, Cimanceuri,
 </script>
 </body>
 </html>
-<!-- heslab-content: 86285008977ac913 -->
+<!-- heslab-content: 4a73b9530aff86ef -->
