@@ -801,6 +801,8 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
 
 /* -------------------------------------------------------------- catatan -- */
 
+/* hidden harus menang atas display kelas (catatan gangguan FEWS, 2026-11-23) */
+.note[hidden] { display: none; }
 .note {
   border-left: 3px solid var(--current);
   background: var(--current-soft);
@@ -1012,7 +1014,7 @@ aria-current="true">Rainfall Monitoring</a>
     <strong>Data belum diperbarui.</strong>
     Data di halaman ini berakhir 19 Nov 2026 07.00 WIB, <span data-age></span>
     yang lalu, melewati jadwal pembaruannya. Angka di bawah bukan kondisi terkini.
-    <span class="note__sumber">Data terbaru belum tersedia karena sumber aslinya, GSMaP dari JAXA, tidak dapat diakses sejak 20 November 2026 pagi. Halaman ini akan diperbarui otomatis setelah sumber data kembali tersedia.</span>
+    <span class="note__sumber">Data terbaru belum tersedia karena sumber aslinya, GSMaP dari JAXA, tidak dapat diakses sejak 20 November 2026 pagi. JAXA belum dapat memastikan kapan layanannya pulih. Halaman ini akan diperbarui otomatis setelah data kembali tersedia.</span>
   </div>
 </div>
 
@@ -1217,7 +1219,7 @@ aria-current="true">Rainfall Monitoring</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 22-11-2026 17:40 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 24-11-2026 19:19 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
@@ -2311,4 +2313,4 @@ aria-current="true">Rainfall Monitoring</a>
 </script>
 </body>
 </html>
-<!-- heslab-content: a731021ee87f7aea -->
+<!-- heslab-content: c1283e96efc3f473 -->
