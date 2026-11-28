@@ -427,6 +427,8 @@ a:hover { color: var(--current); }
   display: inline-block;
 }
 .dashcard:hover .dashcard__go { transform: translateX(3px); }
+/* Kartu modul dalam penyiapan bukan tautan (2026-11-28, G3): tidak terangkat saat hover */
+.dashcard--planned:hover { border-color: var(--line); transform: none; box-shadow: none; }
 
 /* Kondisi terkini di beranda (pemilik 2026-11-22, C1; home.html.j2, home_kondisi.js).
    Tiga kotak sejajar; bertumpuk di layar sempit. Kotak data lama: garis kiri amber
@@ -453,8 +455,8 @@ a.kondisi__item:focus-visible { outline: 2px solid var(--current); outline-offse
 .kondisi__stale[hidden], .kondisi__notice[hidden] { display: none; }
 a.kondisi__item.is-stale { border-left-color: var(--alert); }
 a.kondisi__item.is-stale .kondisi__value { color: var(--muted) !important; }
-.kondisi__notice {
-  margin: var(--sp-3) 0 0; padding: var(--sp-2) var(--sp-3); font-size: var(--step--1);
+.kondisi__notice {                       /* di atas kotak sejak 2026-11-28 (G1) */
+  margin: 0 0 var(--sp-3); padding: var(--sp-2) var(--sp-3); font-size: var(--step--1);
   border-left: 3px solid var(--alert); background: var(--alert-soft);
 }
 @media (max-width: 560px) {               /* ponsel: isi sama, jarak lebih rapat */
@@ -1219,7 +1221,7 @@ aria-current="true">Rainfall Monitoring</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 24-11-2026 19:19 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 28-11-2026 21:27 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
@@ -2313,4 +2315,4 @@ aria-current="true">Rainfall Monitoring</a>
 </script>
 </body>
 </html>
-<!-- heslab-content: 6370f2cf1b0b2137 -->
+<!-- heslab-content: 4ef896745566635a -->

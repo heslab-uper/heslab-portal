@@ -427,6 +427,8 @@ a:hover { color: var(--current); }
   display: inline-block;
 }
 .dashcard:hover .dashcard__go { transform: translateX(3px); }
+/* Kartu modul dalam penyiapan bukan tautan (2026-11-28, G3): tidak terangkat saat hover */
+.dashcard--planned:hover { border-color: var(--line); transform: none; box-shadow: none; }
 
 /* Kondisi terkini di beranda (pemilik 2026-11-22, C1; home.html.j2, home_kondisi.js).
    Tiga kotak sejajar; bertumpuk di layar sempit. Kotak data lama: garis kiri amber
@@ -453,8 +455,8 @@ a.kondisi__item:focus-visible { outline: 2px solid var(--current); outline-offse
 .kondisi__stale[hidden], .kondisi__notice[hidden] { display: none; }
 a.kondisi__item.is-stale { border-left-color: var(--alert); }
 a.kondisi__item.is-stale .kondisi__value { color: var(--muted) !important; }
-.kondisi__notice {
-  margin: var(--sp-3) 0 0; padding: var(--sp-2) var(--sp-3); font-size: var(--step--1);
+.kondisi__notice {                       /* di atas kotak sejak 2026-11-28 (G1) */
+  margin: 0 0 var(--sp-3); padding: var(--sp-2) var(--sp-3); font-size: var(--step--1);
   border-left: 3px solid var(--alert); background: var(--alert-soft);
 }
 @media (max-width: 560px) {               /* ponsel: isi sama, jarak lebih rapat */
@@ -1022,6 +1024,7 @@ gtag('config', 'G-Z0TXGDFW5L');
 
   <section class="kondisi" aria-labelledby="kondisi-h">
     <h2 id="kondisi-h" class="eyebrow">Kondisi terkini</h2>
+    <p class="kondisi__notice" role="status" hidden>Data terbaru belum tersedia karena sumber aslinya, GSMaP dari JAXA, tidak dapat diakses sejak 20 November 2026 pagi. JAXA belum dapat memastikan kapan layanannya pulih. Halaman ini akan diperbarui otomatis setelah data kembali tersedia.</p>
     <div class="kondisi__grid">
       <a class="kondisi__item" href="rainfall/harian/nrt/index.html"
          data-end="2026-11-19T07:00+07:00" data-max-age-h="30" data-gsmap>
@@ -1049,7 +1052,6 @@ El Niño 100 %, Netral 0 %, La Niña 0 %</span>
         <span class="kondisi__time">Run ECMWF SEAS5 Nov 2026</span>
       </a>
     </div>
-    <p class="kondisi__notice" hidden>Data terbaru belum tersedia karena sumber aslinya, GSMaP dari JAXA, tidak dapat diakses sejak 20 November 2026 pagi. JAXA belum dapat memastikan kapan layanannya pulih. Halaman ini akan diperbarui otomatis setelah data kembali tersedia.</p>
     <script type="application/json" id="kondisi-payload">{"url":"fews/","index_url":"https://data.heslab-uper.com/portal/assets/fews/index.json","max_age_hours":3,"levels":["normal","waspada","siaga","awas"],"colors":{"normal":"#2f5fb3","waspada":"#d4a017","siaga":"#e8740c","awas":"#c0392b"}}</script>
   </section>
 
@@ -1075,10 +1077,8 @@ El Niño 100 %, Netral 0 %, La Niña 0 %</span>
           <span class="tag tag--live">
             aktif
           </span>
-          <span class="dashcard__go">Buka →</span>
-        </span>
-      </a>
-      <a class="dashcard" href="climate/index.html"
+<span class="dashcard__go">Buka →</span>        </span>
+</a>      <a class="dashcard" href="climate/index.html"
          style="--dash-accent: var(--river-700)">
         <img class="dashcard__media" src="assets/img/modul-climate.webp" alt="Grafik ENSO: riwayat pengamatan indeks Niño3.4 berlanjut ke prakiraan ensemble enam bulan ke depan, dengan zona El Niño dan La Niña"
              width="1200" height="675" loading="lazy" decoding="async">
@@ -1097,10 +1097,8 @@ El Niño 100 %, Netral 0 %, La Niña 0 %</span>
           <span class="tag tag--live">
             aktif
           </span>
-          <span class="dashcard__go">Buka →</span>
-        </span>
-      </a>
-      <a class="dashcard" href="fews/index.html"
+<span class="dashcard__go">Buka →</span>        </span>
+</a>      <a class="dashcard" href="fews/index.html"
          style="--dash-accent: var(--river-700)">
         <img class="dashcard__media" src="assets/img/modul-fews.webp" alt="Peta jaringan sungai satu wilayah sungai; tiap ruas diwarnai tingkat tertinggi model FEWS pada salah satu hari banjir besar: normal, waspada, siaga, awas"
              width="1200" height="675" loading="lazy" decoding="async">
@@ -1119,10 +1117,8 @@ El Niño 100 %, Netral 0 %, La Niña 0 %</span>
           <span class="tag tag--live">
             aktif
           </span>
-          <span class="dashcard__go">Buka →</span>
-        </span>
-      </a>
-      <a class="dashcard" href="streamflow/index.html"
+<span class="dashcard__go">Buka →</span>        </span>
+</a>      <a class="dashcard" href="streamflow/index.html"
          style="--dash-accent: var(--river-700)">
         <img class="dashcard__media" src="assets/img/modul-streamflow.webp" alt="Grafik prakiraan debit musiman per dasarian di ruas hilir satu wilayah sungai: rentang P10 sampai P90 ensemble, median, dan debit normal"
              width="1200" height="675" loading="lazy" decoding="async">
@@ -1141,10 +1137,8 @@ El Niño 100 %, Netral 0 %, La Niña 0 %</span>
           <span class="tag tag--live">
             aktif
           </span>
-          <span class="dashcard__go">Buka →</span>
-        </span>
-      </a>
-      <a class="dashcard" href="historis/index.html"
+<span class="dashcard__go">Buka →</span>        </span>
+</a>      <a class="dashcard" href="historis/index.html"
          style="--dash-accent: var(--river-700)">
         <img class="dashcard__media" src="assets/img/modul-historis.webp" alt="Hidrograf debit rerata harian sejak 2015 di ruas hilir satu wilayah sungai, hasil model"
              width="1200" height="675" loading="lazy" decoding="async">
@@ -1163,17 +1157,14 @@ El Niño 100 %, Netral 0 %, La Niña 0 %</span>
           <span class="tag tag--live">
             aktif
           </span>
-          <span class="dashcard__go">Buka →</span>
-        </span>
-      </a>
-    </div>
+<span class="dashcard__go">Buka →</span>        </span>
+</a>    </div>
   </section>
 
   <section class="dashgroup" aria-labelledby="dev-h">
     <h2 id="dev-h" class="eyebrow">Dalam pengembangan</h2>
     <div class="dashgrid dashgrid--compact">
-      <a class="dashcard" href="drought/index.html"
-         style="--dash-accent: var(--muted)">
+      <div class="dashcard dashcard--planned" style="--dash-accent: var(--muted)">
         <div class="dashcard__head">
           <span class="dashcard__icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -1189,10 +1180,8 @@ El Niño 100 %, Netral 0 %, La Niña 0 %</span>
           <span class="tag tag--planned">
             dalam penyiapan
           </span>
-          <span class="dashcard__go">Buka →</span>
         </span>
-      </a>
-    </div>
+</div>    </div>
   </section>
 
   <section class="panel" style="margin-top:2rem" aria-labelledby="audience-h">
@@ -1306,8 +1295,14 @@ El Niño 100 %, Netral 0 %, La Niña 0 %</span>
     var t0s = basins.map(function (b) { return String(b.t0_wib); }).sort();
     set("time", "Awal prediksi " + t0Label(t0s[t0s.length - 1]));
     if (!fresh.length) {
-      set("value", "data lama");
-      set("text", basins.length + " wilayah sungai dipantau; status terkini belum tersedia.");
+      // Angka utama = jumlah WS dipantau, bukan "data lama" (pemilik 2026-11-28, G2);
+      // tanda lama tetap dari tandaiLama() di bawah.
+      var val = box.querySelector('[data-k="value"]');
+      val.textContent = basins.length + " ";
+      var unit = document.createElement("small");
+      unit.textContent = "wilayah sungai";
+      val.appendChild(unit);
+      set("text", "Dipantau; status terkini belum tersedia.");
       tandaiLama(box);
       return;
     }
@@ -1381,7 +1376,7 @@ El Niño 100 %, Netral 0 %, La Niña 0 %</span>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 24-11-2026 19:19 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 28-11-2026 21:26 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
@@ -1404,4 +1399,4 @@ El Niño 100 %, Netral 0 %, La Niña 0 %</span>
 </script>
 </body>
 </html>
-<!-- heslab-content: 7ccd7fbe9a625a4d -->
+<!-- heslab-content: 846f151a4cf59239 -->
