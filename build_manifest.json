@@ -1,7 +1,7 @@
 {
   "targets": {
     "shell": {
-      "last_build_wib": "2026-11-28T21:52:56+07:00",
+      "last_build_wib": "2026-11-28T22:07:53+07:00",
       "pages": [
         "home",
         "rainfall-daily",
@@ -20,17 +20,17 @@
         "rainfall-daily-standard-v9",
         "rainfall-dasarian-standard-v9"
       ],
-      "note": "produk=semua"
+      "note": "dijalankan dari jalankan.py"
     },
     "rainfall-animation": {
-      "last_build_wib": "2026-11-28T21:49:13+07:00",
+      "last_build_wib": "2026-11-28T22:08:09+07:00",
       "pages": [
         "rainfall"
       ],
-      "note": "dijalankan dari jalankan.py"
+      "note": "produk=semua"
     },
     "rainfall-daily": {
-      "last_build_wib": "2026-11-28T21:49:15+07:00",
+      "last_build_wib": "2026-11-28T22:07:55+07:00",
       "pages": [
         "rainfall-daily-now",
         "rainfall-daily-nrt",
@@ -42,7 +42,7 @@
       "note": "dijalankan dari jalankan.py"
     },
     "rainfall-dasarian": {
-      "last_build_wib": "2026-11-28T21:49:43+07:00",
+      "last_build_wib": "2026-11-28T22:08:11+07:00",
       "pages": [
         "rainfall-dasarian-now",
         "rainfall-dasarian-nrt",
@@ -54,7 +54,7 @@
       "note": "dijalankan dari jalankan.py"
     },
     "rainfall-forecast": {
-      "last_build_wib": "2026-11-28T21:06:45+07:00",
+      "last_build_wib": "2026-11-28T22:06:45+07:00",
       "pages": [
         "rainfall-forecast"
       ],
@@ -70,7 +70,7 @@
       "note": "produk=semua"
     },
     "fews": {
-      "last_build_wib": "2026-11-28T21:07:06+07:00",
+      "last_build_wib": "2026-11-28T22:07:02+07:00",
       "pages": [
         "fews",
         "fews-ws_ciliwung_cisadane",
@@ -80,7 +80,7 @@
       "note": "produk=semua"
     },
     "streamflow": {
-      "last_build_wib": "2026-11-28T21:07:26+07:00",
+      "last_build_wib": "2026-11-28T22:07:24+07:00",
       "pages": [
         "streamflow",
         "streamflow-ws_ciliwung_cisadane"
@@ -88,7 +88,7 @@
       "note": "produk=semua"
     },
     "historis": {
-      "last_build_wib": "2026-11-28T21:07:43+07:00",
+      "last_build_wib": "2026-11-28T22:07:48+07:00",
       "pages": [
         "historis",
         "historis-ws_ciliwung_cisadane",

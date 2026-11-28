@@ -736,7 +736,16 @@ table.data td.num, table.data th.num { text-align: right; font-family: var(--fon
 table.data tbody tr:hover { background: var(--current-soft); }
 /* Judul kelompok pulau di tabel Wilayah sungai /fews/ dan /streamflow/ (pemilik 2026-10-31). */
 tr.ws-island th { text-align: left; background: var(--river-100); color: var(--ink-900); font-weight: 600; padding: .35rem .5rem; }
-tr.ws-none td { color: var(--muted); font-style: italic; }
+/* Pulau tanpa WS: satu kalimat di bawah tabel, bukan baris (pemilik 2026-11-28, I1). */
+.ws-kosong { font-size: var(--step--1); color: var(--muted); font-style: italic; margin-top: var(--sp-2); }
+/* Tautan peta sungai di bawah nama WS: hanya di ponsel, kolom Peta sungai (terakhir) disembunyikan. */
+.ws-peta { display: none; font-size: .75rem; margin-top: 2px; white-space: nowrap; }
+@media (max-width: 560px) {
+  .ws-peta { display: block; }
+  #fews-list thead th:last-child, #sf-list thead th:last-child,
+  #fews-list tbody td:last-child:not([colspan]),
+  #sf-list tbody td:last-child:not([colspan]) { display: none; }
+}
 td .swatch {
   display: inline-block; width: 10px; height: 10px; border-radius: 2px;
   margin-right: var(--sp-2); border: 1px solid rgba(0,0,0,0.12);
@@ -987,10 +996,10 @@ gtag('config', 'G-Z0TXGDFW5L');
          data-status="live"
 >Climate Outlook</a>
       <a href="../fews/index.html"
-         data-status="live"
+         data-status="planned"
 >FEWS</a>
       <a href="../streamflow/index.html"
-         data-status="live"
+         data-status="planned"
 >Streamflow Forecast</a>
       <a href="../drought/index.html"
          data-status="planned"
@@ -1031,7 +1040,6 @@ gtag('config', 'G-Z0TXGDFW5L');
       Data dianggap terlambat bila umurnya melewati batas yang wajar untuk produknya.</p>
   </section>
 
-  <div class="note note--warn" role="status"><p><strong>Gangguan sumber data.</strong> Data terbaru belum tersedia karena sumber aslinya, GSMaP dari JAXA, tidak dapat diakses sejak 20 November 2026 pagi. JAXA belum dapat memastikan kapan layanannya pulih. Halaman ini akan diperbarui otomatis setelah data kembali tersedia.</p></div>
 
   <section class="panel" aria-labelledby="status-h">
     <h2 id="status-h">Hujan dan iklim</h2>
@@ -1132,18 +1140,8 @@ gtag('config', 'G-Z0TXGDFW5L');
       itu kajian satu run.</p>
   </section>
 
-  <section class="panel" aria-labelledby="fews-h">
-    <h2 id="fews-h"><a href="../fews/index.html">FEWS</a> per wilayah sungai</h2>
-    <div class="tablewrap">
-      <table class="data status-tabel" id="status-fews">
-        <thead><tr><th>Wilayah sungai</th><th>Awal prediksi</th><th class="num">Umur</th>
-          <th class="num">Batas</th><th>Status</th></tr></thead>
-        <tbody><tr><td colspan="5">Memuat…</td></tr></tbody>
-      </table>
-    </div>
-  </section>
 
-  <script type="application/json" id="status-payload">{"rows":[{"key":"rainfall","src":"https://data.heslab-uper.com/portal/assets/data/status/rainfall.json"},{"key":"rainfall-daily-now","src":"https://data.heslab-uper.com/portal/assets/data/status/rainfall-daily-now.json"},{"key":"rainfall-daily-nrt","src":"https://data.heslab-uper.com/portal/assets/data/status/rainfall-daily-nrt.json"},{"key":"rainfall-daily-nrt-v9","src":"https://data.heslab-uper.com/portal/assets/data/status/rainfall-daily-nrt-v9.json"},{"key":"rainfall-daily-standard","src":"https://data.heslab-uper.com/portal/assets/data/status/rainfall-daily-standard.json"},{"key":"rainfall-daily-standard-v9","src":"https://data.heslab-uper.com/portal/assets/data/status/rainfall-daily-standard-v9.json"},{"key":"rainfall-dasarian-nrt","src":"https://data.heslab-uper.com/portal/assets/data/status/rainfall-dasarian-nrt.json"},{"key":"rainfall-dasarian-nrt-v9","src":"https://data.heslab-uper.com/portal/assets/data/status/rainfall-dasarian-nrt-v9.json"},{"key":"rainfall-dasarian-standard","src":"https://data.heslab-uper.com/portal/assets/data/status/rainfall-dasarian-standard.json"},{"key":"rainfall-dasarian-standard-v9","src":"https://data.heslab-uper.com/portal/assets/data/status/rainfall-dasarian-standard-v9.json"},{"key":"rainfall-forecast","src":"https://data.heslab-uper.com/portal/assets/data/status/rainfall-forecast.json"},{"key":"climate","src":"https://data.heslab-uper.com/portal/assets/data/status/climate.json"}],"fews":{"url":"fews/","max_age_hours":3,"index_url":"https://data.heslab-uper.com/portal/assets/fews/index.json"}}</script>
+  <script type="application/json" id="status-payload">{"rows":[{"key":"rainfall","src":"../assets/data/status/rainfall.json"},{"key":"rainfall-daily-now","src":"../assets/data/status/rainfall-daily-now.json"},{"key":"rainfall-daily-nrt","src":"../assets/data/status/rainfall-daily-nrt.json"},{"key":"rainfall-daily-nrt-v9","src":"../assets/data/status/rainfall-daily-nrt-v9.json"},{"key":"rainfall-daily-standard","src":"../assets/data/status/rainfall-daily-standard.json"},{"key":"rainfall-daily-standard-v9","src":"../assets/data/status/rainfall-daily-standard-v9.json"},{"key":"rainfall-dasarian-nrt","src":"../assets/data/status/rainfall-dasarian-nrt.json"},{"key":"rainfall-dasarian-nrt-v9","src":"../assets/data/status/rainfall-dasarian-nrt-v9.json"},{"key":"rainfall-dasarian-standard","src":"../assets/data/status/rainfall-dasarian-standard.json"},{"key":"rainfall-dasarian-standard-v9","src":"../assets/data/status/rainfall-dasarian-standard-v9.json"},{"key":"rainfall-forecast","src":"../assets/data/status/rainfall-forecast.json"},{"key":"climate","src":"../assets/data/status/climate.json"}],"fews":null}</script>
 </div>
 <script>/* Halaman Status data (pemilik 2026-11-22, E3).
    Markup: templates/status.html.j2; daftar: heslab/builders/shell.build_status.
@@ -1279,7 +1277,7 @@ gtag('config', 'G-Z0TXGDFW5L');
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 28-11-2026 21:52 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 28-11-2026 22:07 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
@@ -1302,4 +1300,4 @@ gtag('config', 'G-Z0TXGDFW5L');
 </script>
 </body>
 </html>
-<!-- heslab-content: ec707426bc5f38ed -->
+<!-- heslab-content: fa94ff2f35fc3380 -->
