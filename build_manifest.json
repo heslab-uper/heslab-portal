@@ -1,7 +1,7 @@
 {
   "targets": {
     "shell": {
-      "last_build_wib": "2026-11-28T21:49:12+07:00",
+      "last_build_wib": "2026-11-28T21:52:56+07:00",
       "pages": [
         "home",
         "rainfall-daily",
@@ -20,7 +20,7 @@
         "rainfall-daily-standard-v9",
         "rainfall-dasarian-standard-v9"
       ],
-      "note": "dijalankan dari jalankan.py"
+      "note": "produk=semua"
     },
     "rainfall-animation": {
       "last_build_wib": "2026-11-28T21:49:13+07:00",
@@ -61,7 +61,7 @@
       "note": "produk=semua"
     },
     "climate-outlook": {
-      "last_build_wib": "2026-11-22T17:51:43+07:00",
+      "last_build_wib": "2026-11-28T21:52:02+07:00",
       "pages": [
         "climate-202610",
         "climate-202611",
