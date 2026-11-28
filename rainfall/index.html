@@ -700,13 +700,16 @@ button.btn--primary:hover, a.btn--primary:hover { background: var(--current-dark
 
 /* --------------------------------------------------------------- tabel -- */
 
-.tablewrap { overflow-x: auto; }
+/* Keterangan tabel selebar wadah, bukan selebar tabel (pemilik 2026-11-28, H2): tanpa ini
+   caption tabel lebar terpotong di ponsel. Wadah = container, caption max 100cqi, menempel kiri. */
+.tablewrap { overflow-x: auto; container-type: inline-size; }
 table.data {
   width: 100%;
   border-collapse: collapse;
   font-size: var(--step--1);
 }
 table.data caption {
+  position: sticky; left: 0; max-width: 100cqi;
   text-align: left;
   font-family: var(--font-mono);
   font-size: var(--step--1);
@@ -760,7 +763,14 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
     box-shadow: 1px 0 0 var(--line);      /* garis pemisah kolom tetap */
   }
   table.peringkat tbody tr:hover td:nth-child(-n+2) { background: var(--current-soft); }
+  /* Laporan harian (pemilik 2026-11-28, H1): kolom Provinsi (ke-3) disembunyikan,
+     provinsi tampil kecil di bawah nama, agar kolom Hujan masuk layar. */
+  table.peringkat--harian th:nth-child(3),
+  table.peringkat--harian td:nth-child(3) { display: none; }
+  table.peringkat--harian .peringkat__prov { display: block; }
+  table.peringkat--harian th { white-space: normal; }   /* judul "Hujan harian (R24) (mm)" membungkus */
 }
+.peringkat__prov { display: none; font-size: .75rem; color: var(--muted); }
 
 /* --------------------------------------------------------- panel detail -- */
 
@@ -1024,7 +1034,7 @@ aria-current="true">Rainfall Monitoring</a>
   <section class="pagehead">
     <h1>Rainfall Monitoring</h1>
     <p class="lede">
-      Animasi sebaran akumulasi hujan 24 jam terakhir di
+      Animasi hujan jam-jaman selama 24 jam terakhir di
       wilayah Indonesia berdasarkan estimasi satelit GSMaP, diperbarui setiap jam.
     </p>
   </section>
@@ -1044,26 +1054,10 @@ aria-current="true">Rainfall Monitoring</a>
   </div>
   <div class="readout__cell">
     <span class="readout__k">Hujan wilayah Indonesia</span>
-    <span class="readout__v">19.2% · maks 30.1 mm/jam</span>
+    <span class="readout__v">19,2 % · maks 30,1 mm/jam</span>
   </div>
 </div>
 
-
-  <div class="note">
-    <p style="margin-bottom:0"><strong>Membaca interval waktu.</strong>
-    Setiap gambar menunjukkan akumulasi hujan selama satu jam penuh, bukan
-    kondisi sesaat. Sebagai contoh, label
-    <span style="font-family:var(--font-mono)">09:00–10:00 WIB</span>
-    merepresentasikan total hujan yang terjadi sepanjang interval tersebut.
-    Data untuk suatu interval baru dianggap lengkap setelah waktu akhir
-    interval terlewati.</p>    <p style="margin:.75rem 0 0"><strong>Hujan wilayah Indonesia.</strong>
-    Persentase sel grid 0,1° pada jam terakhir yang mencatat hujan sedikitnya
-    0,02 mm/jam, dihitung di dalam kotak
-    6° LU – 11° LS dan
-    95°–141° BT. Kotak ini mencakup laut
-    dan sebagian wilayah negara tetangga; ia bukan batas negara. Angka
-    <em>maks</em> adalah intensitas tertinggi pada sel di dalam kotak yang sama.</p>
-  </div>
 
   <section class="panel" aria-labelledby="anim-h">
     <div class="panel__head">
@@ -1130,6 +1124,22 @@ aria-current="true">Rainfall Monitoring</a>
       situs HESLab.
     </p>
   </section>
+
+  <div class="note" style="margin-top:1.5rem">
+    <p style="margin-bottom:0"><strong>Membaca interval waktu.</strong>
+    Setiap gambar menunjukkan akumulasi hujan selama satu jam penuh, bukan
+    kondisi sesaat. Sebagai contoh, label
+    <span style="font-family:var(--font-mono)">09:00–10:00 WIB</span>
+    merepresentasikan total hujan yang terjadi sepanjang interval tersebut.
+    Data untuk suatu interval baru dianggap lengkap setelah waktu akhir
+    interval terlewati.</p>    <p style="margin:.75rem 0 0"><strong>Hujan wilayah Indonesia.</strong>
+    Persentase sel grid 0,1° pada jam terakhir yang mencatat hujan sedikitnya
+    0,02 mm/jam, dihitung di dalam kotak
+    6° LU – 11° LS dan
+    95°–141° BT. Kotak ini mencakup laut
+    dan sebagian wilayah negara tetangga; ia bukan batas negara. Angka
+    <em>maks</em> adalah intensitas tertinggi pada sel di dalam kotak yang sama.</p>
+  </div>
 
   <section aria-labelledby="sub-h">
     <h2 id="sub-h" class="eyebrow">Sub-informasi</h2>
@@ -1260,7 +1270,7 @@ aria-current="true">Rainfall Monitoring</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 28-11-2026 21:36 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 28-11-2026 21:49 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
@@ -1281,7 +1291,7 @@ aria-current="true">Rainfall Monitoring</a>
   });
 })();
 </script>
-<script id="payload" type="application/json">{"kind":"rainfall-animation-raster","products":[{"key":"now","button":"NOW","label":"GSMaP NOW","frames":[{"url":"https://data.heslab-uper.com/portal/assets/frames/now/20261120T05-7d665d.png","label":"20 Nov 2026 · 05:00–06:00 WIB"}],"readout":[{"k":"Produk","v":"GSMaP NOW"},{"k":"Jendela waktu","v":"1 jam terakhir"},{"k":"Data terakhir","v":"20 Nov 2026 · 05:00–06:00 WIB"},{"k":"Hujan wilayah Indonesia","v":"19.2% · maks 30.1 mm/jam"}]},{"key":"nrt","button":"NRT v8","label":"GSMaP NRT v8","frames":[{"url":"https://data.heslab-uper.com/portal/assets/frames/nrt/20261120T01-7d665d.png","label":"20 Nov 2026 · 01:00–02:00 WIB"}],"readout":[{"k":"Produk","v":"GSMaP NRT v8"},{"k":"Jendela waktu","v":"1 jam terakhir"},{"k":"Data terakhir","v":"20 Nov 2026 · 01:00–02:00 WIB"},{"k":"Hujan wilayah Indonesia","v":"18.8% · maks 67.0 mm/jam"}]},{"key":"nrt-v9","button":"NRT v9","label":"GSMaP NRT v9","frames":[{"url":"https://data.heslab-uper.com/portal/assets/frames/nrt-v9/20261120T01-7d665d.png","label":"20 Nov 2026 · 01:00–02:00 WIB"}],"readout":[{"k":"Produk","v":"GSMaP NRT v9"},{"k":"Jendela waktu","v":"1 jam terakhir"},{"k":"Data terakhir","v":"20 Nov 2026 · 01:00–02:00 WIB"},{"k":"Hujan wilayah Indonesia","v":"19.9% · maks 61.0 mm/jam"}]}],"default":0,"bounds":{"west":90.0,"east":150.10000000000002,"north":15.100000000000001,"south":-15.100000000000001},"classes":[{"min":0.02,"max":0.1,"label":"Gerimis","color":"#142AA6"},{"min":0.1,"max":0.5,"label":"Sangat ringan","color":"#147AFA"},{"min":0.5,"max":2.0,"label":"Ringan","color":"#14BAFA"},{"min":2.0,"max":5.0,"label":"Ringan–sedang","color":"#66D1E6"},{"min":5.0,"max":10.0,"label":"Sedang","color":"#3DD994"},{"min":10.0,"max":20.0,"label":"Lebat","color":"#90E669"},{"min":20.0,"max":40.0,"label":"Sangat lebat","color":"#E0F62E"},{"min":40.0,"max":60.0,"label":"Ekstrem","color":"#FA6414"},{"min":60.0,"max":null,"label":"Ekstrem tinggi","color":"#D01414"}],"dry_label":"Tidak hujan","floor":0.02,"opacity":0.82,"unit":"mm/jam","map":{"center":{"lat":-2.5,"lon":118.0},"zoom":3.5,"style":"white-bg","layers":[{"below":"traces","sourcetype":"raster","sourceattribution":"Esri, HERE, Garmin, © OpenStreetMap contributors","source":["https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"]},{"below":"traces","sourcetype":"raster","source":["https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}"]}]},"autoplay":true,"frame_ms":650,"end_pause_ms":2000}</script>
+<script id="payload" type="application/json">{"kind":"rainfall-animation-raster","products":[{"key":"now","button":"NOW","label":"GSMaP NOW","frames":[{"url":"https://data.heslab-uper.com/portal/assets/frames/now/20261120T05-7d665d.png","label":"20 Nov 2026 · 05:00–06:00 WIB"}],"readout":[{"k":"Produk","v":"GSMaP NOW"},{"k":"Jendela waktu","v":"1 jam terakhir"},{"k":"Data terakhir","v":"20 Nov 2026 · 05:00–06:00 WIB"},{"k":"Hujan wilayah Indonesia","v":"19,2 % · maks 30,1 mm/jam"}]},{"key":"nrt","button":"NRT v8","label":"GSMaP NRT v8","frames":[{"url":"https://data.heslab-uper.com/portal/assets/frames/nrt/20261120T01-7d665d.png","label":"20 Nov 2026 · 01:00–02:00 WIB"}],"readout":[{"k":"Produk","v":"GSMaP NRT v8"},{"k":"Jendela waktu","v":"1 jam terakhir"},{"k":"Data terakhir","v":"20 Nov 2026 · 01:00–02:00 WIB"},{"k":"Hujan wilayah Indonesia","v":"18,8 % · maks 67,0 mm/jam"}]},{"key":"nrt-v9","button":"NRT v9","label":"GSMaP NRT v9","frames":[{"url":"https://data.heslab-uper.com/portal/assets/frames/nrt-v9/20261120T01-7d665d.png","label":"20 Nov 2026 · 01:00–02:00 WIB"}],"readout":[{"k":"Produk","v":"GSMaP NRT v9"},{"k":"Jendela waktu","v":"1 jam terakhir"},{"k":"Data terakhir","v":"20 Nov 2026 · 01:00–02:00 WIB"},{"k":"Hujan wilayah Indonesia","v":"19,9 % · maks 61,0 mm/jam"}]}],"default":0,"bounds":{"west":90.0,"east":150.10000000000002,"north":15.100000000000001,"south":-15.100000000000001},"classes":[{"min":0.02,"max":0.1,"label":"Gerimis","color":"#142AA6"},{"min":0.1,"max":0.5,"label":"Sangat ringan","color":"#147AFA"},{"min":0.5,"max":2.0,"label":"Ringan","color":"#14BAFA"},{"min":2.0,"max":5.0,"label":"Ringan–sedang","color":"#66D1E6"},{"min":5.0,"max":10.0,"label":"Sedang","color":"#3DD994"},{"min":10.0,"max":20.0,"label":"Lebat","color":"#90E669"},{"min":20.0,"max":40.0,"label":"Sangat lebat","color":"#E0F62E"},{"min":40.0,"max":60.0,"label":"Ekstrem","color":"#FA6414"},{"min":60.0,"max":null,"label":"Ekstrem tinggi","color":"#D01414"}],"dry_label":"Tidak hujan","floor":0.02,"opacity":0.82,"unit":"mm/jam","map":{"center":{"lat":-2.5,"lon":118.0},"zoom":3.5,"style":"white-bg","layers":[{"below":"traces","sourcetype":"raster","sourceattribution":"Esri, HERE, Garmin, © OpenStreetMap contributors","source":["https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"]},{"below":"traces","sourcetype":"raster","source":["https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}"]}]},"autoplay":true,"frame_ms":650,"end_pause_ms":2000}</script>
 <script src="https://cdn.plot.ly/plotly-2.32.0.min.js" integrity="sha384-7TVmlZWH60iKX5Uk7lSvQhjtcgw2tkFjuwLcXoRSR4zXTyWFJRm9aPAguMh7CIra" crossorigin="anonymous" charset="utf-8"></script>
 <script>/* ==========================================================================
    Utilitas bersama HESLab Portal.
@@ -1751,10 +1761,15 @@ aria-current="true">Rainfall Monitoring</a>
   function renderLegend() {
     var el = document.getElementById("anim-legend");
     if (!el) return;
+    // Desimal secukupnya (0, 1, atau 2): ambang 0,02 tidak tertulis "0,0" (pemilik 2026-11-28, H4).
+    function angka(v) {
+      var d = v % 1 === 0 ? 0 : (Math.abs(v * 10 - Math.round(v * 10)) < 1e-9 ? 1 : 2);
+      return HES.num(v, d);
+    }
     var html = P.classes.map(function (c) {
       var rentang = c.max === null
-        ? "≥ " + HES.num(c.min, c.min % 1 ? 1 : 0)
-        : HES.num(c.min, c.min % 1 ? 1 : 0) + "–" + HES.num(c.max, c.max % 1 ? 1 : 0);
+        ? "≥ " + angka(c.min)
+        : angka(c.min) + "–" + angka(c.max);
       return '<li><i style="background:' + c.color + '"></i><span>' +
              rentang + " " + P.unit + "</span></li>";
     }).join("");
@@ -1763,7 +1778,7 @@ aria-current="true">Rainfall Monitoring</a>
        dibiarkan tembus pandang, bukan area tanpa data. */
     html += '<li style="margin-left:.5rem"><i style="background:' +
             'repeating-linear-gradient(45deg,#fff,#fff 3px,#ECEAE6 3px,#ECEAE6 6px)' +
-            '"></i><span>' + P.dry_label + " (&lt; " + HES.num(P.floor) + " " +
+            '"></i><span>' + P.dry_label + " (&lt; " + angka(P.floor) + " " +
             P.unit + ")</span></li>";
     el.innerHTML = html;
   }
@@ -2034,4 +2049,4 @@ aria-current="true">Rainfall Monitoring</a>
 </script>
 </body>
 </html>
-<!-- heslab-content: f6c4b233c6bf786e -->
+<!-- heslab-content: 59d2539e1f28e6b4 -->

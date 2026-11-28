@@ -700,13 +700,16 @@ button.btn--primary:hover, a.btn--primary:hover { background: var(--current-dark
 
 /* --------------------------------------------------------------- tabel -- */
 
-.tablewrap { overflow-x: auto; }
+/* Keterangan tabel selebar wadah, bukan selebar tabel (pemilik 2026-11-28, H2): tanpa ini
+   caption tabel lebar terpotong di ponsel. Wadah = container, caption max 100cqi, menempel kiri. */
+.tablewrap { overflow-x: auto; container-type: inline-size; }
 table.data {
   width: 100%;
   border-collapse: collapse;
   font-size: var(--step--1);
 }
 table.data caption {
+  position: sticky; left: 0; max-width: 100cqi;
   text-align: left;
   font-family: var(--font-mono);
   font-size: var(--step--1);
@@ -760,7 +763,14 @@ button.linkbtn:hover { color: var(--current-dark); text-decoration: underline; }
     box-shadow: 1px 0 0 var(--line);      /* garis pemisah kolom tetap */
   }
   table.peringkat tbody tr:hover td:nth-child(-n+2) { background: var(--current-soft); }
+  /* Laporan harian (pemilik 2026-11-28, H1): kolom Provinsi (ke-3) disembunyikan,
+     provinsi tampil kecil di bawah nama, agar kolom Hujan masuk layar. */
+  table.peringkat--harian th:nth-child(3),
+  table.peringkat--harian td:nth-child(3) { display: none; }
+  table.peringkat--harian .peringkat__prov { display: block; }
+  table.peringkat--harian th { white-space: normal; }   /* judul "Hujan harian (R24) (mm)" membungkus */
 }
+.peringkat__prov { display: none; font-size: .75rem; color: var(--muted); }
 
 /* --------------------------------------------------------- panel detail -- */
 
@@ -1215,7 +1225,7 @@ aria-current="true">Rainfall Monitoring</a>
     <p class="foot__legal">
       Portal ini disusun untuk keperluan riset dan edukasi. Informasi peringatan dini
       resmi tetap mengacu pada BMKG dan instansi berwenang.
-      Halaman dibangun 28-11-2026 21:36 WIB · © 2026 Hydro-Environmental System Lab.
+      Halaman dibangun 28-11-2026 21:49 WIB · © 2026 Hydro-Environmental System Lab.
     </p>
   </div>
 </footer>
@@ -2279,4 +2289,4 @@ aria-current="true">Rainfall Monitoring</a>
 </script>
 </body>
 </html>
-<!-- heslab-content: e98b82e815f66429 -->
+<!-- heslab-content: 93b5d4097d1740ea -->
